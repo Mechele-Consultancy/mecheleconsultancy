@@ -707,9 +707,7 @@ footer {
       <span class="logo-sub" data-lang-inline data-lang-val-nl="Aanbestedingsbegeleiding" data-lang-val-fr="Conseil en marchés publics" data-lang-val-en="Tender Consultancy">Aanbestedingsbegeleiding</span>
     </div>
   </a>
-  <a href="#contact" class="nav-cta">
-    <span data-lang-inline data-lang-val-nl="Neem contact op" data-lang-val-fr="Nous contacter" data-lang-val-en="Get in touch">Neem contact op</span>
-  </a>
+  <a href="#contact" class="nav-cta" data-lang-btn data-lang-val-nl="Neem contact op" data-lang-val-fr="Nous contacter" data-lang-val-en="Get in touch">Neem contact op</a>
 </nav>
 
 <!-- HERO -->
@@ -729,12 +727,8 @@ footer {
       <span data-lang="en">We monitor the market, filter relevant tenders and deliver them to you weekly. You focus on your business.</span>
     </p>
     <div class="hero-actions">
-      <a href="#contact" class="btn-primary">
-        <span data-lang-inline data-lang-val-nl="Vrijblijvend gesprek" data-lang-val-fr="Entretien sans engagement" data-lang-val-en="Free consultation">Vrijblijvend gesprek</span>
-      </a>
-      <a href="#diensten" class="btn-secondary">
-        <span data-lang-inline data-lang-val-nl="Onze diensten" data-lang-val-fr="Nos services" data-lang-val-en="Our services">Onze diensten</span>
-      </a>
+      <a href="#contact" class="btn-primary" data-lang-btn data-lang-val-nl="Vrijblijvend gesprek" data-lang-val-fr="Entretien sans engagement" data-lang-val-en="Free consultation">Vrijblijvend gesprek</a>
+      <a href="#diensten" class="btn-secondary" data-lang-btn data-lang-val-nl="Onze diensten" data-lang-val-fr="Nos services" data-lang-val-en="Our services">Onze diensten</a>
     </div>
   </div>
 </section>
@@ -1079,13 +1073,17 @@ function setLang(lang) {
     const val = el.dataset[key];
     if (val) el.textContent = val;
   });
+  document.querySelectorAll('[data-lang-btn]').forEach(el => {
+    const key = 'langVal' + lang.charAt(0).toUpperCase() + lang.slice(1);
+    const val = el.dataset[key];
+    if (val) el.textContent = val;
+  });
   document.querySelectorAll('.lang-btn').forEach(btn => {
     btn.classList.toggle('active', btn.textContent.trim() === lang.toUpperCase());
   });
   document.querySelector('html').setAttribute('lang', lang);
 }
 
-// Initialize on load
 document.addEventListener('DOMContentLoaded', function() {
   setLang('nl');
 });
