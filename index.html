@@ -1075,7 +1075,8 @@ function setLang(lang) {
     el.classList.toggle('visible', el.dataset.lang === lang);
   });
   document.querySelectorAll('[data-lang-inline]').forEach(el => {
-    const val = el.dataset['langVal' + lang.charAt(0).toUpperCase() + lang.slice(1)];
+    const key = 'langVal' + lang.charAt(0).toUpperCase() + lang.slice(1);
+    const val = el.dataset[key];
     if (val) el.textContent = val;
   });
   document.querySelectorAll('.lang-btn').forEach(btn => {
@@ -1083,6 +1084,11 @@ function setLang(lang) {
   });
   document.querySelector('html').setAttribute('lang', lang);
 }
+
+// Initialize on load
+document.addEventListener('DOMContentLoaded', function() {
+  setLang('nl');
+});
 </script>
 
 </body>
