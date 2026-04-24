@@ -1,0 +1,1089 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mechele Consultancy</title>
+<meta name="description" content="Mechele Consultancy helpt Vlaamse ondernemers bij het vinden en indienen van overheidsopdrachten.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --navy: #2B3A52;
+  --navy-dark: #1C2A3E;
+  --navy-light: #3A4E6A;
+  --blue: #4A6FA5;
+  --amber: #E8A838;
+  --amber-dark: #C8891A;
+  --off-white: #F5F6F8;
+  --white: #FFFFFF;
+  --text-dark: #1A2332;
+  --text-mid: #4A5568;
+  --text-light: #8A98AA;
+  --border: rgba(43,58,82,0.12);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--off-white);
+  color: var(--text-dark);
+  font-size: 16px;
+  line-height: 1.7;
+  font-weight: 300;
+}
+
+/* LANGUAGE SWITCHER */
+.lang-bar {
+  background: var(--navy-dark);
+  padding: 8px 40px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 6px;
+}
+
+.lang-btn {
+  background: none;
+  border: 1px solid rgba(255,255,255,0.2);
+  color: rgba(255,255,255,0.5);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  padding: 3px 10px;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.lang-btn.active {
+  background: var(--amber);
+  border-color: var(--amber);
+  color: var(--navy-dark);
+}
+
+.lang-btn:hover:not(.active) {
+  border-color: rgba(255,255,255,0.5);
+  color: rgba(255,255,255,0.85);
+}
+
+[data-lang] { display: none; }
+[data-lang].visible { display: block; }
+[data-lang-inline] { display: none; }
+[data-lang-inline].visible { display: inline; }
+
+/* NAV */
+nav {
+  background: var(--navy);
+  padding: 20px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 20px rgba(0,0,0,0.15);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  text-decoration: none;
+}
+
+.logo-mark {
+  width: 38px;
+  height: 38px;
+  background: var(--amber);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.logo-mark svg {
+  width: 22px;
+  height: 22px;
+}
+
+.logo-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+
+.logo-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--white);
+  letter-spacing: 0.01em;
+}
+
+.logo-sub {
+  font-size: 10px;
+  font-weight: 400;
+  color: var(--amber);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.nav-cta {
+  background: var(--amber);
+  color: var(--navy-dark);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  padding: 10px 22px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  text-decoration: none;
+  letter-spacing: 0.03em;
+  transition: background 0.2s;
+}
+
+.nav-cta:hover { background: var(--amber-dark); }
+
+/* HERO */
+.hero {
+  background: var(--navy);
+  padding: 90px 40px 100px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -60px;
+  right: -60px;
+  width: 400px;
+  height: 400px;
+  border: 1px solid rgba(232,168,56,0.12);
+  border-radius: 50%;
+}
+
+.hero::after {
+  content: '';
+  position: absolute;
+  top: -20px;
+  right: -20px;
+  width: 260px;
+  height: 260px;
+  border: 1px solid rgba(232,168,56,0.08);
+  border-radius: 50%;
+}
+
+.hero-inner {
+  max-width: 760px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+.hero-eyebrow {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--amber);
+  margin-bottom: 22px;
+}
+
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(32px, 5vw, 54px);
+  font-weight: 700;
+  color: var(--white);
+  line-height: 1.15;
+  margin-bottom: 28px;
+  letter-spacing: -0.01em;
+}
+
+.hero h1 em {
+  font-style: italic;
+  color: var(--amber);
+}
+
+.hero-tagline {
+  font-size: 18px;
+  font-weight: 300;
+  color: rgba(255,255,255,0.72);
+  margin-bottom: 44px;
+  max-width: 520px;
+  line-height: 1.6;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.btn-primary {
+  background: var(--amber);
+  color: var(--navy-dark);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 14px 30px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  text-decoration: none;
+  letter-spacing: 0.03em;
+  transition: background 0.2s;
+}
+
+.btn-primary:hover { background: var(--amber-dark); }
+
+.btn-secondary {
+  background: transparent;
+  color: rgba(255,255,255,0.8);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  padding: 14px 30px;
+  border: 1px solid rgba(255,255,255,0.25);
+  border-radius: 3px;
+  cursor: pointer;
+  text-decoration: none;
+  letter-spacing: 0.03em;
+  transition: all 0.2s;
+}
+
+.btn-secondary:hover {
+  border-color: rgba(255,255,255,0.5);
+  color: var(--white);
+}
+
+/* INTRO STRIP */
+.intro-strip {
+  background: var(--amber);
+  padding: 22px 40px;
+  text-align: center;
+}
+
+.intro-strip p {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--navy-dark);
+  letter-spacing: 0.02em;
+}
+
+/* SECTION BASE */
+section {
+  padding: 80px 40px;
+}
+
+.section-inner {
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+.section-label {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--blue);
+  margin-bottom: 14px;
+}
+
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(26px, 3.5vw, 38px);
+  font-weight: 600;
+  color: var(--navy);
+  line-height: 1.2;
+  margin-bottom: 20px;
+}
+
+.section-body {
+  font-size: 16px;
+  font-weight: 300;
+  color: var(--text-mid);
+  line-height: 1.8;
+  max-width: 620px;
+}
+
+/* ABOUT */
+.about {
+  background: var(--white);
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+  margin-top: 50px;
+}
+
+.about-stat {
+  border-left: 3px solid var(--amber);
+  padding-left: 20px;
+  margin-bottom: 32px;
+}
+
+.about-stat-number {
+  font-family: 'Playfair Display', serif;
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--navy);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.about-stat-label {
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--text-mid);
+}
+
+.about-text p {
+  font-size: 15px;
+  font-weight: 300;
+  color: var(--text-mid);
+  line-height: 1.85;
+  margin-bottom: 16px;
+}
+
+/* SERVICES */
+.services {
+  background: var(--off-white);
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+  margin-top: 50px;
+}
+
+.service-card {
+  background: var(--white);
+  border-radius: 6px;
+  padding: 40px 36px;
+  border: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+  transition: box-shadow 0.25s;
+}
+
+.service-card:hover {
+  box-shadow: 0 8px 40px rgba(43,58,82,0.1);
+}
+
+.service-card.featured {
+  border-color: var(--navy);
+}
+
+.service-card.featured::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--amber);
+}
+
+.service-badge {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--amber-dark);
+  background: rgba(232,168,56,0.12);
+  padding: 4px 10px;
+  border-radius: 2px;
+  margin-bottom: 20px;
+}
+
+.service-card h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--navy);
+  margin-bottom: 14px;
+  line-height: 1.2;
+}
+
+.service-card p {
+  font-size: 14px;
+  font-weight: 300;
+  color: var(--text-mid);
+  line-height: 1.8;
+  margin-bottom: 24px;
+}
+
+.service-list {
+  list-style: none;
+  margin-bottom: 0;
+}
+
+.service-list li {
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--text-mid);
+  padding: 7px 0;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.service-list li:last-child { border-bottom: none; }
+
+.service-list li::before {
+  content: '';
+  width: 5px;
+  height: 5px;
+  background: var(--amber);
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* HOW */
+.how {
+  background: var(--navy);
+  color: var(--white);
+}
+
+.how .section-title { color: var(--white); }
+.how .section-label { color: var(--amber); }
+
+.how-steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+  margin-top: 50px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.how-step {
+  padding: 36px 30px;
+  background: rgba(255,255,255,0.03);
+}
+
+.step-number {
+  font-family: 'Playfair Display', serif;
+  font-size: 42px;
+  font-weight: 700;
+  color: rgba(232,168,56,0.25);
+  line-height: 1;
+  margin-bottom: 16px;
+}
+
+.how-step h4 {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--white);
+  margin-bottom: 10px;
+  letter-spacing: 0.01em;
+}
+
+.how-step p {
+  font-size: 13px;
+  font-weight: 300;
+  color: rgba(255,255,255,0.55);
+  line-height: 1.75;
+}
+
+/* WHY */
+.why {
+  background: var(--white);
+}
+
+.why-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 36px;
+  margin-top: 50px;
+}
+
+.why-item {
+  padding: 28px 0;
+  border-top: 2px solid var(--border);
+}
+
+.why-item.amber-top { border-top-color: var(--amber); }
+
+.why-item h4 {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--navy);
+  margin-bottom: 10px;
+}
+
+.why-item p {
+  font-size: 13px;
+  font-weight: 300;
+  color: var(--text-mid);
+  line-height: 1.75;
+}
+
+/* CONTACT */
+.contact {
+  background: var(--off-white);
+}
+
+.contact-box {
+  background: var(--navy);
+  border-radius: 8px;
+  padding: 60px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+  margin-top: 50px;
+}
+
+.contact-left .section-title { color: var(--white); margin-bottom: 14px; }
+.contact-left .section-label { color: var(--amber); }
+
+.contact-left p {
+  font-size: 15px;
+  font-weight: 300;
+  color: rgba(255,255,255,0.65);
+  line-height: 1.8;
+}
+
+.contact-details {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.contact-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.contact-icon {
+  width: 40px;
+  height: 40px;
+  background: rgba(232,168,56,0.15);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.contact-icon svg {
+  width: 18px;
+  height: 18px;
+  stroke: var(--amber);
+  fill: none;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.contact-item-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.contact-item-label {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.4);
+  margin-bottom: 3px;
+}
+
+.contact-item-value {
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--white);
+  text-decoration: none;
+}
+
+.contact-item-value:hover { color: var(--amber); }
+
+.contact-note {
+  font-size: 11px;
+  font-weight: 300;
+  color: rgba(255,255,255,0.35);
+  margin-top: 4px;
+}
+
+/* FOOTER */
+footer {
+  background: var(--navy-dark);
+  padding: 28px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.footer-left {
+  font-size: 12px;
+  font-weight: 300;
+  color: rgba(255,255,255,0.35);
+}
+
+.footer-left strong {
+  color: rgba(255,255,255,0.6);
+  font-weight: 500;
+}
+
+.footer-btw {
+  font-size: 11px;
+  color: rgba(255,255,255,0.25);
+  font-weight: 300;
+}
+
+/* ANIMATIONS */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.hero-inner > * {
+  animation: fadeUp 0.7s ease both;
+}
+
+.hero-eyebrow { animation-delay: 0.1s; }
+.hero h1 { animation-delay: 0.2s; }
+.hero-tagline { animation-delay: 0.35s; }
+.hero-actions { animation-delay: 0.5s; }
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  nav { padding: 16px 20px; }
+  .lang-bar { padding: 8px 20px; }
+  section { padding: 60px 20px; }
+  .hero { padding: 60px 20px 70px; }
+  .about-grid,
+  .services-grid,
+  .how-steps,
+  .why-grid,
+  .contact-box { grid-template-columns: 1fr; gap: 28px; }
+  .contact-box { padding: 36px 28px; }
+  .hero::before, .hero::after { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- LANGUAGE BAR -->
+<div class="lang-bar">
+  <button class="lang-btn active" onclick="setLang('nl')">NL</button>
+  <button class="lang-btn" onclick="setLang('fr')">FR</button>
+  <button class="lang-btn" onclick="setLang('en')">EN</button>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="logo">
+    <div class="logo-mark">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#1C2A3E" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M9 17H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v3"/>
+        <path d="M13 21l4-4 4 4"/>
+        <path d="M17 21v-8"/>
+        <path d="M7 9h8M7 13h4"/>
+      </svg>
+    </div>
+    <div class="logo-text">
+      <span class="logo-name">Mechele Consultancy</span>
+      <span class="logo-sub" data-lang-inline data-lang-val-nl="Aanbestedingsbegeleiding" data-lang-val-fr="Conseil en marchés publics" data-lang-val-en="Tender Consultancy">Aanbestedingsbegeleiding</span>
+    </div>
+  </a>
+  <a href="#contact" class="nav-cta">
+    <span data-lang-inline data-lang-val-nl="Neem contact op" data-lang-val-fr="Nous contacter" data-lang-val-en="Get in touch">Neem contact op</span>
+  </a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <p class="hero-eyebrow">
+      <span data-lang-inline data-lang-val-nl="Aanbestedingsbegeleiding voor Vlaamse ondernemers" data-lang-val-fr="Conseil en marchés publics pour les entrepreneurs flamands" data-lang-val-en="Tender consulting for Flemish entrepreneurs">Aanbestedingsbegeleiding voor Vlaamse ondernemers</span>
+    </p>
+    <h1>
+      <span data-lang="nl" class="visible">Overheidsopdrachten zoeken<br>kost tijd. <em>Dat doen wij.</em></span>
+      <span data-lang="fr">Les marchés publics prennent du temps.<br><em>C'est notre travail.</em></span>
+      <span data-lang="en">Finding public tenders takes time.<br><em>That's what we do.</em></span>
+    </h1>
+    <p class="hero-tagline">
+      <span data-lang="nl" class="visible">Wij monitoren de markt, filteren de relevante opdrachten en bezorgen ze u wekelijks. U focust op uw zaak.</span>
+      <span data-lang="fr">Nous surveillons le marché, filtrons les appels d'offres pertinents et vous les livrons chaque semaine. Vous vous concentrez sur votre activité.</span>
+      <span data-lang="en">We monitor the market, filter relevant tenders and deliver them to you weekly. You focus on your business.</span>
+    </p>
+    <div class="hero-actions">
+      <a href="#contact" class="btn-primary">
+        <span data-lang-inline data-lang-val-nl="Vrijblijvend gesprek" data-lang-val-fr="Entretien sans engagement" data-lang-val-en="Free consultation">Vrijblijvend gesprek</span>
+      </a>
+      <a href="#diensten" class="btn-secondary">
+        <span data-lang-inline data-lang-val-nl="Onze diensten" data-lang-val-fr="Nos services" data-lang-val-en="Our services">Onze diensten</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- INTRO STRIP -->
+<div class="intro-strip">
+  <p>
+    <span data-lang="nl" class="visible">Actief in België &mdash; Gespecialiseerd in overheidsopdrachten voor KMO's</span>
+    <span data-lang="fr">Actif en Belgique &mdash; Spécialisé dans les marchés publics pour PME</span>
+    <span data-lang="en">Active in Belgium &mdash; Specialised in public tenders for SMEs</span>
+  </p>
+</div>
+
+<!-- ABOUT -->
+<section class="about" id="over">
+  <div class="section-inner">
+    <p class="section-label">
+      <span data-lang-inline data-lang-val-nl="Wie zijn wij" data-lang-val-fr="Qui sommes-nous" data-lang-val-en="About us">Wie zijn wij</span>
+    </p>
+    <h2 class="section-title">
+      <span data-lang="nl" class="visible">Een vertrouwde partner<br>in overheidsopdrachten</span>
+      <span data-lang="fr">Un partenaire de confiance<br>pour les marchés publics</span>
+      <span data-lang="en">A trusted partner<br>in public procurement</span>
+    </h2>
+    <div class="about-grid">
+      <div class="about-stats">
+        <div class="about-stat">
+          <div class="about-stat-number">100%</div>
+          <div class="about-stat-label">
+            <span data-lang-inline data-lang-val-nl="Focus op overheidsopdrachten" data-lang-val-fr="Focus sur les marchés publics" data-lang-val-en="Focus on public tenders">Focus op overheidsopdrachten</span>
+          </div>
+        </div>
+        <div class="about-stat">
+          <div class="about-stat-number">Wekelijks</div>
+          <div class="about-stat-label">
+            <span data-lang-inline data-lang-val-nl="Gefilterd overzicht in uw mailbox" data-lang-val-fr="Aperçu filtré dans votre boîte mail" data-lang-val-en="Filtered overview in your inbox">Gefilterd overzicht in uw mailbox</span>
+          </div>
+        </div>
+        <div class="about-stat">
+          <div class="about-stat-number">B2B</div>
+          <div class="about-stat-label">
+            <span data-lang-inline data-lang-val-nl="Persoonlijke begeleiding, geen platform" data-lang-val-fr="Accompagnement personnel, pas une plateforme" data-lang-val-en="Personal guidance, not a platform">Persoonlijke begeleiding, geen platform</span>
+          </div>
+        </div>
+      </div>
+      <div class="about-text">
+        <p>
+          <span data-lang="nl" class="visible">Mechele Consultancy helpt Vlaamse KMO's om kansen op overheidsopdrachten niet te missen. Wij nemen het zoekwerk volledig uit handen: van monitoring tot dossierindiening.</span>
+          <span data-lang="fr">Mechele Consultancy aide les PME flamandes à ne pas manquer les opportunités de marchés publics. Nous prenons en charge tout le travail de recherche : de la surveillance à la soumission du dossier.</span>
+          <span data-lang="en">Mechele Consultancy helps Flemish SMEs avoid missing public tender opportunities. We handle all the research work: from monitoring to dossier submission.</span>
+        </p>
+        <p>
+          <span data-lang="nl" class="visible">Geen abonnement op een platform dat u zelf moet doorzoeken. Wij doen het voor u — persoonlijk, gefilterd op uw profiel, wekelijks bezorgd.</span>
+          <span data-lang="fr">Pas d'abonnement à une plateforme que vous devez parcourir vous-même. Nous le faisons pour vous — personnellement, filtré selon votre profil, livré chaque semaine.</span>
+          <span data-lang="en">No subscription to a platform you have to search yourself. We do it for you — personally, filtered to your profile, delivered weekly.</span>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services" id="diensten">
+  <div class="section-inner">
+    <p class="section-label">
+      <span data-lang-inline data-lang-val-nl="Wat wij doen" data-lang-val-fr="Ce que nous faisons" data-lang-val-en="What we do">Wat wij doen</span>
+    </p>
+    <h2 class="section-title">
+      <span data-lang="nl" class="visible">Twee diensten,<br>één helder traject</span>
+      <span data-lang="fr">Deux services,<br>un parcours clair</span>
+      <span data-lang="en">Two services,<br>one clear path</span>
+    </h2>
+    <div class="services-grid">
+      <!-- Service 1 -->
+      <div class="service-card featured">
+        <span class="service-badge">
+          <span data-lang-inline data-lang-val-nl="Corebusiness" data-lang-val-fr="Service principal" data-lang-val-en="Core service">Corebusiness</span>
+        </span>
+        <h3>
+          <span data-lang="nl" class="visible">Tenderopvolging</span>
+          <span data-lang="fr">Suivi des appels d'offres</span>
+          <span data-lang="en">Tender monitoring</span>
+        </h3>
+        <p>
+          <span data-lang="nl" class="visible">Wij monitoren dagelijks alle relevante aanbestedingsplatformen en bezorgen u wekelijks een persoonlijk, gefilterd overzicht van opdrachten die bij uw bedrijf passen.</span>
+          <span data-lang="fr">Nous surveillons quotidiennement toutes les plateformes d'appels d'offres pertinentes et vous fournissons chaque semaine un aperçu personnalisé et filtré des marchés adaptés à votre entreprise.</span>
+          <span data-lang="en">We monitor all relevant tender platforms daily and deliver you a personalised, filtered weekly overview of tenders that match your business.</span>
+        </p>
+        <ul class="service-list">
+          <li>
+            <span data-lang="nl" class="visible">Dagelijkse monitoring van aanbestedingsplatformen</span>
+            <span data-lang="fr">Surveillance quotidienne des plateformes</span>
+            <span data-lang="en">Daily monitoring of tender platforms</span>
+          </li>
+          <li>
+            <span data-lang="nl" class="visible">Wekelijks gefilterd overzicht op maat</span>
+            <span data-lang="fr">Aperçu filtré hebdomadaire sur mesure</span>
+            <span data-lang="en">Weekly filtered overview tailored to you</span>
+          </li>
+          <li>
+            <span data-lang="nl" class="visible">Maandelijks opzegbaar na 3 maanden</span>
+            <span data-lang="fr">Résiliable mensuellement après 3 mois</span>
+            <span data-lang="en">Monthly cancellable after 3 months</span>
+          </li>
+          <li>
+            <span data-lang="nl" class="visible">Jaarformule beschikbaar met voordeel</span>
+            <span data-lang="fr">Formule annuelle disponible avec avantage</span>
+            <span data-lang="en">Annual formula available with benefit</span>
+          </li>
+        </ul>
+      </div>
+      <!-- Service 2 -->
+      <div class="service-card">
+        <span class="service-badge" style="color: var(--navy); background: rgba(43,58,82,0.08);">
+          <span data-lang-inline data-lang-val-nl="Op aanvraag" data-lang-val-fr="Sur demande" data-lang-val-en="On request">Op aanvraag</span>
+        </span>
+        <h3>
+          <span data-lang="nl" class="visible">Tenderbegeleiding</span>
+          <span data-lang="fr">Accompagnement d'appels d'offres</span>
+          <span data-lang="en">Tender guidance</span>
+        </h3>
+        <p>
+          <span data-lang="nl" class="visible">Heeft u een interessante opdracht gevonden en wilt u die ook effectief indienen? Wij stellen het volledige dossier op en zorgen voor een correcte, tijdige indiening.</span>
+          <span data-lang="fr">Vous avez trouvé un marché intéressant et souhaitez le soumettre efficacement ? Nous constituons le dossier complet et assurons une soumission correcte et dans les délais.</span>
+          <span data-lang="en">Found an interesting tender and want to submit it effectively? We prepare the complete dossier and ensure correct, timely submission.</span>
+        </p>
+        <ul class="service-list">
+          <li>
+            <span data-lang="nl" class="visible">Volledige opmaak van het dossier</span>
+            <span data-lang="fr">Constitution complète du dossier</span>
+            <span data-lang="en">Complete dossier preparation</span>
+          </li>
+          <li>
+            <span data-lang="nl" class="visible">Tijdige en correcte indiening</span>
+            <span data-lang="fr">Soumission correcte et dans les délais</span>
+            <span data-lang="en">Timely and correct submission</span>
+          </li>
+          <li>
+            <span data-lang="nl" class="visible">Per opdracht, geen abonnement</span>
+            <span data-lang="fr">Par marché, sans abonnement</span>
+            <span data-lang="en">Per tender, no subscription</span>
+          </li>
+          <li>
+            <span data-lang="nl" class="visible">Enkel beschikbaar in combinatie met Tenderopvolging</span>
+            <span data-lang="fr">Uniquement disponible avec le suivi des appels d'offres</span>
+            <span data-lang="en">Only available combined with Tender monitoring</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how">
+  <div class="section-inner">
+    <p class="section-label">
+      <span data-lang-inline data-lang-val-nl="Hoe werkt het" data-lang-val-fr="Comment ça fonctionne" data-lang-val-en="How it works">Hoe werkt het</span>
+    </p>
+    <h2 class="section-title">
+      <span data-lang="nl" class="visible">Eenvoudig van start</span>
+      <span data-lang="fr">Démarrer simplement</span>
+      <span data-lang="en">Simple to get started</span>
+    </h2>
+    <div class="how-steps">
+      <div class="how-step">
+        <div class="step-number">01</div>
+        <h4>
+          <span data-lang="nl" class="visible">Vrijblijvend gesprek</span>
+          <span data-lang="fr">Entretien sans engagement</span>
+          <span data-lang="en">Free consultation</span>
+        </h4>
+        <p>
+          <span data-lang="nl" class="visible">We leren uw bedrijf kennen: uw sector, uw capaciteit en welke opdrachten interessant kunnen zijn.</span>
+          <span data-lang="fr">Nous apprenons à connaître votre entreprise : votre secteur, vos capacités et les marchés qui pourraient vous intéresser.</span>
+          <span data-lang="en">We get to know your business: your sector, capacity and which tenders could be interesting for you.</span>
+        </p>
+      </div>
+      <div class="how-step">
+        <div class="step-number">02</div>
+        <h4>
+          <span data-lang="nl" class="visible">Profiel opmaken</span>
+          <span data-lang="fr">Établir votre profil</span>
+          <span data-lang="en">Profile setup</span>
+        </h4>
+        <p>
+          <span data-lang="nl" class="visible">Wij stellen een zoekprofiel op op basis van uw activiteiten, regio en grootte van opdrachten die u aankan.</span>
+          <span data-lang="fr">Nous créons un profil de recherche basé sur vos activités, votre région et la taille des marchés que vous pouvez gérer.</span>
+          <span data-lang="en">We set up a search profile based on your activities, region and the size of tenders you can handle.</span>
+        </p>
+      </div>
+      <div class="how-step">
+        <div class="step-number">03</div>
+        <h4>
+          <span data-lang="nl" class="visible">Wekelijks overzicht</span>
+          <span data-lang="fr">Aperçu hebdomadaire</span>
+          <span data-lang="en">Weekly overview</span>
+        </h4>
+        <p>
+          <span data-lang="nl" class="visible">Elke week ontvangt u een overzicht van relevante opdrachten. U beslist zelf of u wil inschrijven.</span>
+          <span data-lang="fr">Chaque semaine, vous recevez un aperçu des marchés pertinents. Vous décidez vous-même si vous souhaitez soumettre une offre.</span>
+          <span data-lang="en">Every week you receive an overview of relevant tenders. You decide yourself whether you want to submit.</span>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY -->
+<section class="why">
+  <div class="section-inner">
+    <p class="section-label">
+      <span data-lang-inline data-lang-val-nl="Waarom Mechele Consultancy" data-lang-val-fr="Pourquoi Mechele Consultancy" data-lang-val-en="Why Mechele Consultancy">Waarom Mechele Consultancy</span>
+    </p>
+    <h2 class="section-title">
+      <span data-lang="nl" class="visible">Geen platform. Een partner.</span>
+      <span data-lang="fr">Pas une plateforme. Un partenaire.</span>
+      <span data-lang="en">Not a platform. A partner.</span>
+    </h2>
+    <div class="why-grid">
+      <div class="why-item amber-top">
+        <h4>
+          <span data-lang="nl" class="visible">Persoonlijk gefilterd</span>
+          <span data-lang="fr">Filtrage personnalisé</span>
+          <span data-lang="en">Personally filtered</span>
+        </h4>
+        <p>
+          <span data-lang="nl" class="visible">Geen ruis, geen irrelevante resultaten. Alleen opdrachten die echt bij uw bedrijf passen.</span>
+          <span data-lang="fr">Pas de bruit, pas de résultats non pertinents. Uniquement des marchés qui correspondent vraiment à votre entreprise.</span>
+          <span data-lang="en">No noise, no irrelevant results. Only tenders that genuinely match your business.</span>
+        </p>
+      </div>
+      <div class="why-item amber-top">
+        <h4>
+          <span data-lang="nl" class="visible">Tijdsbesparing</span>
+          <span data-lang="fr">Gain de temps</span>
+          <span data-lang="en">Time saving</span>
+        </h4>
+        <p>
+          <span data-lang="nl" class="visible">Aanbestedingen zoeken kost uren per week. Die tijd steekt u voortaan in uw zaak.</span>
+          <span data-lang="fr">La recherche d'appels d'offres prend des heures par semaine. Désormais, consacrez ce temps à votre activité.</span>
+          <span data-lang="en">Searching for tenders takes hours per week. You can now put that time back into your business.</span>
+        </p>
+      </div>
+      <div class="why-item amber-top">
+        <h4>
+          <span data-lang="nl" class="visible">Geen gemiste kansen</span>
+          <span data-lang="fr">Aucune opportunité manquée</span>
+          <span data-lang="en">No missed opportunities</span>
+        </h4>
+        <p>
+          <span data-lang="nl" class="visible">Wij bewaken de markt dagelijks. Deadlines en nieuwe opdrachten glippen niet meer door de mazen.</span>
+          <span data-lang="fr">Nous surveillons le marché quotidiennement. Les délais et les nouveaux marchés ne passent plus entre les mailles du filet.</span>
+          <span data-lang="en">We monitor the market daily. Deadlines and new tenders no longer slip through the cracks.</span>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="section-inner">
+    <p class="section-label">
+      <span data-lang-inline data-lang-val-nl="Contact" data-lang-val-fr="Contact" data-lang-val-en="Contact">Contact</span>
+    </p>
+    <div class="contact-box">
+      <div class="contact-left">
+        <h2 class="section-title">
+          <span data-lang="nl" class="visible">Klaar om geen opdracht<br>meer te missen?</span>
+          <span data-lang="fr">Prêt à ne plus manquer<br>aucun marché ?</span>
+          <span data-lang="en">Ready to stop missing<br>tenders?</span>
+        </h2>
+        <p>
+          <span data-lang="nl" class="visible">Neem contact op voor een vrijblijvend gesprek. We bekijken samen of onze samenwerking past bij uw situatie — zonder verplichtingen.</span>
+          <span data-lang="fr">Contactez-nous pour un entretien sans engagement. Nous examinons ensemble si notre collaboration correspond à votre situation — sans obligations.</span>
+          <span data-lang="en">Get in touch for a no-obligation conversation. We'll look together at whether our collaboration fits your situation — no commitments.</span>
+        </p>
+      </div>
+      <div class="contact-details">
+        <div class="contact-item">
+          <div class="contact-icon">
+            <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.41 2 2 0 0 1 3.6 1.21h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.79a16 16 0 0 0 6.29 6.29l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          </div>
+          <div class="contact-item-text">
+            <span class="contact-item-label">
+              <span data-lang-inline data-lang-val-nl="Telefoon" data-lang-val-fr="Téléphone" data-lang-val-en="Phone">Telefoon</span>
+            </span>
+            <a href="tel:0495794426" class="contact-item-value">0495 79 44 26</a>
+            <span class="contact-note">
+              <span data-lang-inline data-lang-val-nl="Persoonlijk nummer — zakelijk nummer volgt" data-lang-val-fr="Numéro personnel — numéro professionnel à venir" data-lang-val-en="Personal number — business number coming soon">Persoonlijk nummer — zakelijk nummer volgt</span>
+            </span>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">
+            <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </div>
+          <div class="contact-item-text">
+            <span class="contact-item-label">E-mail</span>
+            <a href="mailto:info@mecheleconsultancy.be" class="contact-item-value">info@mecheleconsultancy.be</a>
+            <span class="contact-note">
+              <span data-lang-inline data-lang-val-nl="E-mail actief na registratie" data-lang-val-fr="E-mail actif après enregistrement" data-lang-val-en="Email active after registration">E-mail actief na registratie</span>
+            </span>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">
+            <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          </div>
+          <div class="contact-item-text">
+            <span class="contact-item-label">
+              <span data-lang-inline data-lang-val-nl="BTW-nummer" data-lang-val-fr="Numéro TVA" data-lang-val-en="VAT number">BTW-nummer</span>
+            </span>
+            <span class="contact-item-value">BE XXXX.XXX.XXX</span>
+            <span class="contact-note">
+              <span data-lang-inline data-lang-val-nl="Registratie in behandeling" data-lang-val-fr="Enregistrement en cours" data-lang-val-en="Registration in progress">Registratie in behandeling</span>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-left">
+    <strong>Mechele Consultancy</strong> &mdash;
+    <span data-lang-inline data-lang-val-nl="Aanbestedingsbegeleiding voor Vlaamse KMO's" data-lang-val-fr="Conseil en marchés publics pour PME flamandes" data-lang-val-en="Tender consulting for Flemish SMEs">Aanbestedingsbegeleiding voor Vlaamse KMO's</span>
+  </div>
+  <div class="footer-btw">BE XXXX.XXX.XXX</div>
+</footer>
+
+<script>
+function setLang(lang) {
+  document.querySelectorAll('[data-lang]').forEach(el => {
+    el.classList.toggle('visible', el.dataset.lang === lang);
+  });
+  document.querySelectorAll('[data-lang-inline]').forEach(el => {
+    const val = el.dataset['langVal' + lang.charAt(0).toUpperCase() + lang.slice(1)];
+    if (val) el.textContent = val;
+  });
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.textContent.trim() === lang.toUpperCase());
+  });
+  document.querySelector('html').setAttribute('lang', lang);
+}
+</script>
+
+</body>
+</html>
