@@ -10,7 +10,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
+ 
 :root {
   --navy: #2B3A52;
   --navy-dark: #1C2A3E;
@@ -25,9 +25,9 @@
   --text-light: #8A98AA;
   --border: rgba(43,58,82,0.12);
 }
-
+ 
 html { scroll-behavior: smooth; }
-
+ 
 body {
   font-family: 'DM Sans', sans-serif;
   background: var(--off-white);
@@ -36,7 +36,7 @@ body {
   line-height: 1.7;
   font-weight: 300;
 }
-
+ 
 /* LANGUAGE SWITCHER */
 .lang-bar {
   background: var(--navy-dark);
@@ -45,7 +45,7 @@ body {
   justify-content: flex-end;
   gap: 6px;
 }
-
+ 
 .lang-btn {
   background: none;
   border: 1px solid rgba(255,255,255,0.2);
@@ -59,23 +59,23 @@ body {
   cursor: pointer;
   transition: all 0.2s;
 }
-
+ 
 .lang-btn.active {
   background: var(--amber);
   border-color: var(--amber);
   color: var(--navy-dark);
 }
-
+ 
 .lang-btn:hover:not(.active) {
   border-color: rgba(255,255,255,0.5);
   color: rgba(255,255,255,0.85);
 }
-
+ 
 [data-lang] { display: none; }
 [data-lang].visible { display: block; }
 [data-lang-inline] { display: none; }
 [data-lang-inline].visible { display: inline; }
-
+ 
 /* NAV */
 nav {
   background: var(--navy);
@@ -88,14 +88,14 @@ nav {
   z-index: 100;
   box-shadow: 0 2px 20px rgba(0,0,0,0.15);
 }
-
+ 
 .logo {
   display: flex;
   align-items: center;
   gap: 14px;
   text-decoration: none;
 }
-
+ 
 .logo-mark {
   width: 38px;
   height: 38px;
@@ -106,18 +106,18 @@ nav {
   justify-content: center;
   flex-shrink: 0;
 }
-
+ 
 .logo-mark svg {
   width: 22px;
   height: 22px;
 }
-
+ 
 .logo-text {
   display: flex;
   flex-direction: column;
   line-height: 1.1;
 }
-
+ 
 .logo-name {
   font-family: 'Playfair Display', serif;
   font-size: 17px;
@@ -125,7 +125,7 @@ nav {
   color: var(--white);
   letter-spacing: 0.01em;
 }
-
+ 
 .logo-sub {
   font-size: 10px;
   font-weight: 400;
@@ -133,7 +133,7 @@ nav {
   letter-spacing: 0.12em;
   text-transform: uppercase;
 }
-
+ 
 .nav-cta {
   background: var(--amber);
   color: var(--navy-dark);
@@ -148,9 +148,9 @@ nav {
   letter-spacing: 0.03em;
   transition: background 0.2s;
 }
-
+ 
 .nav-cta:hover { background: var(--amber-dark); }
-
+ 
 /* HERO */
 .hero {
   background: var(--navy);
@@ -158,7 +158,7 @@ nav {
   position: relative;
   overflow: hidden;
 }
-
+ 
 .hero::before {
   content: '';
   position: absolute;
@@ -169,7 +169,7 @@ nav {
   border: 1px solid rgba(232,168,56,0.12);
   border-radius: 50%;
 }
-
+ 
 .hero::after {
   content: '';
   position: absolute;
@@ -180,14 +180,14 @@ nav {
   border: 1px solid rgba(232,168,56,0.08);
   border-radius: 50%;
 }
-
+ 
 .hero-inner {
   max-width: 760px;
   margin: 0 auto;
   position: relative;
   z-index: 1;
 }
-
+ 
 .hero-eyebrow {
   font-size: 11px;
   font-weight: 500;
@@ -196,7 +196,7 @@ nav {
   color: var(--amber);
   margin-bottom: 22px;
 }
-
+ 
 .hero h1 {
   font-family: 'Playfair Display', serif;
   font-size: clamp(32px, 5vw, 54px);
@@ -206,12 +206,12 @@ nav {
   margin-bottom: 28px;
   letter-spacing: -0.01em;
 }
-
+ 
 .hero h1 em {
   font-style: italic;
   color: var(--amber);
 }
-
+ 
 .hero-tagline {
   font-size: 18px;
   font-weight: 300;
@@ -220,13 +220,13 @@ nav {
   max-width: 520px;
   line-height: 1.6;
 }
-
+ 
 .hero-actions {
   display: flex;
   gap: 14px;
   flex-wrap: wrap;
 }
-
+ 
 .btn-primary {
   background: var(--amber);
   color: var(--navy-dark);
@@ -241,9 +241,9 @@ nav {
   letter-spacing: 0.03em;
   transition: background 0.2s;
 }
-
+ 
 .btn-primary:hover { background: var(--amber-dark); }
-
+ 
 .btn-secondary {
   background: transparent;
   color: rgba(255,255,255,0.8);
@@ -258,36 +258,36 @@ nav {
   letter-spacing: 0.03em;
   transition: all 0.2s;
 }
-
+ 
 .btn-secondary:hover {
   border-color: rgba(255,255,255,0.5);
   color: var(--white);
 }
-
+ 
 /* INTRO STRIP */
 .intro-strip {
   background: var(--amber);
   padding: 22px 40px;
   text-align: center;
 }
-
+ 
 .intro-strip p {
   font-size: 14px;
   font-weight: 500;
   color: var(--navy-dark);
   letter-spacing: 0.02em;
 }
-
+ 
 /* SECTION BASE */
 section {
   padding: 80px 40px;
 }
-
+ 
 .section-inner {
   max-width: 860px;
   margin: 0 auto;
 }
-
+ 
 .section-label {
   font-size: 11px;
   font-weight: 500;
@@ -296,7 +296,7 @@ section {
   color: var(--blue);
   margin-bottom: 14px;
 }
-
+ 
 .section-title {
   font-family: 'Playfair Display', serif;
   font-size: clamp(26px, 3.5vw, 38px);
@@ -305,7 +305,7 @@ section {
   line-height: 1.2;
   margin-bottom: 20px;
 }
-
+ 
 .section-body {
   font-size: 16px;
   font-weight: 300;
@@ -313,12 +313,12 @@ section {
   line-height: 1.8;
   max-width: 620px;
 }
-
+ 
 /* ABOUT */
 .about {
   background: var(--white);
 }
-
+ 
 .about-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -326,13 +326,13 @@ section {
   align-items: center;
   margin-top: 50px;
 }
-
+ 
 .about-stat {
   border-left: 3px solid var(--amber);
   padding-left: 20px;
   margin-bottom: 32px;
 }
-
+ 
 .about-stat-number {
   font-family: 'Playfair Display', serif;
   font-size: 36px;
@@ -341,13 +341,13 @@ section {
   line-height: 1;
   margin-bottom: 4px;
 }
-
+ 
 .about-stat-label {
   font-size: 13px;
   font-weight: 400;
   color: var(--text-mid);
 }
-
+ 
 .about-text p {
   font-size: 15px;
   font-weight: 300;
@@ -355,19 +355,19 @@ section {
   line-height: 1.85;
   margin-bottom: 16px;
 }
-
+ 
 /* SERVICES */
 .services {
   background: var(--off-white);
 }
-
+ 
 .services-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 28px;
   margin-top: 50px;
 }
-
+ 
 .service-card {
   background: var(--white);
   border-radius: 6px;
@@ -377,15 +377,15 @@ section {
   overflow: hidden;
   transition: box-shadow 0.25s;
 }
-
+ 
 .service-card:hover {
   box-shadow: 0 8px 40px rgba(43,58,82,0.1);
 }
-
+ 
 .service-card.featured {
   border-color: var(--navy);
 }
-
+ 
 .service-card.featured::before {
   content: '';
   position: absolute;
@@ -395,7 +395,7 @@ section {
   height: 3px;
   background: var(--amber);
 }
-
+ 
 .service-badge {
   display: inline-block;
   font-size: 10px;
@@ -408,7 +408,7 @@ section {
   border-radius: 2px;
   margin-bottom: 20px;
 }
-
+ 
 .service-card h3 {
   font-family: 'Playfair Display', serif;
   font-size: 22px;
@@ -417,7 +417,7 @@ section {
   margin-bottom: 14px;
   line-height: 1.2;
 }
-
+ 
 .service-card p {
   font-size: 14px;
   font-weight: 300;
@@ -425,12 +425,12 @@ section {
   line-height: 1.8;
   margin-bottom: 24px;
 }
-
+ 
 .service-list {
   list-style: none;
   margin-bottom: 0;
 }
-
+ 
 .service-list li {
   font-size: 13px;
   font-weight: 400;
@@ -441,9 +441,9 @@ section {
   align-items: center;
   gap: 10px;
 }
-
+ 
 .service-list li:last-child { border-bottom: none; }
-
+ 
 .service-list li::before {
   content: '';
   width: 5px;
@@ -452,16 +452,16 @@ section {
   border-radius: 50%;
   flex-shrink: 0;
 }
-
+ 
 /* HOW */
 .how {
   background: var(--navy);
   color: var(--white);
 }
-
+ 
 .how .section-title { color: var(--white); }
 .how .section-label { color: var(--amber); }
-
+ 
 .how-steps {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -471,12 +471,12 @@ section {
   border-radius: 6px;
   overflow: hidden;
 }
-
+ 
 .how-step {
   padding: 36px 30px;
   background: rgba(255,255,255,0.03);
 }
-
+ 
 .step-number {
   font-family: 'Playfair Display', serif;
   font-size: 42px;
@@ -485,7 +485,7 @@ section {
   line-height: 1;
   margin-bottom: 16px;
 }
-
+ 
 .how-step h4 {
   font-size: 15px;
   font-weight: 500;
@@ -493,52 +493,52 @@ section {
   margin-bottom: 10px;
   letter-spacing: 0.01em;
 }
-
+ 
 .how-step p {
   font-size: 13px;
   font-weight: 300;
   color: rgba(255,255,255,0.55);
   line-height: 1.75;
 }
-
+ 
 /* WHY */
 .why {
   background: var(--white);
 }
-
+ 
 .why-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 36px;
   margin-top: 50px;
 }
-
+ 
 .why-item {
   padding: 28px 0;
   border-top: 2px solid var(--border);
 }
-
+ 
 .why-item.amber-top { border-top-color: var(--amber); }
-
+ 
 .why-item h4 {
   font-size: 15px;
   font-weight: 500;
   color: var(--navy);
   margin-bottom: 10px;
 }
-
+ 
 .why-item p {
   font-size: 13px;
   font-weight: 300;
   color: var(--text-mid);
   line-height: 1.75;
 }
-
+ 
 /* CONTACT */
 .contact {
   background: var(--off-white);
 }
-
+ 
 .contact-box {
   background: var(--navy);
   border-radius: 8px;
@@ -549,29 +549,29 @@ section {
   align-items: center;
   margin-top: 50px;
 }
-
+ 
 .contact-left .section-title { color: var(--white); margin-bottom: 14px; }
 .contact-left .section-label { color: var(--amber); }
-
+ 
 .contact-left p {
   font-size: 15px;
   font-weight: 300;
   color: rgba(255,255,255,0.65);
   line-height: 1.8;
 }
-
+ 
 .contact-details {
   display: flex;
   flex-direction: column;
   gap: 18px;
 }
-
+ 
 .contact-item {
   display: flex;
   align-items: flex-start;
   gap: 14px;
 }
-
+ 
 .contact-icon {
   width: 40px;
   height: 40px;
@@ -582,7 +582,7 @@ section {
   justify-content: center;
   flex-shrink: 0;
 }
-
+ 
 .contact-icon svg {
   width: 18px;
   height: 18px;
@@ -592,12 +592,12 @@ section {
   stroke-linecap: round;
   stroke-linejoin: round;
 }
-
+ 
 .contact-item-text {
   display: flex;
   flex-direction: column;
 }
-
+ 
 .contact-item-label {
   font-size: 10px;
   font-weight: 500;
@@ -606,23 +606,23 @@ section {
   color: rgba(255,255,255,0.4);
   margin-bottom: 3px;
 }
-
+ 
 .contact-item-value {
   font-size: 15px;
   font-weight: 400;
   color: var(--white);
   text-decoration: none;
 }
-
+ 
 .contact-item-value:hover { color: var(--amber); }
-
+ 
 .contact-note {
   font-size: 11px;
   font-weight: 300;
   color: rgba(255,255,255,0.35);
   margin-top: 4px;
 }
-
+ 
 /* FOOTER */
 footer {
   background: var(--navy-dark);
@@ -633,39 +633,39 @@ footer {
   flex-wrap: wrap;
   gap: 12px;
 }
-
+ 
 .footer-left {
   font-size: 12px;
   font-weight: 300;
   color: rgba(255,255,255,0.35);
 }
-
+ 
 .footer-left strong {
   color: rgba(255,255,255,0.6);
   font-weight: 500;
 }
-
+ 
 .footer-btw {
   font-size: 11px;
   color: rgba(255,255,255,0.25);
   font-weight: 300;
 }
-
+ 
 /* ANIMATIONS */
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(24px); }
   to { opacity: 1; transform: translateY(0); }
 }
-
+ 
 .hero-inner > * {
   animation: fadeUp 0.7s ease both;
 }
-
+ 
 .hero-eyebrow { animation-delay: 0.1s; }
 .hero h1 { animation-delay: 0.2s; }
 .hero-tagline { animation-delay: 0.35s; }
 .hero-actions { animation-delay: 0.5s; }
-
+ 
 /* RESPONSIVE */
 @media (max-width: 768px) {
   nav { padding: 16px 20px; }
@@ -683,14 +683,14 @@ footer {
 </style>
 </head>
 <body>
-
+ 
 <!-- LANGUAGE BAR -->
 <div class="lang-bar">
   <button class="lang-btn active" onclick="setLang('nl')">NL</button>
   <button class="lang-btn" onclick="setLang('fr')">FR</button>
   <button class="lang-btn" onclick="setLang('en')">EN</button>
 </div>
-
+ 
 <!-- NAV -->
 <nav>
   <a href="#" class="logo">
@@ -709,7 +709,7 @@ footer {
   </a>
   <a href="#contact" class="nav-cta" data-lang-btn data-lang-val-nl="Neem contact op" data-lang-val-fr="Nous contacter" data-lang-val-en="Get in touch">Neem contact op</a>
 </nav>
-
+ 
 <!-- HERO -->
 <section class="hero">
   <div class="hero-inner">
@@ -732,7 +732,7 @@ footer {
     </div>
   </div>
 </section>
-
+ 
 <!-- INTRO STRIP -->
 <div class="intro-strip">
   <p>
@@ -741,7 +741,7 @@ footer {
     <span data-lang="en">Active in Belgium &mdash; Specialised in public tenders for SMEs</span>
   </p>
 </div>
-
+ 
 <!-- ABOUT -->
 <section class="about" id="over">
   <div class="section-inner">
@@ -789,7 +789,7 @@ footer {
     </div>
   </div>
 </section>
-
+ 
 <!-- SERVICES -->
 <section class="services" id="diensten">
   <div class="section-inner">
@@ -881,7 +881,7 @@ footer {
     </div>
   </div>
 </section>
-
+ 
 <!-- HOW IT WORKS -->
 <section class="how">
   <div class="section-inner">
@@ -936,7 +936,7 @@ footer {
     </div>
   </div>
 </section>
-
+ 
 <!-- WHY -->
 <section class="why">
   <div class="section-inner">
@@ -988,7 +988,7 @@ footer {
     </div>
   </div>
 </section>
-
+ 
 <!-- CONTACT -->
 <section class="contact" id="contact">
   <div class="section-inner">
@@ -1043,9 +1043,9 @@ footer {
             <span class="contact-item-label">
               <span data-lang-inline data-lang-val-nl="BTW-nummer" data-lang-val-fr="Numéro TVA" data-lang-val-en="VAT number">BTW-nummer</span>
             </span>
-            <span class="contact-item-value">BE XXXX.XXX.XXX</span>
+            <span class="contact-item-value">BE 0810.155.282</span>
             <span class="contact-note">
-              <span data-lang-inline data-lang-val-nl="Registratie in behandeling" data-lang-val-fr="Enregistrement en cours" data-lang-val-en="Registration in progress">Registratie in behandeling</span>
+              <span data-lang-inline data-lang-val-nl="Ondernemingsnummer" data-lang-val-fr="Numéro d'entreprise" data-lang-val-en="Company number">Ondernemingsnummer</span>
             </span>
           </div>
         </div>
@@ -1053,16 +1053,16 @@ footer {
     </div>
   </div>
 </section>
-
+ 
 <!-- FOOTER -->
 <footer>
   <div class="footer-left">
     <strong>Mechele Consultancy</strong> &mdash;
     <span data-lang-inline data-lang-val-nl="Aanbestedingsbegeleiding voor Vlaamse KMO's" data-lang-val-fr="Conseil en marchés publics pour PME flamandes" data-lang-val-en="Tender consulting for Flemish SMEs">Aanbestedingsbegeleiding voor Vlaamse KMO's</span>
   </div>
-  <div class="footer-btw">BE XXXX.XXX.XXX</div>
+  <div class="footer-btw">BE 0810.155.282</div>
 </footer>
-
+ 
 <script>
 function setLang(lang) {
   document.querySelectorAll('[data-lang]').forEach(el => {
@@ -1083,11 +1083,11 @@ function setLang(lang) {
   });
   document.querySelector('html').setAttribute('lang', lang);
 }
-
+ 
 document.addEventListener('DOMContentLoaded', function() {
   setLang('nl');
 });
 </script>
-
+ 
 </body>
 </html>
