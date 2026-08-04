@@ -790,21 +790,21 @@ footer {
     <div class="about-grid">
       <div class="about-stats">
         <div class="about-stat">
-          <div class="about-stat-number">100%</div>
-          <div class="about-stat-label">
-            <span data-lang-inline data-lang-val-nl="Focus op overheidsopdrachten" data-lang-val-fr="Focus sur les marchés publics" data-lang-val-en="Focus on public tenders">Focus op overheidsopdrachten</span>
-          </div>
-        </div>
-        <div class="about-stat">
           <div class="about-stat-number">Wekelijks</div>
           <div class="about-stat-label">
             <span data-lang-inline data-lang-val-nl="Gefilterd overzicht in uw mailbox" data-lang-val-fr="Aperçu filtré dans votre boîte mail" data-lang-val-en="Filtered overview in your inbox">Gefilterd overzicht in uw mailbox</span>
           </div>
         </div>
         <div class="about-stat">
-          <div class="about-stat-number">B2B</div>
+          <div class="about-stat-number">Persoonlijk</div>
           <div class="about-stat-label">
-            <span data-lang-inline data-lang-val-nl="Persoonlijke begeleiding, geen platform" data-lang-val-fr="Accompagnement personnel, pas une plateforme" data-lang-val-en="Personal guidance, not a platform">Persoonlijke begeleiding, geen platform</span>
+            <span data-lang-inline data-lang-val-nl="Geen platform, een vaste partner" data-lang-val-fr="Pas une plateforme, un partenaire fixe" data-lang-val-en="Not a platform, a dedicated partner">Geen platform, een vaste partner</span>
+          </div>
+        </div>
+        <div class="about-stat">
+          <div class="about-stat-number">Op maat</div>
+          <div class="about-stat-label">
+            <span data-lang-inline data-lang-val-nl="Gefilterd op uw sector en regio" data-lang-val-fr="Filtré selon votre secteur et région" data-lang-val-en="Filtered by your sector and region">Gefilterd op uw sector en regio</span>
           </div>
         </div>
       </div>
@@ -1110,7 +1110,6 @@ function setLang(lang) {
     const key = 'langVal' + lang.charAt(0).toUpperCase() + lang.slice(1);
     const val = el.dataset[key];
     if (val) el.textContent = val;
-    el.classList.add('visible');
   });
   document.querySelectorAll('[data-lang-btn]').forEach(el => {
     const key = 'langVal' + lang.charAt(0).toUpperCase() + lang.slice(1);
