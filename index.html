@@ -335,11 +335,11 @@ section {
 
 .about-stat-number {
   font-family: 'Playfair Display', serif;
-  font-size: 30px;
+  font-size: 36px;
   font-weight: 700;
   color: var(--navy);
-  line-height: 1.1;
-  margin-bottom: 6px;
+  line-height: 1;
+  margin-bottom: 4px;
 }
 
 .about-stat-label {
@@ -542,10 +542,10 @@ section {
 .contact-box {
   background: var(--navy);
   border-radius: 8px;
-  padding: 60px 70px;
+  padding: 60px;
   display: grid;
-  grid-template-columns: 1.1fr 1fr;
-  gap: 80px;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
   align-items: center;
   margin-top: 50px;
 }
@@ -563,20 +563,20 @@ section {
 .contact-details {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 18px;
 }
 
 .contact-item {
   display: flex;
   align-items: flex-start;
-  gap: 16px;
+  gap: 14px;
 }
 
 .contact-icon {
-  width: 44px;
-  height: 44px;
+  width: 40px;
+  height: 40px;
   background: rgba(232,168,56,0.15);
-  border-radius: 6px;
+  border-radius: 4px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -626,29 +626,63 @@ section {
 /* FOOTER */
 footer {
   background: var(--navy-dark);
-  padding: 28px 40px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  padding: 32px 40px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: 20px;
 }
 
 .footer-left {
   font-size: 12px;
   font-weight: 300;
   color: rgba(255,255,255,0.35);
+  line-height: 1.6;
 }
 
 .footer-left strong {
-  color: rgba(255,255,255,0.6);
+  color: rgba(255,255,255,0.7);
   font-weight: 500;
+  font-family: 'Playfair Display', serif;
+  font-size: 13px;
+  letter-spacing: 0.01em;
+}
+
+.footer-links {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.footer-links a {
+  font-size: 12px;
+  font-weight: 400;
+  color: rgba(255,255,255,0.5);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.footer-links a:hover {
+  color: var(--amber);
 }
 
 .footer-btw {
   font-size: 11px;
-  color: rgba(255,255,255,0.25);
-  font-weight: 300;
+  color: rgba(255,255,255,0.3);
+  font-weight: 400;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+  footer {
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+  }
 }
 
 /* ANIMATIONS */
@@ -756,16 +790,22 @@ footer {
     <div class="about-grid">
       <div class="about-stats">
         <div class="about-stat">
-          <div class="about-stat-number" data-lang-btn data-lang-val-nl="Wekelijks" data-lang-val-fr="Hebdomadaire" data-lang-val-en="Weekly">Wekelijks</div>
-          <div class="about-stat-label" data-lang-btn data-lang-val-nl="Gefilterd overzicht in uw mailbox" data-lang-val-fr="Aperçu filtré dans votre boîte mail" data-lang-val-en="Filtered overview in your inbox">Gefilterd overzicht in uw mailbox</div>
+          <div class="about-stat-number">100%</div>
+          <div class="about-stat-label">
+            <span data-lang-inline data-lang-val-nl="Focus op overheidsopdrachten" data-lang-val-fr="Focus sur les marchés publics" data-lang-val-en="Focus on public tenders">Focus op overheidsopdrachten</span>
+          </div>
         </div>
         <div class="about-stat">
-          <div class="about-stat-number" data-lang-btn data-lang-val-nl="Persoonlijk" data-lang-val-fr="Personnel" data-lang-val-en="Personal">Persoonlijk</div>
-          <div class="about-stat-label" data-lang-btn data-lang-val-nl="Geen platform, een vaste partner" data-lang-val-fr="Pas une plateforme, un partenaire fixe" data-lang-val-en="Not a platform, a dedicated partner">Geen platform, een vaste partner</div>
+          <div class="about-stat-number">Wekelijks</div>
+          <div class="about-stat-label">
+            <span data-lang-inline data-lang-val-nl="Gefilterd overzicht in uw mailbox" data-lang-val-fr="Aperçu filtré dans votre boîte mail" data-lang-val-en="Filtered overview in your inbox">Gefilterd overzicht in uw mailbox</span>
+          </div>
         </div>
         <div class="about-stat">
-          <div class="about-stat-number" data-lang-btn data-lang-val-nl="Op maat" data-lang-val-fr="Sur mesure" data-lang-val-en="Tailored">Op maat</div>
-          <div class="about-stat-label" data-lang-btn data-lang-val-nl="Gefilterd op uw sector en regio" data-lang-val-fr="Filtré selon votre secteur et région" data-lang-val-en="Filtered by your sector and region">Gefilterd op uw sector en regio</div>
+          <div class="about-stat-number">B2B</div>
+          <div class="about-stat-label">
+            <span data-lang-inline data-lang-val-nl="Persoonlijke begeleiding, geen platform" data-lang-val-fr="Accompagnement personnel, pas une plateforme" data-lang-val-en="Personal guidance, not a platform">Persoonlijke begeleiding, geen platform</span>
+          </div>
         </div>
       </div>
       <div class="about-text">
@@ -797,8 +837,10 @@ footer {
     </h2>
     <div class="services-grid">
       <!-- Service 1 -->
-      <div class="service-card">
-        <span class="service-badge" data-lang-btn data-lang-val-nl="Corebusiness" data-lang-val-fr="Service principal" data-lang-val-en="Core service">Corebusiness</span>
+      <div class="service-card featured">
+        <span class="service-badge">
+          <span data-lang-inline data-lang-val-nl="Corebusiness" data-lang-val-fr="Service principal" data-lang-val-en="Core service">Corebusiness</span>
+        </span>
         <h3>
           <span data-lang="nl" class="visible">Tenderopvolging</span>
           <span data-lang="fr">Suivi des appels d'offres</span>
@@ -821,20 +863,22 @@ footer {
             <span data-lang="en">Weekly filtered overview tailored to you</span>
           </li>
           <li>
-            <span data-lang="nl" class="visible">Maandelijks opzegbaar na 3 maanden</span>
-            <span data-lang="fr">Résiliable mensuellement après 3 mois</span>
-            <span data-lang="en">Monthly cancellable after 3 months</span>
+            <span data-lang="nl" class="visible">Maandformule</span>
+            <span data-lang="fr">Formule mensuelle</span>
+            <span data-lang="en">Monthly formula</span>
           </li>
           <li>
-            <span data-lang="nl" class="visible">Jaarformule beschikbaar met voordeel</span>
-            <span data-lang="fr">Formule annuelle disponible avec avantage</span>
-            <span data-lang="en">Annual formula available with benefit</span>
+            <span data-lang="nl" class="visible">Jaarformule met voordeel</span>
+            <span data-lang="fr">Formule annuelle avantageuse</span>
+            <span data-lang="en">Annual formula with benefit</span>
           </li>
         </ul>
       </div>
       <!-- Service 2 -->
       <div class="service-card">
-        <span class="service-badge" style="color: var(--navy); background: rgba(43,58,82,0.08);" data-lang-btn data-lang-val-nl="Op aanvraag" data-lang-val-fr="Sur demande" data-lang-val-en="On request">Op aanvraag</span>
+        <span class="service-badge" style="color: var(--navy); background: rgba(43,58,82,0.08);">
+          <span data-lang-inline data-lang-val-nl="Op aanvraag" data-lang-val-fr="Sur demande" data-lang-val-en="On request">Op aanvraag</span>
+        </span>
         <h3>
           <span data-lang="nl" class="visible">Tenderbegeleiding</span>
           <span data-lang="fr">Accompagnement d'appels d'offres</span>
@@ -1047,8 +1091,12 @@ footer {
 <!-- FOOTER -->
 <footer>
   <div class="footer-left">
-    <strong>Mechele Consultancy</strong> &mdash;
+    <strong>Mechele Consultancy</strong><br>
     <span data-lang-inline data-lang-val-nl="Aanbestedingsbegeleiding voor Vlaamse KMO's" data-lang-val-fr="Conseil en marchés publics pour PME flamandes" data-lang-val-en="Tender consulting for Flemish SMEs">Aanbestedingsbegeleiding voor Vlaamse KMO's</span>
+  </div>
+  <div class="footer-links">
+    <a href="tel:0495794426">0495 79 44 26</a>
+    <a href="mailto:info@mecheleconsultancy.be">info@mecheleconsultancy.be</a>
   </div>
   <div class="footer-btw">BE 0810.155.282</div>
 </footer>
@@ -1062,6 +1110,7 @@ function setLang(lang) {
     const key = 'langVal' + lang.charAt(0).toUpperCase() + lang.slice(1);
     const val = el.dataset[key];
     if (val) el.textContent = val;
+    el.classList.add('visible');
   });
   document.querySelectorAll('[data-lang-btn]').forEach(el => {
     const key = 'langVal' + lang.charAt(0).toUpperCase() + lang.slice(1);
