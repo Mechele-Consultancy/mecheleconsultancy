@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="referrer" content="no-referrer">
+<title>Intern | Mechele Consultancy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #2B3A52; --navy-dark: #1C2A3E; --navy-light: #3A4E6A;
+    --amber: #E8A838; --amber-dark: #C8891A; --blue: #4A6FA5;
+    --bg: #F5F6F8; --card: #FFFFFF; --text: #1A2332; --mid: #4A5568; --light: #8A98AA;
+    --line: #E2E6EC; --ok: #2F7D4F; --warn: #C8891A; --bad: #B23B3B;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 15px; line-height: 1.45; }
+  header { background: var(--navy-dark); color: #fff; padding: 14px 16px; display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+  header h1 { font-family: 'Playfair Display', serif; font-size: 20px; margin: 0; font-weight: 700; }
+  header h1 span { color: var(--amber); }
+  header .meta { font-size: 13px; color: #C9D2DE; display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+  button, .btn { font: inherit; border: 0; border-radius: 6px; padding: 8px 14px; cursor: pointer; background: var(--amber); color: var(--navy-dark); font-weight: 700; text-decoration: none; display: inline-block; }
+  button.ghost { background: transparent; color: #fff; border: 1px solid #5A6E8A; font-weight: 500; }
+  main { max-width: 1180px; margin: 0 auto; padding: 16px; }
+  .grid { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); margin-bottom: 16px; }
+  .kpi { background: var(--card); border-radius: 10px; padding: 14px; border: 1px solid var(--line); }
+  .kpi .v { font-size: 26px; font-weight: 700; color: var(--navy); }
+  .kpi .l { font-size: 13px; color: var(--mid); }
+  .kpi .s { font-size: 12px; color: var(--light); margin-top: 4px; }
+  section.card { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 16px; margin-bottom: 16px; }
+  section.card h2 { font-family: 'Playfair Display', serif; font-size: 18px; margin: 0 0 10px; color: var(--navy); display: flex; justify-content: space-between; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+  section.card h2 a { font-family: 'DM Sans', sans-serif; font-size: 13px; color: var(--blue); font-weight: 500; }
+  .empty { color: var(--light); font-size: 14px; }
+  .tbl { width: 100%; overflow-x: auto; }
+  table { border-collapse: collapse; width: 100%; font-size: 14px; }
+  th { text-align: left; font-size: 12px; text-transform: uppercase; letter-spacing: .03em; color: var(--light); font-weight: 500; padding: 6px 8px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+  td { padding: 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  tr:last-child td { border-bottom: 0; }
+  .tag { display: inline-block; font-size: 12px; padding: 2px 8px; border-radius: 999px; background: #EEF1F5; color: var(--mid); white-space: nowrap; }
+  .tag.ok { background: #E3F2E9; color: var(--ok); } .tag.warn { background: #FBF0DC; color: #8A5A0B; } .tag.bad { background: #F7E1E1; color: var(--bad); } .tag.info { background: #E4EBF5; color: var(--blue); }
+  .muted { color: var(--light); font-size: 13px; }
+  .item { padding: 10px 0; border-bottom: 1px solid var(--line); } .item:last-child { border-bottom: 0; }
+  .item .t { font-weight: 500; }
+  ul.compact { margin: 4px 0 0; padding-left: 18px; color: var(--mid); font-size: 13px; }
+  .bar { height: 8px; background: #EEF1F5; border-radius: 4px; overflow: hidden; margin-top: 6px; }
+  .bar > div { height: 100%; background: var(--amber); }
+  .two { display: grid; gap: 16px; grid-template-columns: 1fr; }
+  @media (min-width: 900px) { .two { grid-template-columns: 1fr 1fr; } }
+  #login { max-width: 380px; margin: 60px auto; background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 24px; }
+  #login h2 { font-family: 'Playfair Display', serif; margin: 0 0 6px; color: var(--navy); }
+  #login input { width: 100%; font: inherit; padding: 10px; border: 1px solid var(--line); border-radius: 6px; margin: 12px 0; }
+  #msg { font-size: 14px; color: var(--mid); margin-top: 10px; min-height: 1em; }
+  .hidden { display: none !important; }
+  a { color: var(--blue); }
+</style>
+</head>
+<body>
+<header>
+  <h1>Mechele <span>intern</span></h1>
+  <div class="meta">
+    <span id="stamp"></span>
+    <button class="ghost hidden" id="refresh" type="button">Vernieuwen</button>
+    <button class="ghost hidden" id="logout" type="button">Afmelden</button>
+  </div>
+</header>
+
+<div id="login" class="hidden">
+  <h2>Aanmelden</h2>
+  <div class="muted">Je krijgt een aanmeldlink per mail.</div>
+  <form id="loginform">
+    <input type="email" id="email" autocomplete="email" placeholder="E-mailadres" required>
+    <button type="submit">Stuur aanmeldlink</button>
+  </form>
+  <div id="msg"></div>
+</div>
+
+<main id="app" class="hidden">
+  <div class="grid" id="kpis"></div>
+
+  <section class="card">
+    <h2>Vandaag te doen</h2>
+    <div id="todo"></div>
+  </section>
+
+  <div class="two">
+    <section class="card">
+      <h2>Tender Radar <a href="https://docs.google.com/spreadsheets/d/166wgQIkOi7BX6W7dIWam7o8xc3lRXH8vttrhBTWIorU/edit" target="_blank" rel="noopener">Open de sheet</a></h2>
+      <div id="radar"></div>
+    </section>
+    <section class="card">
+      <h2>Meldingen dossiers</h2>
+      <div id="meldingen"></div>
+    </section>
+  </div>
+
+  <section class="card">
+    <h2>Dossiers</h2>
+    <div class="tbl" id="dossiers"></div>
+  </section>
+
+  <section class="card">
+    <h2>Klanten <a href="https://drive.google.com/drive/folders/1wGTweyFln5kdgEotHkctnPLDXcDL4PqU" target="_blank" rel="noopener">Klantdossiers in Drive</a></h2>
+    <div class="tbl" id="klanten"></div>
+    <div id="attesten"></div>
+  </section>
+
+  <div class="two">
+    <section class="card">
+      <h2>Groeiplan</h2>
+      <div id="groei"></div>
+    </section>
+    <section class="card">
+      <h2>Outreach <a href="https://docs.google.com/spreadsheets/d/1KThc6u2AG9mV7qnrLROSJ_MEhGMRLNgvkp6EVGTnHY4/edit" target="_blank" rel="noopener">Open de sheet</a></h2>
+      <div id="outreach"></div>
+    </section>
+  </div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<script>
+(function () {
+  'use strict';
+  var SUPABASE_URL = 'https://bgqeiwrpsgsuyomaygfa.supabase.co';
+  var SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJncWVpd3Jwc2dzdXlvbWF5Z2ZhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTEwNTkyMTYsImV4cCI6MjEwNjYzNTIxNn0.pZTsa-AWwKGxFoCfLl0Pq37_f-V3sqKUSUbdfrJv1UI';
+  var sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY, {
+    auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true }
+  });
+
+  // Mijlpalen uit het groeiplan (versie 3 oktober 2026)
+  var MIJLPALEN = [
+    { datum: '2026-12-31', label: 'December 2026', tier1: 3, tekst: '3 Tier 1-klanten' },
+    { datum: '2027-02-28', label: 'Februari 2027', tekst: 'Eerste maand boven EUR 5.000 omzet', omzetMaand: 5000 },
+    { datum: '2027-06-30', label: 'Juni 2027', tier1: 15, tekst: '15 Tier 1-klanten, avondcapaciteit vol' },
+    { datum: '2027-12-31', label: 'December 2027', tier1: 26, tekst: '26 Tier 1-klanten, ongeveer EUR 165.000 omzet in 2027' },
+    { datum: '2028-12-31', label: '2028', tekst: 'BV, eerste medewerker, ongeveer EUR 660.000 omzet' },
+    { datum: '2029-12-31', label: '2029', tekst: 'Verkoper aan boord, ongeveer EUR 1,3 miljoen omzet' },
+    { datum: '2030-12-31', label: '2030', tier1: 200, tekst: 'Ongeveer 200 Tier 1-klanten, 8 FTE, EUR 2 miljoen omzet' }
+  ];
+
+  var $ = function (id) { return document.getElementById(id); };
+  function esc(v) {
+    return String(v == null ? '' : v).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+  function safeUrl(u) { return /^https:\/\//i.test(u || '') ? esc(u) : ''; }
+  function dagenTot(d) {
+    if (!d) return null;
+    var ms = new Date(d).getTime() - Date.now();
+    return Math.ceil(ms / 86400000);
+  }
+  function fmtDatum(d, metUur) {
+    if (!d) return 'geen datum';
+    var o = { day: '2-digit', month: '2-digit', year: 'numeric', timeZone: 'Europe/Brussels' };
+    if (metUur) { o.hour = '2-digit'; o.minute = '2-digit'; }
+    return new Date(d).toLocaleString('nl-BE', o);
+  }
+  function eur(n) {
+    if (n == null || n === '') return '';
+    return 'EUR ' + Number(n).toLocaleString('nl-BE', { maximumFractionDigits: 0 });
+  }
+  function dagTag(d) {
+    var n = dagenTot(d);
+    if (n == null) return '<span class="tag">geen deadline</span>';
+    var cls = n < 0 ? 'bad' : n <= 2 ? 'bad' : n <= 7 ? 'warn' : 'info';
+    var txt = n < 0 ? 'verstreken' : n === 0 ? 'vandaag' : n + ' d';
+    return '<span class="tag ' + cls + '">' + txt + '</span>';
+  }
+  var FASE = {
+    errata: ['loopt, bewaking errata', 'info'],
+    status_onduidelijk: ['deadline voorbij: ingediend?', 'warn'],
+    gunning: ['wacht op gunning', 'info'],
+    nazorg: ['gegund: fee of referentie open', 'warn'],
+    klaar: ['afgesloten', 'ok']
+  };
+
+  function toonLogin() {
+    $('login').classList.remove('hidden');
+    $('app').classList.add('hidden');
+    $('logout').classList.add('hidden');
+    $('refresh').classList.add('hidden');
+    $('stamp').textContent = '';
+  }
+
+  $('loginform').addEventListener('submit', async function (e) {
+    e.preventDefault();
+    var email = $('email').value.trim().toLowerCase();
+    $('msg').textContent = 'Bezig...';
+    var res = await sb.auth.signInWithOtp({
+      email: email,
+      options: { emailRedirectTo: window.location.origin + '/intern/' }
+    });
+    $('msg').textContent = res.error
+      ? 'Versturen mislukt: ' + res.error.message
+      : 'Als dit adres toegang heeft, staat er een aanmeldlink in je mailbox.';
+  });
+
+  $('logout').addEventListener('click', async function () {
+    await sb.auth.signOut();
+    toonLogin();
+  });
+  $('refresh').addEventListener('click', laad);
+
+  async function laad() {
+    $('stamp').textContent = 'Laden...';
+    var res = await sb.rpc('dashboard_data');
+    if (res.error) {
+      if (/geen toegang|permission|JWT/i.test(res.error.message)) {
+        $('app').classList.add('hidden');
+        $('login').classList.remove('hidden');
+        $('msg').textContent = 'Dit account heeft geen toegang.';
+        $('logout').classList.remove('hidden');
+      } else {
+        $('stamp').textContent = 'Fout bij laden: ' + res.error.message;
+      }
+      return;
+    }
+    $('login').classList.add('hidden');
+    $('app').classList.remove('hidden');
+    $('logout').classList.remove('hidden');
+    $('refresh').classList.remove('hidden');
+    render(res.data || {});
+    $('stamp').textContent = 'Stand ' + fmtDatum(res.data && res.data.gegenereerd, true);
+  }
+
+  function render(d) {
+    var radar = d.radar || [], dossiers = d.dossiers || [], meldingen = d.meldingen || [];
+    var klanten = d.klanten || [], attesten = d.attesten || [], t = d.telling || {};
+    var volgende = MIJLPALEN.filter(function (m) { return m.tier1 && new Date(m.datum) >= new Date(); })[0];
+    var lopend = dossiers.filter(function (x) { return x.fase !== 'klaar'; });
+
+    // KPI's
+    var kpis = [
+      { v: (t.tier1 || 0) + (volgende ? ' / ' + volgende.tier1 : ''), l: 'Tier 1-klanten', s: volgende ? 'doel ' + volgende.label : '' },
+      { v: t.klanten_actief || 0, l: 'Actieve klanten', s: 'alle formules' },
+      { v: radar.length, l: 'Radar te beoordelen', s: 'MAYBE, GO en nieuw vandaag' },
+      { v: lopend.length, l: 'Lopende dossiers', s: 'tot en met nazorg' },
+      { v: meldingen.length, l: 'Open meldingen', s: 'errata, forum, gunning' },
+      { v: t.matches_7d || 0, l: 'Matches 7 dagen', s: (t.tenders_7d || 0) + ' publicaties ingelezen' }
+    ];
+    $('kpis').innerHTML = kpis.map(function (k) {
+      return '<div class="kpi"><div class="v">' + esc(k.v) + '</div><div class="l">' + esc(k.l) + '</div><div class="s">' + esc(k.s) + '</div></div>';
+    }).join('');
+
+    // Vandaag te doen
+    var todo = [];
+    meldingen.forEach(function (m) {
+      todo.push({ p: 0, h: '<span class="tag bad">' + esc(m.type) + '</span> ' + esc(m.klantcode || '') + ' ' + esc(m.dossier || '') + ': ' + esc(m.impact || m.samenvatting || '') });
+    });
+    dossiers.forEach(function (x) {
+      var n = dagenTot(x.deadline);
+      if (x.fase === 'errata' && n != null && n <= 7) todo.push({ p: 1, h: dagTag(x.deadline) + ' Deadline ' + esc(x.omschrijving) + ' (' + esc(x.klantcode) + '): forum en documenten op het platform nakijken.' });
+      if (x.fase === 'status_onduidelijk') todo.push({ p: 1, h: '<span class="tag warn">status</span> ' + esc(x.omschrijving) + ': ingediend of niet? Zeg het in de chat.' });
+      if (x.fase === 'nazorg' && !x.succesfee_gefactureerd) todo.push({ p: 1, h: '<span class="tag warn">factuur</span> Succesfee ' + esc(x.omschrijving) + ' ' + esc(eur(x.succesfee_eur)) });
+    });
+    var nieuw = radar.filter(function (r) { return r.beslissing === 'nieuw'; }).length;
+    var maybe = radar.filter(function (r) { return r.beslissing === 'MAYBE'; }).length;
+    if (nieuw) todo.push({ p: 2, h: '<span class="tag info">radar</span> ' + nieuw + ' nieuwe match(es) beoordelen in de sheet.' });
+    if (maybe) todo.push({ p: 3, h: '<span class="tag">radar</span> ' + maybe + ' MAYBE nog open.' });
+    attesten.filter(function (a) { return a.dagen_resterend <= 30; }).forEach(function (a) {
+      todo.push({ p: 2, h: '<span class="tag warn">attest</span> ' + esc(a.klantcode) + ' ' + esc(a.type) + ' vervalt over ' + esc(a.dagen_resterend) + ' dagen.' });
+    });
+    todo.sort(function (a, b) { return a.p - b.p; });
+    $('todo').innerHTML = todo.length
+      ? todo.map(function (x) { return '<div class="item">' + x.h + '</div>'; }).join('')
+      : '<div class="empty">Niets dringends. Goed bezig.</div>';
+
+    // Radar
+    $('radar').innerHTML = radar.length ? radar.map(function (r) {
+      var cls = r.beslissing === 'GO' ? 'ok' : r.beslissing === 'MAYBE' ? 'warn' : 'info';
+      var link = safeUrl(r.url);
+      return '<div class="item"><div class="t">' + (link ? '<a href="' + link + '" target="_blank" rel="noopener">' + esc(r.titel) + '</a>' : esc(r.titel)) + '</div>' +
+        '<div class="muted">' + esc(r.organisatie) + ' | ' + esc(r.klantcode || '') + ' ' + esc(r.klant || '') + ' | score ' + esc(r.ai_score == null ? '-' : r.ai_score) + '</div>' +
+        '<div style="margin-top:4px"><span class="tag ' + cls + '">' + esc(r.beslissing) + '</span> ' + dagTag(r.deadline) + ' <span class="muted">' + esc(fmtDatum(r.deadline, true)) + '</span></div>' +
+        (r.ai_advies ? '<div class="muted" style="margin-top:4px">' + esc(r.ai_advies) + '</div>' : '') + '</div>';
+    }).join('') : '<div class="empty">Niets te beoordelen.</div>';
+
+    // Meldingen
+    $('meldingen').innerHTML = meldingen.length ? meldingen.map(function (m) {
+      return '<div class="item"><div class="t"><span class="tag warn">' + esc(m.type) + '</span> ' + esc(m.klantcode || '') + ' ' + esc(m.dossier || '') + '</div>' +
+        '<div class="muted">' + esc(fmtDatum(m.datum, true)) + '</div>' +
+        '<div style="margin-top:4px">' + esc(m.samenvatting || '') + '</div>' +
+        (m.impact ? '<div class="muted" style="margin-top:4px">Impact: ' + esc(m.impact) + '</div>' : '') + '</div>';
+    }).join('') : '<div class="empty">Geen open meldingen.</div>';
+
+    // Dossiers
+    $('dossiers').innerHTML = dossiers.length ? '<table><thead><tr><th>Klant</th><th>Dossier</th><th>Fase</th><th>Deadline</th><th>Waarde</th><th>Fee</th></tr></thead><tbody>' +
+      dossiers.map(function (x) {
+        var f = FASE[x.fase] || [x.fase, ''];
+        var waarde = (x.contractwaarde_min_eur || x.contractwaarde_max_eur) ? esc(eur(x.contractwaarde_min_eur)) + ' tot ' + esc(eur(x.contractwaarde_max_eur)) : '<span class="muted">onbekend</span>';
+        var fee = [x.dossierfee_eur ? 'dossier ' + eur(x.dossierfee_eur) : '', x.succesfee_eur ? 'succes ' + eur(x.succesfee_eur) : (x.succesfee_pct ? x.succesfee_pct + '%' : '')].filter(Boolean).join(', ');
+        return '<tr><td>' + esc(x.klantcode) + (x.geen_mails ? '<div class="muted">geen mails</div>' : '') + '</td><td>' + esc(x.omschrijving) + '<div class="muted">' + esc(x.aanbesteder || '') + '</div></td>' +
+          '<td><span class="tag ' + f[1] + '">' + esc(f[0]) + '</span></td><td>' + dagTag(x.deadline) + '<div class="muted">' + esc(fmtDatum(x.deadline, true)) + '</div></td>' +
+          '<td>' + waarde + '</td><td>' + (fee ? esc(fee) : '<span class="muted">nog te bepalen</span>') + '</td></tr>';
+      }).join('') + '</tbody></table>' : '<div class="empty">Nog geen dossiers.</div>';
+
+    // Klanten
+    $('klanten').innerHTML = klanten.length ? '<table><thead><tr><th>Code</th><th>Klant</th><th>Status</th><th>Formule</th><th>Segment</th><th>Intake: ontbreekt</th></tr></thead><tbody>' +
+      klanten.map(function (k) {
+        var st = k.status === 'actief' ? 'ok' : k.status === 'prospect' ? 'info' : '';
+        var ontbreekt = (k.ontbreekt || []);
+        return '<tr><td>' + esc(k.klantcode || '-') + '</td><td>' + esc(k.naam) + '<div class="muted">' + esc(k.fte != null ? k.fte + ' FTE' : '') + '</div></td>' +
+          '<td><span class="tag ' + st + '">' + esc(k.status) + '</span></td><td>' + esc(k.formule || '-') + '</td><td>' + esc(k.segment || '-') + '</td>' +
+          '<td>' + (ontbreekt.length ? '<ul class="compact">' + ontbreekt.map(function (o) { return '<li>' + esc(o) + '</li>'; }).join('') + '</ul>' : '<span class="tag ok">volledig</span>') + '</td></tr>';
+      }).join('') + '</tbody></table>' : '<div class="empty">Geen klanten.</div>';
+    $('attesten').innerHTML = attesten.length ? '<div class="muted" style="margin-top:10px">Attesten die binnen 60 dagen vervallen: ' +
+      attesten.map(function (a) { return esc(a.klantcode) + ' ' + esc(a.type) + ' (' + esc(a.dagen_resterend) + ' d)'; }).join(', ') + '</div>' : '';
+
+    // Groeiplan
+    var maand = d.maandcijfers || [];
+    var laatste = maand.length ? maand[maand.length - 1] : null;
+    var tier1 = t.tier1 || 0;
+    var html = '';
+    if (volgende) {
+      var pct = Math.min(100, Math.round(tier1 / volgende.tier1 * 100));
+      html += '<div><b>' + tier1 + ' van ' + volgende.tier1 + '</b> Tier 1-klanten voor ' + esc(volgende.label) + ' <span class="muted">(' + dagenTot(volgende.datum) + ' dagen)</span>' +
+        '<div class="bar"><div style="width:' + pct + '%"></div></div></div>';
+    }
+    html += '<div class="tbl" style="margin-top:12px"><table><thead><tr><th>Mijlpaal</th><th>Doel</th><th>Stand</th></tr></thead><tbody>' +
+      MIJLPALEN.map(function (m) {
+        var voorbij = new Date(m.datum) < new Date();
+        var stand = '';
+        if (m.tier1) stand = tier1 >= m.tier1 ? '<span class="tag ok">gehaald</span>' : (voorbij ? '<span class="tag bad">gemist</span>' : '<span class="tag">open</span>');
+        else if (m.omzetMaand) {
+          var gehaald = maand.some(function (c) { return Number(c.omzet_eur) > m.omzetMaand; });
+          stand = gehaald ? '<span class="tag ok">gehaald</span>' : (voorbij ? '<span class="tag bad">gemist</span>' : '<span class="tag">open</span>');
+        } else stand = '<span class="tag">open</span>';
+        return '<tr><td>' + esc(m.label) + '</td><td>' + esc(m.tekst) + '</td><td>' + stand + '</td></tr>';
+      }).join('') + '</tbody></table></div>';
+    html += laatste
+      ? '<div class="muted" style="margin-top:10px">Laatste maandcijfers (' + esc(fmtDatum(laatste.maand)) + '): omzet ' + esc(eur(laatste.omzet_eur) || '-') + ', Tier 1 ' + esc(laatste.tier1_klanten == null ? '-' : laatste.tier1_klanten) + ', Tier 2 ' + esc(laatste.tier2_klanten == null ? '-' : laatste.tier2_klanten) + ', uren ' + esc(laatste.uren == null ? '-' : laatste.uren) + '.</div>'
+      : '<div class="muted" style="margin-top:10px">Omzet en uren verschijnen hier na de maandcontrole op de eerste werkdag van de maand.</div>';
+    $('groei').innerHTML = html;
+
+    // Outreach
+    var o = d.outreach, ov = d.outreach_vorige;
+    if (!o) {
+      $('outreach').innerHTML = '<div class="empty">De eerste cijfers verschijnen na de dagelijkse dossierbewaking (18:47).</div>';
+    } else {
+      var ps = o.per_status || {};
+      var vps = (ov && ov.per_status) || {};
+      var volgorde = ['Nieuw', 'Email1_verstuurd', 'Email2_verstuurd', 'Email3_verstuurd', 'Geantwoord', 'Afspraak_gepland', 'Niet_geinteresseerd', 'Uitgeschreven', 'Bounce'];
+      var keys = volgorde.filter(function (k) { return ps[k] != null; }).concat(Object.keys(ps).filter(function (k) { return volgorde.indexOf(k) < 0; }));
+      $('outreach').innerHTML = '<div class="muted">Stand ' + esc(fmtDatum(o.datum)) + ', ' + esc(o.totaal) + ' rijen' + (ov ? ', verschil tegenover ' + esc(fmtDatum(ov.datum)) : '') + '</div>' +
+        '<div class="tbl"><table><tbody>' + keys.map(function (k) {
+          var diff = ov && vps[k] != null ? ps[k] - vps[k] : null;
+          return '<tr><td>' + esc(k.replace(/_/g, ' ')) + '</td><td style="text-align:right"><b>' + esc(ps[k]) + '</b></td><td class="muted" style="text-align:right">' + (diff != null && diff !== 0 ? (diff > 0 ? '+' : '') + diff : '') + '</td></tr>';
+        }).join('') + '</tbody></table></div>';
+    }
+  }
+
+  sb.auth.onAuthStateChange(function (event, session) {
+    if (event === 'SIGNED_IN' && session) {
+      if (window.location.hash) history.replaceState(null, '', window.location.pathname);
+      laad();
+    }
+  });
+
+  sb.auth.getSession().then(function (r) {
+    if (r.data && r.data.session) laad(); else toonLogin();
+  });
+})();
+</script>
+</body>
+</html>
