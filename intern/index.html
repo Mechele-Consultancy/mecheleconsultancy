@@ -53,6 +53,12 @@
   #login h2 { font-family: 'Playfair Display', serif; margin: 0 0 6px; color: var(--navy); }
   #login input { width: 100%; font: inherit; padding: 10px; border: 1px solid var(--line); border-radius: 6px; margin: 12px 0; }
   #msg { font-size: 14px; color: var(--mid); margin-top: 10px; min-height: 1em; }
+  .keuze { margin-top: 8px; display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+  button.kb { background: #EEF1F5; color: var(--navy); font-weight: 500; padding: 6px 12px; font-size: 13px; }
+  button.kb.actief[data-b="GO"] { background: var(--ok); color: #fff; }
+  button.kb.actief[data-b="MAYBE"] { background: var(--amber); color: var(--navy-dark); }
+  button.kb.actief[data-b="SKIP"] { background: var(--bad); color: #fff; }
+  button.kb:disabled { opacity: .5; cursor: wait; }
   .hidden { display: none !important; }
   a { color: var(--blue); }
 </style>
@@ -204,6 +210,22 @@
   });
   $('refresh').addEventListener('click', laad);
 
+  // Beslissing GO / MAYBE / SKIP vanop het dashboard
+  $('radar').addEventListener('click', async function (e) {
+    var btn = e.target.closest('button.kb');
+    if (!btn) return;
+    var box = btn.parentNode, id = box.getAttribute('data-id'), b = btn.getAttribute('data-b');
+    var msg = box.querySelector('.kmsg');
+    var knoppen = box.querySelectorAll('button.kb');
+    knoppen.forEach(function (k) { k.disabled = true; });
+    msg.textContent = 'Opslaan...';
+    var res = await sb.rpc('zet_beslissing_web', { p_match: id, p_beslissing: b });
+    knoppen.forEach(function (k) { k.disabled = false; });
+    if (res.error) { msg.textContent = 'Mislukt: ' + res.error.message; return; }
+    knoppen.forEach(function (k) { k.classList.toggle('actief', k.getAttribute('data-b') === b); });
+    msg.textContent = res.data && res.data.naar_sheet ? 'Opgeslagen, sheet volgt binnen een minuut.' : 'Opgeslagen in de databank (sheet nog niet gekoppeld).';
+  });
+
   async function laad() {
     $('stamp').textContent = 'Laden...';
     var res = await sb.rpc('dashboard_data');
@@ -275,7 +297,10 @@
       return '<div class="item"><div class="t">' + (link ? '<a href="' + link + '" target="_blank" rel="noopener">' + esc(r.titel) + '</a>' : esc(r.titel)) + '</div>' +
         '<div class="muted">' + esc(r.organisatie) + ' | ' + esc(r.klantcode || '') + ' ' + esc(r.klant || '') + ' | score ' + esc(r.ai_score == null ? '-' : r.ai_score) + '</div>' +
         '<div style="margin-top:4px"><span class="tag ' + cls + '">' + esc(r.beslissing) + '</span> ' + dagTag(r.deadline) + ' <span class="muted">' + esc(fmtDatum(r.deadline, true)) + '</span></div>' +
-        (r.ai_advies ? '<div class="muted" style="margin-top:4px">' + esc(r.ai_advies) + '</div>' : '') + '</div>';
+        (r.ai_advies ? '<div class="muted" style="margin-top:4px">' + esc(r.ai_advies) + '</div>' : '') +
+        '<div class="keuze" data-id="' + esc(r.id) + '">' + ['GO', 'MAYBE', 'SKIP'].map(function (b) {
+          return '<button type="button" class="kb' + (r.beslissing === b ? ' actief' : '') + '" data-b="' + b + '">' + b + '</button>';
+        }).join('') + '<span class="kmsg muted"></span></div></div>';
     }).join('') : '<div class="empty">Niets te beoordelen.</div>';
 
     // Meldingen
