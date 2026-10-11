@@ -34,6 +34,7 @@
   section.card h2 { font-family: 'Playfair Display', serif; font-size: 18px; margin: 0 0 10px; color: var(--navy); display: flex; justify-content: space-between; align-items: baseline; gap: 8px; flex-wrap: wrap; }
   section.card h2 a { font-family: 'DM Sans', sans-serif; font-size: 13px; color: var(--blue); font-weight: 500; }
   .empty { color: var(--light); font-size: 14px; }
+  h3.sub { font-size: 13px; text-transform: uppercase; letter-spacing: .03em; color: var(--mid); font-weight: 500; margin: 8px 0 6px; }
   .tbl { width: 100%; overflow-x: auto; }
   table { border-collapse: collapse; width: 100%; font-size: 14px; }
   th { text-align: left; font-size: 12px; text-transform: uppercase; letter-spacing: .03em; color: var(--light); font-weight: 500; padding: 6px 8px; border-bottom: 1px solid var(--line); white-space: nowrap; }
@@ -59,6 +60,10 @@
   button.kb.actief[data-b="MAYBE"] { background: var(--amber); color: var(--navy-dark); }
   button.kb.actief[data-b="SKIP"] { background: var(--bad); color: #fff; }
   button.kb:disabled { opacity: .5; cursor: wait; }
+  .kpi.bad .v { color: var(--bad); }
+  .kpi.ok .v { color: var(--ok); }
+  td.num, th.num { text-align: right; white-space: nowrap; }
+  tr.vervallen td { background: #FDF4F4; }
   .hidden { display: none !important; }
   a { color: var(--blue); }
 </style>
@@ -111,6 +116,22 @@
     <h2>Klanten <a href="https://drive.google.com/drive/folders/1wGTweyFln5kdgEotHkctnPLDXcDL4PqU" target="_blank" rel="noopener">Klantdossiers in Drive</a></h2>
     <div class="tbl" id="klanten"></div>
     <div id="attesten"></div>
+  </section>
+
+  <section class="card">
+    <h2>Facturatie</h2>
+    <div class="grid" id="fact-kpis"></div>
+    <div class="two">
+      <div>
+        <h3 class="sub">Te factureren</h3>
+        <div class="tbl" id="fact-te-factureren"></div>
+      </div>
+      <div>
+        <h3 class="sub">Openstaand en vervallen</h3>
+        <div class="tbl" id="fact-openstaand"></div>
+      </div>
+    </div>
+    <div id="fact-abonnementen"></div>
   </section>
 
   <div class="two">
@@ -167,6 +188,11 @@
   function eur(n) {
     if (n == null || n === '') return '';
     return 'EUR ' + Number(n).toLocaleString('nl-BE', { maximumFractionDigits: 0 });
+  }
+  // Bedragen met twee decimalen voor facturatie, bv. EUR 1.234,00
+  function eurCent(n) {
+    if (n == null || n === '') return 'EUR 0,00';
+    return 'EUR ' + Number(n).toLocaleString('nl-BE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
   }
   function dagTag(d) {
     var n = dagenTot(d);
@@ -334,6 +360,9 @@
     $('attesten').innerHTML = attesten.length ? '<div class="muted" style="margin-top:10px">Attesten die binnen 60 dagen vervallen: ' +
       attesten.map(function (a) { return esc(a.klantcode) + ' ' + esc(a.type) + ' (' + esc(a.dagen_resterend) + ' d)'; }).join(', ') + '</div>' : '';
 
+    // Facturatie (defensief: ontbreekt de sleutel, dan lege toestand)
+    renderFacturatie(d.facturatie || {});
+
     // Groeiplan
     var maand = d.maandcijfers || [];
     var laatste = maand.length ? maand[maand.length - 1] : null;
@@ -375,6 +404,54 @@
           return '<tr><td>' + esc(k.replace(/_/g, ' ')) + '</td><td style="text-align:right"><b>' + esc(ps[k]) + '</b></td><td class="muted" style="text-align:right">' + (diff != null && diff !== 0 ? (diff > 0 ? '+' : '') + diff : '') + '</td></tr>';
         }).join('') + '</tbody></table></div>';
     }
+  }
+
+  var FACTUUR_STATUS = { te_factureren: ['te factureren', 'warn'], gefactureerd: ['gefactureerd', 'info'], betaald: ['betaald', 'ok'], geannuleerd: ['geannuleerd', ''] };
+
+  function renderFacturatie(f) {
+    var tf = f.te_factureren || [], open = f.openstaand || [], verv = f.vervallen || [];
+    var tot = f.totalen || {}, ab = f.abonnementen_actief || {}, abLijst = ab.lijst || [];
+
+    // Tegels
+    var tegels = [
+      { v: eurCent(tot.te_factureren), l: 'Te factureren deze maand', s: tf.length + ' lijn(en)', c: '' },
+      { v: eurCent(tot.openstaand), l: 'Openstaand', s: open.length + ' factu(u)r(en), nog niet vervallen', c: '' },
+      { v: eurCent(tot.vervallen), l: 'Vervallen', s: verv.length + ' factu(u)r(en) over de vervaldatum', c: verv.length ? 'bad' : '' },
+      { v: eurCent(tot.omzet_betaald_dit_jaar), l: 'Betaald dit jaar', s: 'gefactureerd deze maand ' + eurCent(tot.omzet_gefactureerd_deze_maand), c: 'ok' }
+    ];
+    $('fact-kpis').innerHTML = tegels.map(function (k) {
+      return '<div class="kpi' + (k.c ? ' ' + k.c : '') + '"><div class="v">' + esc(k.v) + '</div><div class="l">' + esc(k.l) + '</div><div class="s">' + esc(k.s) + '</div></div>';
+    }).join('');
+
+    // Te factureren
+    $('fact-te-factureren').innerHTML = tf.length ? '<table><thead><tr><th>Klant</th><th>Omschrijving</th><th>Periode</th><th class="num">Bedrag</th></tr></thead><tbody>' +
+      tf.map(function (x) {
+        var st = FACTUUR_STATUS[x.factuur_status] || [x.factuur_status, ''];
+        return '<tr><td>' + esc(x.klantcode || '-') + '<div class="muted">' + esc(x.klant || '') + '</div></td>' +
+          '<td>' + esc(x.omschrijving || x.type || '') + '<div class="muted"><span class="tag ' + st[1] + '">' + esc(st[0]) + '</span> ' + esc(x.type || '') + '</div></td>' +
+          '<td>' + esc(x.periode_start ? fmtDatum(x.periode_start) : '-') + '</td><td class="num">' + esc(eurCent(x.bedrag_eur)) + '</td></tr>';
+      }).join('') + '</tbody></table>' : '<div class="empty">Niets te factureren.</div>';
+
+    // Vervallen (rood accent) eerst, dan openstaand
+    var rijen = verv.map(function (x) {
+      return '<tr class="vervallen"><td>' + esc(x.klantcode || '-') + '<div class="muted">' + esc(x.klant || '') + '</div></td>' +
+        '<td>' + esc(x.factuurnummer || '-') + '<div class="muted">' + esc(x.type || '') + '</div></td>' +
+        '<td><span class="tag bad">' + esc(x.dagen_vervallen) + ' d vervallen</span><div class="muted">' + esc(fmtDatum(x.vervaldatum)) + '</div></td>' +
+        '<td class="num">' + esc(eurCent(x.bedrag_eur)) + '</td></tr>';
+    }).concat(open.map(function (x) {
+      return '<tr><td>' + esc(x.klantcode || '-') + '<div class="muted">' + esc(x.klant || '') + '</div></td>' +
+        '<td>' + esc(x.factuurnummer || '-') + '<div class="muted">' + esc(x.type || '') + '</div></td>' +
+        '<td>' + (x.vervaldatum ? dagTag(x.vervaldatum) : '<span class="tag">geen vervaldatum</span>') + '<div class="muted">' + esc(fmtDatum(x.vervaldatum)) + '</div></td>' +
+        '<td class="num">' + esc(eurCent(x.bedrag_eur)) + '</td></tr>';
+    }));
+    $('fact-openstaand').innerHTML = rijen.length ? '<table><thead><tr><th>Klant</th><th>Factuur</th><th>Vervaldatum</th><th class="num">Bedrag</th></tr></thead><tbody>' +
+      rijen.join('') + '</tbody></table>' : '<div class="empty">Geen openstaande facturen.</div>';
+
+    // Actieve abonnementen
+    $('fact-abonnementen').innerHTML = abLijst.length ? '<div class="muted" style="margin-top:10px">Actieve abonnementen (' + esc(ab.aantal != null ? ab.aantal : abLijst.length) + '): ' +
+      abLijst.map(function (a) {
+        return esc(a.klantcode) + ' ' + esc(a.formule || '') + ' ' + esc(eurCent(a.bedrag_eur)) + (a.minimum_tot ? ' (minimum tot ' + esc(fmtDatum(a.minimum_tot)) + ')' : '');
+      }).join(', ') + '</div>' : '<div class="muted" style="margin-top:10px">Geen actieve abonnementen.</div>';
   }
 
   sb.auth.onAuthStateChange(function (event, session) {
