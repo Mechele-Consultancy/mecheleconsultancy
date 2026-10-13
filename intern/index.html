@@ -65,6 +65,17 @@
   td.num, th.num { text-align: right; white-space: nowrap; }
   tr.vervallen td { background: #FDF4F4; }
   .hidden { display: none !important; }
+  .grid.mini { grid-template-columns: repeat(2, minmax(0, 1fr)); margin: 10px 0 6px; }
+  .grid.mini .kpi { padding: 10px 12px; }
+  .grid.mini .kpi .v { font-size: 22px; }
+  .dagen { display: flex; gap: 6px; align-items: flex-end; min-height: 120px; padding-top: 4px; }
+  .dag { flex: 1; min-width: 0; text-align: center; font-size: 11px; color: var(--mid); }
+  .dag .stapel { display: flex; flex-direction: column-reverse; width: 100%; max-width: 34px; margin: 0 auto; border-radius: 4px 4px 0 0; overflow: hidden; background: #EEF1F5; min-height: 2px; }
+  .dag .n { font-weight: 700; color: var(--navy); margin-top: 2px; }
+  .s1 { background: var(--navy); } .s2 { background: var(--blue); } .s3 { background: var(--amber); }
+  .legende { font-size: 12px; color: var(--mid); margin-top: 6px; }
+  .legende .sw { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin: 0 4px 0 10px; vertical-align: -1px; }
+  .legende .sw:first-child { margin-left: 0; }
   a { color: var(--blue); }
 </style>
 </head>
@@ -389,20 +400,57 @@
       : '<div class="muted" style="margin-top:10px">Omzet en uren verschijnen hier na de maandcontrole op de eerste werkdag van de maand.</div>';
     $('groei').innerHTML = html;
 
-    // Outreach
+    // Outreach (exacte telling door Make uit de sheet, elke twee uur tussen 09:20 en 23:40)
     var o = d.outreach, ov = d.outreach_vorige;
     if (!o) {
-      $('outreach').innerHTML = '<div class="empty">De eerste cijfers verschijnen na de dagelijkse dossierbewaking (18:47).</div>';
+      $('outreach').innerHTML = '<div class="empty">De cijfers verschijnen na de eerste telling (elke twee uur tussen 09:20 en 23:40).</div>';
     } else {
       var ps = o.per_status || {};
       var vps = (ov && ov.per_status) || {};
-      var volgorde = ['Nieuw', 'Email1_verstuurd', 'Email2_verstuurd', 'Email3_verstuurd', 'Geantwoord', 'Afspraak_gepland', 'Niet_geinteresseerd', 'Uitgeschreven', 'Bounce'];
+      var st = o.stats || null;
+      var pct = function (v) { return v == null ? '-' : String(v).replace('.', ',') + '%'; };
+      var num = function (v) { return v == null ? 0 : Number(v); };
+      var oh = '<div class="muted">Stand ' + esc(o.bijgewerkt ? fmtDatum(o.bijgewerkt, true) : fmtDatum(o.datum)) + ', ' + esc(o.totaal) + ' bedrijven in de sheet' +
+        (o.bron === 'make' ? '' : ' (oude telling, wordt bij de volgende run vervangen)') + '</div>';
+      if (st) {
+        var m = st.mails || {};
+        var tegels = [
+          { v: num(m.totaal), l: 'Mails verstuurd', s: 'mail 1: ' + num(m.mail1) + ', mail 2: ' + num(m.mail2) + ', mail 3: ' + num(m.mail3) },
+          { v: num(st.aangeschreven), l: 'Bedrijven aangeschreven', s: num(st.nog_te_versturen) + ' wachten op mail 1, ' + num(st.niet_bruikbaar) + ' niet bruikbaar' },
+          { v: num(st.reacties), l: 'Reacties', s: pct(st.reactie_pct) + ' van aangeschreven, ' + num(st.positief) + ' met interesse of gesprek (' + pct(st.positief_pct) + ')' },
+          { v: num(st.deze_week), l: 'Mails deze week', s: 'vorige week ' + num(st.vorige_week) + ', bounces ' + num(st.bounces) + ' (' + pct(st.bounce_pct) + ')' }
+        ];
+        oh += '<div class="grid mini">' + tegels.map(function (k) {
+          return '<div class="kpi"><div class="v">' + esc(k.v) + '</div><div class="l">' + esc(k.l) + '</div><div class="s">' + esc(k.s) + '</div></div>';
+        }).join('') + '</div>';
+        var pd = st.per_dag || [];
+        if (pd.length) {
+          var max = 1;
+          pd.forEach(function (x) { max = Math.max(max, num(x.m1) + num(x.m2) + num(x.m3)); });
+          var hoogte = function (v) { return Math.round(num(v) / max * 90); };
+          oh += '<h3 class="sub">Verstuurd per werkdag</h3><div class="dagen">' + pd.map(function (x) {
+            var tot = num(x.m1) + num(x.m2) + num(x.m3);
+            var dm = String(x.datum || '').split('-');
+            var label = dm.length === 3 ? dm[2] + '/' + dm[1] : esc(x.datum);
+            return '<div class="dag" title="' + esc(label + ': mail 1 ' + num(x.m1) + ', mail 2 ' + num(x.m2) + ', mail 3 ' + num(x.m3)) + '">' +
+              '<div class="stapel">' +
+                (num(x.m1) ? '<div class="s1" style="height:' + hoogte(x.m1) + 'px"></div>' : '') +
+                (num(x.m2) ? '<div class="s2" style="height:' + hoogte(x.m2) + 'px"></div>' : '') +
+                (num(x.m3) ? '<div class="s3" style="height:' + hoogte(x.m3) + 'px"></div>' : '') +
+              '</div><div class="n">' + tot + '</div><div>' + label + '</div></div>';
+          }).join('') + '</div>' +
+          '<div class="legende"><span class="sw s1"></span>mail 1<span class="sw s2"></span>mail 2<span class="sw s3"></span>mail 3</div>';
+        }
+      }
+      var volgorde = ['Nieuw', 'Hold', 'Email1_verstuurd', 'Email2_verstuurd', 'Email3_verstuurd', 'Geantwoord', 'Gesprek_gehad', 'Afspraak_gepland', 'Niet_geinteresseerd', 'Uitgeschreven', 'Bounce', 'Uitgesloten', 'Contactgegevens_ontbreken'];
       var keys = volgorde.filter(function (k) { return ps[k] != null; }).concat(Object.keys(ps).filter(function (k) { return volgorde.indexOf(k) < 0; }));
-      $('outreach').innerHTML = '<div class="muted">Stand ' + esc(fmtDatum(o.datum)) + ', ' + esc(o.totaal) + ' rijen' + (ov ? ', verschil tegenover ' + esc(fmtDatum(ov.datum)) : '') + '</div>' +
+      oh += '<h3 class="sub">Huidige status per bedrijf' + (ov ? ' <span class="muted">(verschil tegenover ' + esc(fmtDatum(ov.datum)) + ')</span>' : '') + '</h3>' +
         '<div class="tbl"><table><tbody>' + keys.map(function (k) {
           var diff = ov && vps[k] != null ? ps[k] - vps[k] : null;
           return '<tr><td>' + esc(k.replace(/_/g, ' ')) + '</td><td style="text-align:right"><b>' + esc(ps[k]) + '</b></td><td class="muted" style="text-align:right">' + (diff != null && diff !== 0 ? (diff > 0 ? '+' : '') + diff : '') + '</td></tr>';
-        }).join('') + '</tbody></table></div>';
+        }).join('') + '</tbody></table></div>' +
+        '<div class="muted" style="margin-top:6px">Een bedrijf staat maar onder één status: wie mail 3 kreeg, telt niet meer bij mail 1 of 2. De mailtotalen hierboven tellen elke verstuurde mail.</div>';
+      $('outreach').innerHTML = oh;
     }
   }
 
