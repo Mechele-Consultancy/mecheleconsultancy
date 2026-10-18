@@ -221,6 +221,9 @@ nav {
 }
 
 .nav-cta:hover { background: var(--amber-dark); }
+.nav-actions { display: flex; gap: 10px; align-items: center; }
+.nav-cta-ghost { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.45); }
+.nav-cta-ghost:hover { background: rgba(255,255,255,0.1); border-color: #fff; }
 
 /* HERO */
 .hero {
@@ -823,7 +826,10 @@ footer {
       <span class="logo-sub" data-lang-inline data-lang-val-nl="Aanbestedingsbegeleiding" data-lang-val-fr="Conseil en marchés publics" data-lang-val-en="Tender Consultancy">Aanbestedingsbegeleiding</span>
     </div>
   </a>
-  <a href="#contact" class="nav-cta" data-lang-btn data-lang-val-nl="Neem contact op" data-lang-val-fr="Nous contacter" data-lang-val-en="Get in touch">Neem contact op</a>
+  <div class="nav-actions">
+    <a href="/klant/" class="nav-cta nav-cta-ghost" data-lang-btn data-lang-val-nl="Klanten" data-lang-val-fr="Clients" data-lang-val-en="Clients">Klanten</a>
+    <a href="#contact" class="nav-cta" data-lang-btn data-lang-val-nl="Neem contact op" data-lang-val-fr="Nous contacter" data-lang-val-en="Get in touch">Neem contact op</a>
+  </div>
 </nav>
 
 <!-- HERO -->
