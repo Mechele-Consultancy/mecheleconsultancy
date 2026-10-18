@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="referrer" content="no-referrer">
+<title>Nieuw wachtwoord | Mechele Consultancy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../shared/shared.css">
+</head>
+<body>
+<header>
+  <div class="top"><h1>Mechele <span>klantpagina</span></h1></div>
+</header>
+
+<div id="login">
+  <h2>Nieuw wachtwoord</h2>
+  <div class="muted" id="uitleg">Kies een wachtwoord van minstens 10 tekens.</div>
+  <form id="form" class="hidden">
+    <input type="password" id="w1" autocomplete="new-password" placeholder="Nieuw wachtwoord" required minlength="10">
+    <input type="password" id="w2" autocomplete="new-password" placeholder="Nog eens" required minlength="10">
+    <button type="submit">Wachtwoord opslaan</button>
+  </form>
+  <div id="msg"></div>
+  <div style="margin-top:14px"><a href="/klant/">Terug naar aanmelden</a></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<script src="../../shared/shared.js"></script>
+<script>
+(function () {
+  'use strict';
+  var M = window.MC, sb = M.sb, $ = M.$;
+  var klaar = false;
+
+  // De herstel-link zet een sessie; pas dan mag het formulier getoond worden.
+  sb.auth.onAuthStateChange(function (event, session) {
+    if ((event === 'PASSWORD_RECOVERY' || event === 'SIGNED_IN') && session) {
+      klaar = true;
+      $('form').classList.remove('hidden');
+      $('msg').textContent = '';
+      if (/access_token=|refresh_token=|type=/.test(window.location.hash)) history.replaceState(null, '', window.location.pathname);
+    }
+  });
+  sb.auth.getSession().then(function (r) {
+    if (r.data && r.data.session) { klaar = true; $('form').classList.remove('hidden'); }
+    else if (!/access_token=|type=recovery|code=/.test(window.location.hash + window.location.search)) {
+      $('msg').textContent = 'Deze link is niet meer geldig. Vraag op de aanmeldpagina een nieuwe aan via "Wachtwoord vergeten".';
+    } else $('msg').textContent = 'Even geduld...';
+  });
+
+  $('form').addEventListener('submit', async function (e) {
+    e.preventDefault();
+    if (!klaar) return;
+    var w1 = $('w1').value, w2 = $('w2').value;
+    if (w1.length < 10) { $('msg').textContent = 'Minstens 10 tekens.'; return; }
+    if (w1 !== w2) { $('msg').textContent = 'De twee wachtwoorden zijn niet gelijk.'; return; }
+    $('msg').textContent = 'Bezig...';
+    var res = await sb.auth.updateUser({ password: w1 });
+    if (res.error) { $('msg').textContent = 'Opslaan mislukt: ' + res.error.message; return; }
+    $('form').classList.add('hidden');
+    $('uitleg').textContent = 'Uw wachtwoord is opgeslagen.';
+    $('msg').innerHTML = 'U kan nu <a href="/klant/">aanmelden</a> met uw nieuwe wachtwoord.';
+  });
+})();
+</script>
+</body>
+</html>
