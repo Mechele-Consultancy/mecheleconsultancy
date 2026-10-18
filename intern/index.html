@@ -318,6 +318,8 @@
     if (d.outreach) {
       var rijen = [
         ['Geantwoord, wacht op jouw antwoord', num(ps.Geantwoord), 'warn'],
+        ['Wacht op prospect (jij antwoordde, zij zijn aan zet)', num(ps.Wacht_op_prospect), 'info'],
+        ['Geen reactie na opvolging', num(ps.Geen_reactie), ''],
         ['Gesprek gehad', num(ps.Gesprek_gehad), 'info'],
         ['Afspraak gepland', num(ps.Afspraak_gepland), 'info'],
         ['Niet geinteresseerd', num(ps.Niet_geinteresseerd), ''],
@@ -430,7 +432,7 @@
           }).join('') + '</div><div class="legende"><span class="sw s1"></span>mail 1<span class="sw s2"></span>mail 2<span class="sw s3"></span>mail 3</div>';
         }
       }
-      var volgorde = ['Nieuw', 'Hold', 'Email1_verstuurd', 'Email2_verstuurd', 'Email3_verstuurd', 'Geantwoord', 'Gesprek_gehad', 'Afspraak_gepland', 'Niet_geinteresseerd', 'Uitgeschreven', 'Bounce', 'Uitgesloten', 'Contactgegevens_ontbreken'];
+      var volgorde = ['Nieuw', 'Hold', 'Email1_verstuurd', 'Email2_verstuurd', 'Email3_verstuurd', 'Geantwoord', 'Wacht_op_prospect', 'Geen_reactie', 'Gesprek_gehad', 'Afspraak_gepland', 'Niet_geinteresseerd', 'Uitgeschreven', 'Bounce', 'Uitgesloten', 'Contactgegevens_ontbreken'];
       var keys = volgorde.filter(function (k) { return ps[k] != null; }).concat(Object.keys(ps).filter(function (k) { return volgorde.indexOf(k) < 0; }));
       oh += '<h3 class="sub">Huidige status per bedrijf' + (ov ? ' <span class="muted">(verschil tegenover ' + esc(fmtDatum(ov.datum)) + ')</span>' : '') + '</h3><div class="tbl"><table><tbody>' +
         keys.map(function (k) {
