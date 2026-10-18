@@ -454,8 +454,8 @@
     $('dossiers').innerHTML = dossiers.length ? '<table><thead><tr><th>Klant</th><th>Dossier</th><th>Fase</th><th>Deadline</th><th>Waarde</th><th>Fee</th></tr></thead><tbody>' +
       dossiers.map(function (x) {
         var fs = FASE[x.fase] || [x.fase, ''];
-        var waarde = (x.contractwaarde_min_eur || x.contractwaarde_max_eur) ? esc(eur(x.contractwaarde_min_eur)) + ' tot ' + esc(eur(x.contractwaarde_max_eur)) : '<span class="muted">onbekend</span>';
-        var fee = [x.dossierfee_eur ? 'dossier ' + eur(x.dossierfee_eur) : '', x.succesfee_eur ? 'succes ' + eur(x.succesfee_eur) : (x.succesfee_pct ? x.succesfee_pct + '%' : '')].filter(Boolean).join(', ');
+        var waarde = M.waardeHtml(x.contractwaarde_min_eur, x.contractwaarde_max_eur, x.looptijd_jaren) || '<span class="muted">onbekend</span>';
+        var fee = [x.dossierfee_eur ? 'dossier ' + eur(x.dossierfee_eur) : '', x.succesfee_eur ? 'succes ' + eur(x.succesfee_eur) : (x.succesfee_pct ? String(x.succesfee_pct).replace('.', ',') + '%' : '')].filter(Boolean).join(', ');
         return '<tr><td>' + esc(x.klantcode) + (x.geen_mails ? '<div class="muted">geen mails</div>' : '') + '</td><td>' + esc(x.omschrijving) + '<div class="muted">' + esc(x.aanbesteder || '') + '</div></td><td>' + tag(fs[0], fs[1]) + (x.status ? '<div class="muted">' + esc(x.status) + '</div>' : '') + '</td><td>' + dagTag(x.deadline) + '<div class="muted">' + esc(fmtDatum(x.deadline, true)) + '</div></td><td>' + waarde + '</td><td>' + (fee ? esc(fee) : '<span class="muted">nog te bepalen</span>') + '</td></tr>';
       }).join('') + '</tbody></table>' : '<div class="empty">Nog geen dossiers.</div>';
 
