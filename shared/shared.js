@@ -52,6 +52,16 @@
   }
   function tag(txt, cls) { return '<span class="tag ' + (cls || '') + '">' + esc(txt) + '</span>'; }
 
+  /* Contractwaarde: totaal over de looptijd plus per jaar als de looptijd gekend is */
+  function waardeHtml(minv, maxv, jaren) {
+    if (!minv && !maxv) return '';
+    var tot = esc(eur(minv)) + ' tot ' + esc(eur(maxv));
+    if (!jaren || Number(jaren) <= 0) return tot;
+    var j = Number(jaren);
+    return '<div>' + tot + ' <span class="muted">totaal, ' + esc(String(j).replace('.', ',')) + ' jaar</span></div>' +
+      '<div class="muted">' + esc(eur(minv / j)) + ' tot ' + esc(eur(maxv / j)) + ' per jaar</div>';
+  }
+
   function kpiTegels(lijst) {
     return lijst.map(function (k) {
       return '<div class="kpi' + (k.c ? ' ' + k.c : '') + '"><div class="v">' + esc(k.v) + '</div><div class="l">' + esc(k.l) + '</div><div class="s">' + esc(k.s || '') + '</div></div>';
@@ -91,6 +101,6 @@
 
   window.MC = {
     sb: sb, $: $, esc: esc, safeUrl: safeUrl, dagenTot: dagenTot, fmtDatum: fmtDatum, fmtMaand: fmtMaand,
-    eur: eur, eurCent: eurCent, num: num, pct: pct, dagTag: dagTag, tag: tag, kpiTegels: kpiTegels, initTabs: initTabs
+    eur: eur, eurCent: eurCent, num: num, pct: pct, dagTag: dagTag, tag: tag, kpiTegels: kpiTegels, initTabs: initTabs, waardeHtml: waardeHtml
   };
 })();
