@@ -192,8 +192,8 @@
     $('dossiers').innerHTML = dos.length ? '<table><thead><tr><th>Dossier</th><th>Status</th><th>Deadline</th><th>Waarde</th><th>Prijs begeleiding</th></tr></thead><tbody>' +
       dos.map(function (x) {
         var s = STATUS[x.status] || [x.status, ''];
-        var waarde = (x.contractwaarde_min_eur || x.contractwaarde_max_eur) ? esc(eur(x.contractwaarde_min_eur)) + ' tot ' + esc(eur(x.contractwaarde_max_eur)) : '<span class="muted">nog in te schatten</span>';
-        var prijs = [x.dossierfee_eur ? 'vast ' + eur(x.dossierfee_eur) : '', x.succesfee_eur ? 'succesfee ' + eur(x.succesfee_eur) : (x.succesfee_pct ? 'succesfee ' + x.succesfee_pct + '%' : '')].filter(Boolean).join(', ');
+        var waarde = M.waardeHtml(x.contractwaarde_min_eur, x.contractwaarde_max_eur, x.looptijd_jaren) || '<span class="muted">nog in te schatten</span>';
+        var prijs = [x.dossierfee_eur ? 'vast ' + eur(x.dossierfee_eur) : '', x.succesfee_eur ? 'succesfee ' + eur(x.succesfee_eur) : (x.succesfee_pct ? 'succesfee ' + String(x.succesfee_pct).replace('.', ',') + '%' : '')].filter(Boolean).join(', ');
         var extra = x.gunning_resultaat === 'gegund' ? '<div class="muted">gegund op ' + esc(fmtDatum(x.gunning_datum)) + '</div>' : (x.ingediend_op ? '<div class="muted">ingediend op ' + esc(fmtDatum(x.ingediend_op)) + '</div>' : '');
         return '<tr><td>' + esc(x.omschrijving) + '<div class="muted">' + esc(x.aanbesteder || '') + (x.dossiernummer ? ' | ' + esc(x.dossiernummer) : '') + '</div>' + (M.safeUrl(x.document_url) ? '<div><a href="' + M.safeUrl(x.document_url) + '" target="_blank" rel="noopener">biddossier openen</a></div>' : '') + '</td>' +
           '<td>' + tag(s[0], s[1]) + extra + '</td><td>' + dagTag(x.deadline) + '<div class="muted">' + esc(fmtDatum(x.deadline, true)) + '</div></td><td>' + waarde + '</td><td>' + (prijs ? esc(prijs) : '<span class="muted">volgens afspraak</span>') + '</td></tr>';
