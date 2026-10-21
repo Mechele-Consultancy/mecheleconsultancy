@@ -1,3 +1,11 @@
+# Beveiliging voor alle pagina's (21/10/2026)
+/*
+  Strict-Transport-Security: max-age=31536000
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=()
+
 # Gedeelde bestanden van het intern dashboard en het klantportaal: altijd hervalideren,
 # anders draait een browser tot 4 uur na een update nog met de oude shared.js.
 /shared/*
