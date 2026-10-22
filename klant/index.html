@@ -9,33 +9,155 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../shared/shared.css">
 <style>
-  #login .rij { display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; margin-top: 4px; }
-  #login .rij a { font-size: 13px; }
-  .intro { color: var(--mid); font-size: 14px; margin: 0 0 12px; }
-  .opdracht .prijs { margin-top: 6px; font-size: 14px; }
-  .opdracht .prijs b { color: var(--navy); }
+/* Klantportaal v2 (22/10/2026): licht en rustig, huisstijl van de site. Eigen stijl, los van shared.css. */
+:root {
+  --navy: #2B3A52; --navy-dark: #1C2A3E; --navy-light: #3A4E6A;
+  --gold: #E8A838; --gold-dark: #C8891A; --gold-soft: #FBF0DC;
+  --bg: #F4F5F8; --card: #FFFFFF; --text: #1A2332; --mid: #4A5568; --light: #8A98AA; --line: #E4E8EE;
+  --ok: #2F7D4F; --ok-soft: #E3F2E9; --warn: #8A5A0B; --bad: #B23B3B; --bad-soft: #F7E1E1; --info: #3D5F94; --info-soft: #E4EBF5;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body { background: var(--bg); color: var(--text); font-family: 'DM Sans', system-ui, sans-serif; font-size: 15px; line-height: 1.5; }
+a { color: var(--info); }
+button { font: inherit; cursor: pointer; }
+.hidden { display: none !important; }
+.muted { color: var(--light); font-size: 13px; }
+
+/* Bovenbalk */
+.balk { background: #fff; border-bottom: 1px solid var(--line); }
+.balk .in { max-width: 1080px; margin: 0 auto; padding: 14px 20px; display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+.merk { display: flex; align-items: center; gap: 10px; }
+.merk .logo { width: 34px; height: 34px; border-radius: 9px; background: var(--navy); color: var(--gold); display: grid; place-items: center; font-family: 'Playfair Display', serif; font-weight: 700; font-size: 18px; }
+.merk b { font-family: 'Playfair Display', serif; font-size: 18px; color: var(--navy); }
+.merk span { display: block; font-size: 12px; color: var(--light); letter-spacing: .06em; text-transform: uppercase; }
+.balk .acties { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.knop-licht { background: #fff; color: var(--navy); border: 1px solid var(--line); border-radius: 10px; padding: 8px 14px; font-weight: 500; }
+.knop-licht:hover { border-color: var(--navy-light); }
+.knop { display: inline-block; background: var(--gold); color: var(--navy-dark); border: 0; border-radius: 10px; padding: 10px 16px; font-weight: 700; text-decoration: none; }
+.knop:hover { background: #F0B54E; }
+
+/* Welkomstband */
+.band { background: linear-gradient(135deg, var(--navy-dark), var(--navy) 60%, var(--navy-light)); color: #fff; }
+.band .in { max-width: 1080px; margin: 0 auto; padding: 28px 20px 74px; }
+.band h1 { font-family: 'Playfair Display', serif; font-size: 30px; margin: 0; font-weight: 700; }
+.band h1 em { font-style: normal; color: var(--gold); }
+.band p { margin: 6px 0 0; color: #C9D2DE; }
+
+main { max-width: 1080px; margin: -52px auto 0; padding: 0 20px 48px; }
+.tegels { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; margin-bottom: 18px; }
+.tegel { background: #fff; border-radius: 16px; padding: 16px 18px; box-shadow: 0 8px 24px rgba(28,42,62,.08); border: 1px solid var(--line); }
+.tegel .l { font-size: 13px; color: var(--mid); }
+.tegel .v { font-size: 26px; font-weight: 700; color: var(--navy); margin-top: 4px; line-height: 1.15; }
+.tegel .s { font-size: 12.5px; color: var(--light); margin-top: 2px; }
+.tegel.goud { background: linear-gradient(135deg, #FFF8EA, #FBF0DC); border-color: #F1DDB4; }
+.tegel.goud .v { color: var(--gold-dark); }
+
+/* Tabs als pillen */
+nav.tabs { display: flex; gap: 6px; flex-wrap: wrap; margin: 0 0 16px; }
+nav.tabs button { background: #fff; border: 1px solid var(--line); color: var(--mid); border-radius: 999px; padding: 8px 16px; font-weight: 500; }
+nav.tabs button[aria-selected="true"] { background: var(--navy); border-color: var(--navy); color: #fff; }
+nav.tabs .n { display: inline-block; min-width: 20px; margin-left: 6px; padding: 0 6px; border-radius: 999px; background: var(--gold); color: var(--navy-dark); font-size: 12px; font-weight: 700; text-align: center; }
+.pane { display: none; }
+.pane[aria-hidden="false"] { display: block; }
+
+/* Kaarten */
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 20px 22px; margin-bottom: 16px; box-shadow: 0 2px 8px rgba(28,42,62,.04); min-width: 0; overflow-wrap: anywhere; }
+.card h2 { font-family: 'Playfair Display', serif; font-size: 20px; color: var(--navy); margin: 0 0 6px; }
+.intro { color: var(--mid); font-size: 14px; margin: 0 0 14px; }
+.empty { background: var(--bg); border-radius: 12px; padding: 16px; color: var(--mid); font-size: 14px; }
+.twee { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.twee > * { min-width: 0; }
+
+/* Tags */
+.tag { display: inline-block; font-size: 12px; padding: 2px 10px; border-radius: 999px; background: #EEF1F5; color: var(--mid); white-space: nowrap; font-weight: 500; }
+.tag.ok { background: var(--ok-soft); color: var(--ok); } .tag.warn { background: var(--gold-soft); color: var(--warn); }
+.tag.bad { background: var(--bad-soft); color: var(--bad); } .tag.info { background: var(--info-soft); color: var(--info); }
+
+/* Opdrachtkaarten */
+.opdracht { border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; margin-bottom: 12px; border-left: 4px solid var(--gold); }
+.opdracht.klaar { border-left-color: var(--ok); }
+.opdracht.voorbij { border-left-color: var(--line); opacity: .75; }
+.opdracht .t { font-weight: 700; font-size: 16px; color: var(--navy); }
+.opdracht .t a { color: var(--navy); text-decoration: none; }
+.opdracht .t a:hover { text-decoration: underline; }
+.opdracht .rij { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-top: 6px; }
+.opdracht .advies { margin-top: 10px; background: var(--bg); border-radius: 10px; padding: 10px 12px; font-size: 14px; color: var(--mid); }
+.opdracht .onder { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; margin-top: 12px; }
+.opdracht .prijs { font-size: 14px; color: var(--mid); }
+.opdracht .prijs b { color: var(--navy); }
+
+/* Dossier met stappen */
+.dossier { border: 1px solid var(--line); border-radius: 14px; padding: 18px; margin-bottom: 12px; }
+.dossier .t { font-weight: 700; font-size: 16px; color: var(--navy); }
+.stappen { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0; margin: 16px 0 12px; }
+.stap { position: relative; text-align: center; font-size: 12.5px; color: var(--light); padding-top: 26px; }
+.stap::before { content: ''; position: absolute; top: 8px; left: 0; right: 0; height: 3px; background: var(--line); }
+.stap:first-child::before { left: 50%; } .stap:last-child::before { right: 50%; }
+.stap i { position: absolute; top: 1px; left: 50%; transform: translateX(-50%); width: 17px; height: 17px; border-radius: 50%; background: #fff; border: 3px solid var(--line); z-index: 1; }
+.stap.ok { color: var(--navy); } .stap.ok::before { background: var(--gold); } .stap.ok i { background: var(--gold); border-color: var(--gold); }
+.stap.nu { color: var(--navy); font-weight: 700; } .stap.nu i { border-color: var(--gold); box-shadow: 0 0 0 4px var(--gold-soft); }
+.dossier .status { background: var(--gold-soft); border-radius: 10px; padding: 10px 12px; font-size: 14px; color: var(--navy); }
+.feiten { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin-top: 12px; }
+.feiten div { background: var(--bg); border-radius: 10px; padding: 10px 12px; }
+.feiten .l { font-size: 12px; color: var(--light); }
+.feiten .v { font-weight: 700; color: var(--navy); font-size: 14px; }
+.feiten .v .muted, .feiten .v div.muted { font-weight: 400; }
+
+/* Maandrapport */
+.maandrij { display: grid; grid-template-columns: 110px 1fr 120px; gap: 12px; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--line); }
+.maandrij:last-child { border-bottom: 0; }
+.maandrij .balk2 { height: 12px; background: #EEF1F5; border-radius: 999px; overflow: hidden; display: flex; }
+.maandrij .balk2 span { display: block; height: 100%; }
+.legende { display: flex; gap: 14px; flex-wrap: wrap; font-size: 12.5px; color: var(--mid); margin-top: 10px; }
+.legende i { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
+
+/* Tabellen */
+.tbl { width: 100%; overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font-size: 14px; }
+th { text-align: left; font-size: 11.5px; text-transform: uppercase; letter-spacing: .05em; color: var(--light); font-weight: 500; padding: 8px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+td { padding: 10px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+tr:last-child td { border-bottom: 0; }
+td.num, th.num { text-align: right; white-space: nowrap; }
+ul.lijst { margin: 0; padding-left: 18px; color: var(--mid); font-size: 14px; }
+
+/* Aanmelden */
+#login { max-width: 420px; margin: 8vh auto; background: #fff; border: 1px solid var(--line); border-radius: 18px; padding: 28px; box-shadow: 0 10px 30px rgba(28,42,62,.08); }
+#login h2 { font-family: 'Playfair Display', serif; color: var(--navy); margin: 0 0 4px; }
+#login input { width: 100%; font: inherit; padding: 11px 12px; border: 1px solid var(--line); border-radius: 10px; margin: 12px 0 0; }
+#login .rij { display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; margin-top: 16px; }
+#login .rij a { font-size: 13px; }
+#msg { font-size: 14px; color: var(--mid); margin-top: 12px; min-height: 1em; }
+.contact { margin-top: 8px; text-align: center; color: var(--light); font-size: 13px; }
+
+@media (max-width: 860px) {
+  .tegels { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .twee { grid-template-columns: 1fr; }
+  .feiten { grid-template-columns: 1fr; }
+}
+@media (max-width: 520px) {
+  #stamp { display: none; }
+  .band h1 { font-size: 24px; }
+  .tegel .v { font-size: 22px; }
+  .maandrij { grid-template-columns: 80px 1fr; }
+  .maandrij .muted:last-child { grid-column: 1 / -1; }
+  .stap { font-size: 11px; }
+}
 </style>
 </head>
 <body>
-<header>
-  <div class="top">
-    <h1>Mechele <span>klantpagina</span></h1>
-    <div class="meta">
-      <span id="stamp"></span>
-      <button class="ghost hidden" id="refresh" type="button">Vernieuwen</button>
-      <button class="ghost hidden" id="logout" type="button">Afmelden</button>
+
+<div class="balk">
+  <div class="in">
+    <div class="merk"><div class="logo">M</div><div><b>Mechele Consultancy</b><span>Uw klantpagina</span></div></div>
+    <div class="acties">
+      <span class="muted" id="stamp"></span>
+      <button class="knop-licht hidden" id="refresh" type="button">Vernieuwen</button>
+      <button class="knop-licht hidden" id="logout" type="button">Afmelden</button>
     </div>
   </div>
-  <nav class="tabs hidden" id="tabs" role="tablist">
-    <button type="button" role="tab" data-tab="opdrachten">Opdrachten<span class="n hidden" id="n-opdrachten">0</span></button>
-    <button type="button" role="tab" data-tab="dossiers">Dossiers</button>
-    <button type="button" role="tab" data-tab="rapport">Maandrapport</button>
-    <button type="button" role="tab" data-tab="facturen">Facturen</button>
-    <button type="button" role="tab" data-tab="gegevens">Uw gegevens</button>
-  </nav>
-</header>
+</div>
 
 <div id="login" class="hidden">
   <h2>Aanmelden</h2>
@@ -44,67 +166,89 @@
     <input type="email" id="email" autocomplete="username" placeholder="E-mailadres" required>
     <input type="password" id="wachtwoord" autocomplete="current-password" placeholder="Wachtwoord" required minlength="10">
     <div class="rij">
-      <button type="submit">Aanmelden</button>
+      <button type="submit" class="knop">Aanmelden</button>
       <a href="#" id="vergeten">Wachtwoord vergeten</a>
     </div>
   </form>
   <div id="msg"></div>
 </div>
 
-<main id="app" class="hidden">
-  <div class="pane" id="pane-opdrachten" role="tabpanel" aria-hidden="true">
-    <section class="card">
-      <h2>Aangeboden opdrachten</h2>
-      <p class="intro">Opdrachten die bij uw profiel passen en die wij u voorgesteld hebben. Per opdracht kiest u zelf: zelf indienen, of de begeleiding aan Steven geven aan de vermelde vaste prijs. Antwoorden kan per mail.</p>
-      <div id="opdrachten"></div>
-    </section>
-  </div>
+<div id="app" class="hidden">
+  <div class="band"><div class="in">
+    <h1 id="groet">Goedendag</h1>
+    <p id="bedrijf"></p>
+  </div></div>
 
-  <div class="pane" id="pane-dossiers" role="tabpanel" aria-hidden="true">
-    <section class="card">
-      <h2>Dossiers in begeleiding</h2>
-      <div class="tbl" id="dossiers"></div>
-    </section>
-  </div>
+  <main>
+    <div class="tegels" id="tegels"></div>
 
-  <div class="pane" id="pane-rapport" role="tabpanel" aria-hidden="true">
-    <section class="card">
-      <h2>Maandrapport screening</h2>
-      <p class="intro">Alles wat wij voor u gescreend hebben, ook in maanden zonder passende opdracht.</p>
-      <div class="tbl" id="rapport"></div>
-    </section>
-  </div>
+    <nav class="tabs" id="tabs" role="tablist">
+      <button type="button" role="tab" data-tab="opdrachten">Opdrachten<span class="n hidden" id="n-opdrachten">0</span></button>
+      <button type="button" role="tab" data-tab="dossiers">Dossiers</button>
+      <button type="button" role="tab" data-tab="rapport">Maandrapport</button>
+      <button type="button" role="tab" data-tab="facturen">Facturen</button>
+      <button type="button" role="tab" data-tab="gegevens">Uw gegevens</button>
+    </nav>
 
-  <div class="pane" id="pane-facturen" role="tabpanel" aria-hidden="true">
-    <section class="card">
-      <h2>Facturen</h2>
-      <div id="abonnement" class="muted" style="margin-bottom:10px"></div>
-      <div class="tbl" id="facturen"></div>
-    </section>
-  </div>
-
-  <div class="pane" id="pane-gegevens" role="tabpanel" aria-hidden="true">
-    <section class="card">
-      <h2>Uw profiel</h2>
-      <div class="tbl" id="profiel"></div>
-    </section>
-    <section class="card">
-      <h2>Nog aan te leveren</h2>
-      <p class="intro">Zonder deze stukken is de screening algemener en duurt een dossier langer. Mail ze naar steven@mecheleconsultancy.be met uw klantcode in het onderwerp.</p>
-      <div id="ontbreekt"></div>
-    </section>
-    <div class="two">
+    <div class="pane" id="pane-opdrachten" role="tabpanel" aria-hidden="true">
       <section class="card">
-        <h2>Referenties</h2>
-        <div class="tbl" id="referenties"></div>
-      </section>
-      <section class="card">
-        <h2>Attesten en documenten</h2>
-        <div class="tbl" id="attesten"></div>
+        <h2>Voorgestelde opdrachten</h2>
+        <p class="intro">Opdrachten die bij uw profiel passen, telkens met mijn advies. Per opdracht kiest u zelf: zelf indienen, of de begeleiding aan mij geven tegen de vermelde vaste prijs.</p>
+        <div id="opdrachten"></div>
       </section>
     </div>
-  </div>
-</main>
+
+    <div class="pane" id="pane-dossiers" role="tabpanel" aria-hidden="true">
+      <section class="card">
+        <h2>Dossiers in begeleiding</h2>
+        <p class="intro">Waar elk dossier staat, van voorbereiding tot gunning.</p>
+        <div id="dossiers"></div>
+      </section>
+    </div>
+
+    <div class="pane" id="pane-rapport" role="tabpanel" aria-hidden="true">
+      <section class="card">
+        <h2>Maandrapport</h2>
+        <p class="intro">Alles wat ik voor u gescreend heb, ook in maanden zonder passende opdracht. Enkel wat echt past, stel ik voor.</p>
+        <div id="rapport"></div>
+      </section>
+    </div>
+
+    <div class="pane" id="pane-facturen" role="tabpanel" aria-hidden="true">
+      <section class="card">
+        <h2>Facturen</h2>
+        <p class="intro" id="abonnement"></p>
+        <div class="tbl" id="facturen"></div>
+      </section>
+    </div>
+
+    <div class="pane" id="pane-gegevens" role="tabpanel" aria-hidden="true">
+      <div class="twee">
+        <section class="card">
+          <h2>Uw profiel</h2>
+          <div class="tbl" id="profiel"></div>
+        </section>
+        <section class="card">
+          <h2>Nog aan te leveren</h2>
+          <p class="intro">Met deze stukken kan ik gerichter screenen en gaat een dossier sneller.</p>
+          <div id="ontbreekt"></div>
+        </section>
+      </div>
+      <div class="twee">
+        <section class="card">
+          <h2>Referenties</h2>
+          <div class="tbl" id="referenties"></div>
+        </section>
+        <section class="card">
+          <h2>Attesten en documenten</h2>
+          <div class="tbl" id="attesten"></div>
+        </section>
+      </div>
+    </div>
+
+    <div class="contact">Vragen? Een korte mail naar <a href="mailto:steven@mecheleconsultancy.be">steven@mecheleconsultancy.be</a> volstaat. Steven Mechele, +32 495 79 44 26</div>
+  </main>
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
 <script src="../shared/shared.js"></script>
@@ -112,16 +256,28 @@
 (function () {
   'use strict';
   var M = window.MC, sb = M.sb, $ = M.$, esc = M.esc, eur = M.eur, eurCent = M.eurCent, num = M.num;
-  var fmtDatum = M.fmtDatum, dagTag = M.dagTag, tag = M.tag;
-  var STATUS = { lopend: ['in voorbereiding', 'info'], ingediend: ['ingediend', 'info'], gegund: ['gegund', 'ok'], niet_gegund: ['niet gegund', ''], afgebroken: ['afgebroken door aanbesteder', ''], niet_ingediend: ['niet ingediend', ''], ingetrokken: ['niet ingediend', ''] };
+  var fmtDatum = M.fmtDatum, dagTag = M.dagTag, tag = M.tag, dagenTot = M.dagenTot;
+  var MAIL = 'steven@mecheleconsultancy.be';
+  var STATUS = { lopend: ['in voorbereiding', 'info'], ingediend: ['ingediend', 'info'], gegund: ['gegund', 'ok'], niet_gegund: ['niet gegund', ''], afgebroken: ['afgebroken door de aanbesteder', ''], niet_ingediend: ['niet ingediend', ''], ingetrokken: ['niet ingediend', ''] };
   var FACTUUR = { gefactureerd: ['open', 'warn'], betaald: ['betaald', 'ok'] };
-  var ATTEST = { kbo_uittreksel: 'KBO-uittreksel', statuten: 'Statuten', jaarrekening: 'Jaarrekening', rsz: 'RSZ-attest', fiscaal: 'Fiscaal attest', uea: 'UEA', erkenning: 'Erkenning aannemer', vca: 'VCA', iso9001: 'ISO 9001', iso14001: 'ISO 14001', iso45001: 'ISO 45001', verzekering_ba: 'Verzekering BA', verzekering_beroeps: 'Beroepsaansprakelijkheid', sectorcertificaat: 'Sectorcertificaat', cv: 'CV', andere: 'Andere' };
+  var FORMULE = { tier1_maand: 'opvolging per maand', tier1_jaar: 'opvolging per jaar', vriendentarief: 'opvolging volgens onze afspraak', proef: 'proefdossier' };
+  var ATTEST = { kbo_uittreksel: 'KBO-uittreksel', statuten: 'Statuten', jaarrekening: 'Jaarrekening', rsz: 'RSZ-attest', fiscaal: 'Fiscaal attest', uea: 'UEA', erkenning: 'Erkenning aannemer', vca: 'VCA', iso9001: 'ISO 9001', iso14001: 'ISO 14001', iso45001: 'ISO 45001', verzekering_ba: 'Verzekering BA', verzekering_beroeps: 'Beroepsaansprakelijkheid', sectorcertificaat: 'Sectorcertificaat', cv: 'CV', andere: 'Ander attest' };
   var tabs = M.initTabs($('tabs'), 'opdrachten');
+
+  function groet() {
+    var u = Number(new Date().toLocaleString('nl-BE', { hour: 'numeric', hour12: false, timeZone: 'Europe/Brussels' }));
+    return u < 12 ? 'Goeiemorgen' : u < 18 ? 'Goeiemiddag' : 'Goedenavond';
+  }
+  function mailto(onderwerp, tekst) {
+    return 'mailto:' + MAIL + '?subject=' + encodeURIComponent(onderwerp) + '&body=' + encodeURIComponent(tekst);
+  }
+  function tegel(l, v, s, cls) {
+    return '<div class="tegel' + (cls ? ' ' + cls : '') + '"><div class="l">' + esc(l) + '</div><div class="v">' + esc(v) + '</div><div class="s">' + esc(s || '') + '</div></div>';
+  }
 
   function toonLogin(tekst) {
     $('login').classList.remove('hidden');
     $('app').classList.add('hidden');
-    $('tabs').classList.add('hidden');
     $('logout').classList.add('hidden');
     $('refresh').classList.add('hidden');
     $('stamp').textContent = '';
@@ -164,52 +320,83 @@
     }
     $('login').classList.add('hidden');
     $('app').classList.remove('hidden');
-    $('tabs').classList.remove('hidden');
     $('logout').classList.remove('hidden');
     $('refresh').classList.remove('hidden');
-    render(res.data || {});
-    $('stamp').textContent = (res.data && res.data.klant ? res.data.klant.naam + ' | ' : '') + 'stand ' + fmtDatum(res.data && res.data.gegenereerd, true);
+    try { render(res.data || {}); } catch (err) { if (window.console) console.error(err); }
+    $('stamp').textContent = 'Stand ' + fmtDatum(res.data && res.data.gegenereerd, true);
   }
 
   function render(d) {
     var k = d.klant || {}, opdr = d.opdrachten || [], dos = d.dossiers || [], rap = d.maandrapport || [], fac = d.facturen || [], intake = d.intake || {};
+    var voornaam = String(k.contactpersoon || '').trim().split(/\s+/)[0];
+    $('groet').innerHTML = esc(groet()) + (voornaam ? ', <em>' + esc(voornaam) + '</em>' : '');
+    $('bedrijf').textContent = (k.naam || '') + (k.klantcode ? ' | klantcode ' + k.klantcode : '');
 
-    // Opdrachten: enkel GO; open = nog geen dossier en deadline in de toekomst
-    var open = opdr.filter(function (o) { return !o.dossier_id && M.dagenTot(o.deadline) != null && M.dagenTot(o.deadline) >= 0; }).length;
-    $('n-opdrachten').textContent = open;
-    $('n-opdrachten').classList.toggle('hidden', !open);
+    // Kerncijfers
+    var open = opdr.filter(function (o) { var n = dagenTot(o.deadline); return !o.dossier_id && n != null && n >= 0; });
+    var lopend = dos.filter(function (x) { return x.status === 'lopend' || (x.status === 'ingediend' && !x.gunning_resultaat); });
+    var deze = rap.length ? rap[rap.length - 1] : null;
+    var komend = dos.filter(function (x) { var n = dagenTot(x.deadline); return x.status === 'lopend' && n != null && n >= 0; })
+      .concat(open).map(function (x) { return x.deadline; }).sort()[0];
+    $('tegels').innerHTML = [
+      tegel('Wachten op uw keuze', open.length, open.length ? 'opdracht(en) met mijn advies' : 'geen openstaande keuze', open.length ? 'goud' : ''),
+      tegel('Dossiers in begeleiding', lopend.length, lopend.length ? 'in voorbereiding of in beoordeling' : 'geen lopend dossier'),
+      tegel('Gescreend deze maand', deze ? num(deze.gescreend) : 0, deze ? num(deze.aangeboden) + ' voorgesteld' : 'rapport volgt'),
+      tegel('Volgende deadline', komend ? fmtDatum(komend) : 'geen', komend ? (dagenTot(komend) + ' dagen') : 'niets dringends')
+    ].join('');
+
+    // Opdrachten
+    $('n-opdrachten').textContent = open.length;
+    $('n-opdrachten').classList.toggle('hidden', !open.length);
     $('opdrachten').innerHTML = opdr.length ? opdr.map(function (o) {
-      var link = M.safeUrl(o.url), n = M.dagenTot(o.deadline);
-      var stand = o.dossier_id ? tag('in begeleiding', 'ok') : (n != null && n < 0 ? tag('deadline voorbij') : tag('uw keuze', 'warn'));
-      return '<div class="item opdracht"><div class="t">' + (link ? '<a href="' + link + '" target="_blank" rel="noopener">' + esc(o.titel) + '</a>' : esc(o.titel)) + '</div>' +
-        '<div class="muted">' + esc(o.organisatie) + (o.raming_eur ? ' | raming ' + esc(eur(o.raming_eur)) : '') + ' | voorgesteld op ' + esc(fmtDatum(o.aangeboden_op)) + '</div>' +
-        '<div style="margin-top:4px">' + stand + ' ' + dagTag(o.deadline) + ' <span class="muted">indienen uiterlijk ' + esc(fmtDatum(o.deadline, true)) + '</span></div>' +
-        (o.advies ? '<div style="margin-top:6px">' + esc(o.advies) + '</div>' : '') +
-        '<div class="prijs">Begeleiding door Mechele: <b>' + esc(o.prijs && o.prijs.tekst ? o.prijs.tekst : 'prijs na inschatting') + '</b> (excl. btw)</div></div>';
-    }).join('') : '<div class="empty">Nog geen opdrachten voorgesteld. U krijgt een mail zodra er een passende opdracht is.</div>';
+      var link = M.safeUrl(o.url), n = dagenTot(o.deadline), voorbij = n != null && n < 0;
+      var cls = o.dossier_id ? ' klaar' : voorbij ? ' voorbij' : '';
+      var stand = o.dossier_id ? tag('in begeleiding', 'ok') : (voorbij ? tag('deadline voorbij') : tag('uw keuze', 'warn'));
+      var prijs = o.prijs && o.prijs.tekst ? o.prijs.tekst : 'prijs na inschatting';
+      var actie = !o.dossier_id && !voorbij
+        ? '<a class="knop" href="' + esc(mailto((k.klantcode ? k.klantcode + ' ' : '') + 'begeleiding: ' + (o.titel || ''), 'Beste Steven,\n\nJa, ik wil dat u deze opdracht begeleidt: ' + (o.titel || '') + ' (' + (o.organisatie || '') + ').\n\nMet vriendelijke groeten,\n' + (k.contactpersoon || ''))) + '">Ja, begeleid deze opdracht</a>'
+        : '';
+      return '<div class="opdracht' + cls + '"><div class="t">' + (link ? '<a href="' + link + '" target="_blank" rel="noopener">' + esc(o.titel) + '</a>' : esc(o.titel)) + '</div>' +
+        '<div class="muted">' + esc(o.organisatie || '') + (o.raming_eur ? ' | geschatte waarde ' + esc(eur(o.raming_eur)) : '') + (o.aangeboden_op ? ' | voorgesteld op ' + esc(fmtDatum(o.aangeboden_op)) : '') + '</div>' +
+        '<div class="rij">' + stand + ' ' + dagTag(o.deadline) + ' <span class="muted">indienen uiterlijk ' + esc(fmtDatum(o.deadline, true)) + '</span></div>' +
+        (o.advies ? '<div class="advies"><b>Mijn advies:</b> ' + esc(o.advies) + '</div>' : '') +
+        '<div class="onder"><div class="prijs">Begeleiding: <b>' + esc(prijs) + '</b> excl. btw</div>' + actie + '</div></div>';
+    }).join('') : '<div class="empty">Er staat op dit moment geen opdracht voor u klaar. Zodra er een passende opdracht verschijnt, krijgt u een mail met de fiche en mijn advies.</div>';
 
-    // Dossiers
-    $('dossiers').innerHTML = dos.length ? '<table><thead><tr><th>Dossier</th><th>Status</th><th>Deadline</th><th>Waarde</th><th>Prijs begeleiding</th></tr></thead><tbody>' +
-      dos.map(function (x) {
-        var s = STATUS[x.status] || [x.status, ''];
-        var waarde = M.waardeHtml(x.contractwaarde_min_eur, x.contractwaarde_max_eur, x.looptijd_jaren) || '<span class="muted">nog in te schatten</span>';
-        var prijs = [x.dossierfee_eur ? 'vast ' + eur(x.dossierfee_eur) : '', x.succesfee_eur ? 'succesfee ' + eur(x.succesfee_eur) : (x.succesfee_pct ? 'succesfee ' + String(x.succesfee_pct).replace('.', ',') + '%' : '')].filter(Boolean).join(', ');
-        var extra = x.gunning_resultaat === 'gegund' ? '<div class="muted">gegund op ' + esc(fmtDatum(x.gunning_datum)) + '</div>' : (x.ingediend_op ? '<div class="muted">ingediend op ' + esc(fmtDatum(x.ingediend_op)) + '</div>' : '');
-        if (x.klant_status) extra += '<div style="margin-top:4px">' + esc(x.klant_status) + (x.klant_status_op ? ' <span class="muted">(' + esc(fmtDatum(x.klant_status_op)) + ')</span>' : '') + '</div>';
-        return '<tr><td>' + esc(x.omschrijving) + '<div class="muted">' + esc(x.aanbesteder || '') + (x.dossiernummer ? ' | ' + esc(x.dossiernummer) : '') + '</div>' + (M.safeUrl(x.document_url) ? '<div><a href="' + M.safeUrl(x.document_url) + '" target="_blank" rel="noopener">biddossier openen</a></div>' : '') + '</td>' +
-          '<td>' + tag(s[0], s[1]) + extra + '</td><td>' + dagTag(x.deadline) + '<div class="muted">' + esc(fmtDatum(x.deadline, true)) + '</div></td><td>' + waarde + '</td><td>' + (prijs ? esc(prijs) : '<span class="muted">volgens afspraak</span>') + '</td></tr>';
-      }).join('') + '</tbody></table>' : '<div class="empty">Nog geen dossiers in begeleiding.</div>';
+    // Dossiers met stappen
+    $('dossiers').innerHTML = dos.length ? dos.map(function (x) {
+      var s = STATUS[x.status] || [x.status, ''];
+      var stap = x.status === 'lopend' ? 0 : x.status === 'ingediend' ? (x.klant_status ? 2 : 1) : 3;
+      var namen = ['Voorbereiding', 'Ingediend', 'In beoordeling', 'Gunning'];
+      var waarde = M.waardeHtml(x.contractwaarde_min_eur, x.contractwaarde_max_eur, x.looptijd_jaren) || '<span class="muted">nog in te schatten</span>';
+      var prijs = [x.dossierfee_eur ? 'vast ' + eur(x.dossierfee_eur) : '', x.succesfee_eur ? 'succesfee ' + eur(x.succesfee_eur) : (x.succesfee_pct ? 'succesfee ' + String(x.succesfee_pct).replace('.', ',') + '%' : '')].filter(Boolean).join(', ');
+      var datum = x.gunning_resultaat ? fmtDatum(x.gunning_datum) : x.ingediend_op ? fmtDatum(x.ingediend_op) : fmtDatum(x.deadline, true);
+      return '<div class="dossier"><div class="t">' + esc(x.omschrijving) + '</div>' +
+        '<div class="muted">' + esc(x.aanbesteder || '') + (x.dossiernummer ? ' | ' + esc(x.dossiernummer) : '') + '</div>' +
+        '<div class="stappen">' + namen.map(function (nm, i) { return '<div class="stap' + (i < stap ? ' ok' : i === stap ? ' nu' : '') + '"><i></i>' + esc(nm) + '</div>'; }).join('') + '</div>' +
+        (x.klant_status ? '<div class="status">' + esc(x.klant_status) + (x.klant_status_op ? ' <span class="muted">(' + esc(fmtDatum(x.klant_status_op)) + ')</span>' : '') + '</div>' : '') +
+        '<div class="feiten"><div><div class="l">Status</div><div class="v">' + tag(s[0], s[1]) + ' <span class="muted">' + esc(datum) + '</span></div></div>' +
+        '<div><div class="l">Geschatte waarde</div><div class="v">' + waarde + '</div></div>' +
+        '<div><div class="l">Prijs begeleiding</div><div class="v">' + (prijs ? esc(prijs) : 'volgens onze afspraak') + '</div></div></div>' +
+        (M.safeUrl(x.document_url) ? '<div style="margin-top:10px"><a href="' + M.safeUrl(x.document_url) + '" target="_blank" rel="noopener">Biddossier openen</a></div>' : '') +
+        '</div>';
+    }).join('') : '<div class="empty">Nog geen dossiers in begeleiding.</div>';
 
-    // Maandrapport
-    $('rapport').innerHTML = rap.length ? '<table><thead><tr><th>Maand</th><th class="num">Gescreend</th><th class="num">Voorgesteld</th><th class="num">In beraad</th><th class="num">Niet passend</th></tr></thead><tbody>' +
-      rap.map(function (r) {
-        return '<tr><td>' + esc(M.fmtMaand(r.maand)) + '</td><td class="num"><b>' + esc(r.gescreend) + '</b></td><td class="num">' + esc(r.aangeboden) + '</td><td class="num">' + esc(num(r.in_beraad) + num(r.nog_te_beoordelen)) + '</td><td class="num">' + esc(r.niet_passend) + '</td></tr>';
-      }).join('') + '</tbody></table><div class="muted" style="margin-top:6px">Gescreend = publicaties die op uw zoekprofiel binnenkwamen en door ons beoordeeld werden. Enkel wat echt past wordt voorgesteld.</div>' : '<div class="empty">Nog geen screening geregistreerd.</div>';
+    // Maandrapport met balken
+    var max = 1;
+    rap.forEach(function (r) { max = Math.max(max, num(r.gescreend)); });
+    $('rapport').innerHTML = rap.length ? rap.map(function (r) {
+      var g = num(r.gescreend), a = num(r.aangeboden), b = num(r.in_beraad) + num(r.nog_te_beoordelen), nP = num(r.niet_passend);
+      var w = function (v) { return (v / max * 100).toFixed(1) + '%'; };
+      return '<div class="maandrij"><div><b>' + esc(M.fmtMaand(r.maand)) + '</b></div>' +
+        '<div class="balk2" title="' + esc(g + ' gescreend') + '"><span style="width:' + w(a) + ';background:var(--gold)"></span><span style="width:' + w(b) + ';background:var(--info)"></span><span style="width:' + w(nP) + ';background:#C9D2DE"></span></div>' +
+        '<div class="muted"><b style="color:var(--navy)">' + g + '</b> gescreend, ' + a + ' voorgesteld</div></div>';
+    }).join('') + '<div class="legende"><span><i style="background:var(--gold)"></i>voorgesteld</span><span><i style="background:var(--info)"></i>in beraad</span><span><i style="background:#C9D2DE"></i>niet passend</span></div>'
+      : '<div class="empty">Het eerste rapport verschijnt na de eerste maand opvolging.</div>';
 
-    // Facturen en abonnement
+    // Facturen en formule
     var ab = d.abonnement;
-    var fl = { tier1_maand: 'Tier 1 maandabonnement', tier1_jaar: 'Tier 1 jaarabonnement', vriendentarief: 'abonnement volgens afspraak', proef: 'proefdossier' };
-    $('abonnement').textContent = ab ? 'Formule: ' + (fl[ab.formule] || ab.formule) + (ab.bedrag_eur ? ', ' + eurCent(ab.bedrag_eur) + ' excl. btw' : '') + ', sinds ' + fmtDatum(ab.start_datum) + (ab.minimum_tot ? ', minimum tot ' + fmtDatum(ab.minimum_tot) : '') + '.' : 'Geen lopend abonnement.';
+    $('abonnement').textContent = ab ? 'Uw formule: ' + (FORMULE[ab.formule] || ab.formule) + (ab.bedrag_eur ? ', ' + eurCent(ab.bedrag_eur) + ' excl. btw' : '') + ', sinds ' + fmtDatum(ab.start_datum) + (ab.minimum_tot ? ', minimum tot ' + fmtDatum(ab.minimum_tot) : '') + '.' : 'Geen lopende opvolging.';
     $('facturen').innerHTML = fac.length ? '<table><thead><tr><th>Datum</th><th>Nummer</th><th>Omschrijving</th><th>Status</th><th class="num">Bedrag excl. btw</th></tr></thead><tbody>' +
       fac.map(function (f) {
         var s = FACTUUR[f.status] || [f.status, ''];
@@ -220,20 +407,25 @@
     // Gegevens
     $('profiel').innerHTML = '<table><tbody>' + [
       ['Klantcode', k.klantcode], ['Bedrijf', k.naam], ['Contactpersoon', k.contactpersoon], ['Activiteit', k.sector],
-      ['Zoekprofielen', (k.zoekprofielen || []).join(', ') || 'nog in te stellen'], ['Status', k.status]
-    ].map(function (r) { return '<tr><td style="width:160px" class="muted">' + esc(r[0]) + '</td><td>' + esc(r[1] || '-') + '</td></tr>'; }).join('') + '</tbody></table>';
+      ['Zoekprofielen', (k.zoekprofielen || []).join(', ') || 'nog in te stellen']
+    ].map(function (r) { return '<tr><td style="width:140px" class="muted">' + esc(r[0]) + '</td><td>' + esc(r[1] || '-') + '</td></tr>'; }).join('') + '</tbody></table>';
     var ontb = intake.ontbreekt || [];
-    $('ontbreekt').innerHTML = ontb.length ? '<ul class="compact" style="font-size:14px">' + ontb.map(function (o) { return '<li>' + esc(o) + '</li>'; }).join('') + '</ul>' : tag('alles aanwezig', 'ok');
+    $('ontbreekt').innerHTML = ontb.length
+      ? '<ul class="lijst">' + ontb.map(function (o) { return '<li>' + esc(o) + '</li>'; }).join('') + '</ul>' +
+        '<div style="margin-top:14px"><a class="knop" href="' + esc(mailto((k.klantcode || '') + ' documenten', 'Beste Steven,\n\nIn bijlage de gevraagde stukken.\n\nMet vriendelijke groeten,\n' + (k.contactpersoon || ''))) + '">Stukken mailen</a></div>' +
+        '<div class="muted" style="margin-top:8px">Uw klantcode staat al in het onderwerp, zodat de stukken meteen in uw dossier komen.</div>'
+      : tag('alles aanwezig', 'ok');
     var refs = intake.referenties || [];
-    $('referenties').innerHTML = refs.length ? '<table><thead><tr><th>Opdrachtgever</th><th>Omschrijving</th><th>Periode</th><th class="num">Bedrag</th></tr></thead><tbody>' +
+    $('referenties').innerHTML = refs.length ? '<table><thead><tr><th>Opdrachtgever</th><th>Omschrijving</th></tr></thead><tbody>' +
       refs.map(function (r) {
-        return '<tr><td>' + esc(r.opdrachtgever) + (r.attest ? '<div>' + tag('attest goede uitvoering', 'ok') + '</div>' : '') + '</td><td>' + esc(r.omschrijving || '') + '</td><td>' + esc(fmtDatum(r.startdatum)) + ' tot ' + esc(fmtDatum(r.einddatum)) + '</td><td class="num">' + esc(eur(r.bedrag_excl_btw) || '-') + '</td></tr>';
+        var per = r.startdatum || r.einddatum ? '<div class="muted">' + esc(fmtDatum(r.startdatum)) + ' tot ' + esc(fmtDatum(r.einddatum)) + '</div>' : '';
+        return '<tr><td>' + esc(r.opdrachtgever) + (r.attest ? '<div>' + tag('attest goede uitvoering', 'ok') + '</div>' : '') + per + '</td><td>' + esc(r.omschrijving || '') + (r.bedrag_excl_btw ? '<div class="muted">' + esc(eur(r.bedrag_excl_btw)) + '</div>' : '') + '</td></tr>';
       }).join('') + '</tbody></table>' : '<div class="empty">Nog geen referenties geregistreerd.</div>';
     var att = (intake.attesten || []).map(function (a) {
-      var n = M.dagenTot(a.geldig_tot);
+      var n = dagenTot(a.geldig_tot);
       return '<tr><td>' + esc(ATTEST[a.type] || a.type) + (a.omschrijving ? '<div class="muted">' + esc(a.omschrijving) + '</div>' : '') + '</td><td>' + (a.geldig_tot ? (n != null && n < 0 ? tag('vervallen', 'bad') : n != null && n <= 60 ? tag('vervalt binnenkort', 'warn') : tag('geldig', 'ok')) + '<div class="muted">tot ' + esc(fmtDatum(a.geldig_tot)) + '</div>' : tag('geen vervaldatum')) + '</td></tr>';
     }).concat((intake.documenten || []).map(function (dd) {
-      return '<tr><td>' + esc(dd.titel || dd.type) + '<div class="muted">' + esc(dd.type) + '</div></td><td>' + tag('ontvangen', 'ok') + (dd.datum ? '<div class="muted">' + esc(fmtDatum(dd.datum)) + '</div>' : '') + '</td></tr>';
+      return '<tr><td>' + esc(dd.titel || dd.type) + '</td><td>' + tag('ontvangen', 'ok') + (dd.datum ? '<div class="muted">' + esc(fmtDatum(dd.datum)) + '</div>' : '') + '</td></tr>';
     }));
     $('attesten').innerHTML = att.length ? '<table><thead><tr><th>Stuk</th><th>Status</th></tr></thead><tbody>' + att.join('') + '</tbody></table>' : '<div class="empty">Nog geen attesten of documenten geregistreerd.</div>';
   }
