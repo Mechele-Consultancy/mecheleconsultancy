@@ -5,150 +5,338 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow, noarchive">
 <meta name="referrer" content="no-referrer">
+<meta name="color-scheme" content="dark">
 <title>Intern | Mechele Consultancy</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../shared/shared.css">
+<style>
+/* Intern dashboard v2 (22/10/2026). Eigen stijl, los van shared.css (klantportaal blijft ongewijzigd). */
+:root {
+  --bg: #0B1424; --bg2: #101C30; --panel: rgba(255,255,255,.035); --panel2: rgba(255,255,255,.06);
+  --line: rgba(255,255,255,.08); --txt: #E8EDF5; --mid: #A9B4C6; --dim: #74829A;
+  --gold: #E8A838; --gold2: #F5C66B; --teal: #2EC4B6; --blue: #5B8DEF; --red: #F0616D; --green: #3DD68C; --amber: #F2A93B;
+  --navy: #1C2A3E;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body {
+  min-height: 100vh; color: var(--txt); font-family: 'DM Sans', system-ui, sans-serif; font-size: 15px; line-height: 1.45;
+  background:
+    radial-gradient(1100px 600px at 0% -10%, rgba(232,168,56,.13), transparent 60%),
+    radial-gradient(900px 520px at 100% 0%, rgba(46,196,182,.10), transparent 60%),
+    radial-gradient(900px 700px at 60% 110%, rgba(91,141,239,.08), transparent 60%),
+    var(--bg);
+  background-attachment: fixed;
+}
+a { color: var(--gold2); }
+button { font: inherit; cursor: pointer; }
+.hidden { display: none !important; }
+.muted { color: var(--dim); font-size: 13px; }
+.serif { font-family: 'Playfair Display', serif; }
+
+/* Opbouw: zijbalk + inhoud */
+.shell { display: grid; grid-template-columns: 240px minmax(0, 1fr); min-height: 100vh; }
+aside.side {
+  position: sticky; top: 0; height: 100vh; padding: 22px 16px; display: flex; flex-direction: column; gap: 22px;
+  background: linear-gradient(180deg, rgba(16,28,48,.92), rgba(11,20,36,.92)); border-right: 1px solid var(--line);
+}
+.brand { display: flex; align-items: center; gap: 10px; padding: 0 6px; }
+.brand .logo { width: 34px; height: 34px; border-radius: 10px; background: linear-gradient(135deg, var(--gold2), var(--gold)); display: grid; place-items: center; color: var(--navy); font-weight: 700; font-family: 'Playfair Display', serif; font-size: 18px; box-shadow: 0 6px 18px rgba(232,168,56,.35); }
+.brand h1 { margin: 0; font-family: 'Playfair Display', serif; font-size: 19px; font-weight: 700; line-height: 1.1; }
+.brand h1 span { color: var(--gold); display: block; font-size: 13px; font-family: 'DM Sans', sans-serif; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; }
+nav.tabs { display: flex; flex-direction: column; gap: 4px; }
+nav.tabs .lbl { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--dim); padding: 0 10px 6px; }
+nav.tabs button {
+  display: flex; align-items: center; gap: 12px; width: 100%; text-align: left; padding: 11px 12px; border-radius: 10px;
+  background: transparent; border: 1px solid transparent; color: var(--mid); font-weight: 500; white-space: nowrap;
+}
+nav.tabs button svg { width: 18px; height: 18px; flex: none; opacity: .85; }
+nav.tabs button:hover { background: var(--panel2); color: var(--txt); }
+nav.tabs button[aria-selected="true"] { background: linear-gradient(90deg, rgba(232,168,56,.18), rgba(232,168,56,.04)); border-color: rgba(232,168,56,.35); color: var(--txt); }
+nav.tabs button[aria-selected="true"] svg { color: var(--gold); opacity: 1; }
+nav.tabs .n { margin-left: auto; min-width: 22px; padding: 1px 7px; border-radius: 999px; background: var(--red); color: #fff; font-size: 12px; font-weight: 700; text-align: center; }
+.side .foot { margin-top: auto; display: flex; flex-direction: column; gap: 8px; }
+.side .foot .stamp { font-size: 12px; color: var(--dim); padding: 0 6px; }
+button.ghost { background: var(--panel); color: var(--txt); border: 1px solid var(--line); border-radius: 10px; padding: 9px 12px; font-weight: 500; text-align: left; }
+button.ghost:hover { background: var(--panel2); }
+button.prim { background: linear-gradient(135deg, var(--gold2), var(--gold)); color: var(--navy); border: 0; border-radius: 10px; padding: 10px 16px; font-weight: 700; }
+
+main { padding: 26px 28px 40px; max-width: 1400px; width: 100%; }
+.kop { display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; flex-wrap: wrap; margin-bottom: 20px; }
+.kop h2 { margin: 0; font-family: 'Playfair Display', serif; font-size: 30px; font-weight: 700; }
+.kop h2 em { font-style: normal; color: var(--gold); }
+.kop .sub { color: var(--mid); margin-top: 4px; }
+.pane { display: none; }
+.pane[aria-hidden="false"] { display: block; animation: in .25s ease; }
+@keyframes in { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+
+/* Raster */
+.row { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 16px; margin-bottom: 16px; }
+.c3 { grid-column: span 3; } .c4 { grid-column: span 4; } .c5 { grid-column: span 5; } .c6 { grid-column: span 6; }
+.c7 { grid-column: span 7; } .c8 { grid-column: span 8; } .c12 { grid-column: span 12; }
+.stack { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
+
+/* Kaarten */
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: 18px; padding: 18px 20px; min-width: 0; overflow-wrap: anywhere; backdrop-filter: blur(8px); }
+.card h3 { margin: 0 0 14px; font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 600; display: flex; justify-content: space-between; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.card h3 a, .card h3 .muted { font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; }
+.card h4 { margin: 16px 0 8px; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--dim); font-weight: 500; }
+.empty { color: var(--dim); font-size: 14px; padding: 6px 0; }
+
+/* KPI-tegels met kleurverloop */
+.kpi { position: relative; overflow: hidden; border-radius: 18px; padding: 18px 20px; min-height: 128px; display: flex; flex-direction: column; justify-content: space-between; color: #fff; box-shadow: 0 10px 30px rgba(0,0,0,.25); }
+.kpi::after { content: ''; position: absolute; right: -40px; top: -40px; width: 140px; height: 140px; border-radius: 50%; background: rgba(255,255,255,.12); }
+.kpi .top { display: flex; justify-content: space-between; align-items: center; gap: 8px; position: relative; z-index: 1; }
+.kpi .l { font-size: 14px; font-weight: 500; opacity: .92; }
+.kpi .ic { width: 34px; height: 34px; border-radius: 10px; background: rgba(255,255,255,.18); display: grid; place-items: center; }
+.kpi .ic svg { width: 18px; height: 18px; }
+.kpi .v { font-size: 34px; font-weight: 700; line-height: 1.1; margin-top: 10px; position: relative; z-index: 1; letter-spacing: -.01em; }
+.kpi .s { font-size: 12.5px; opacity: .88; margin-top: 4px; position: relative; z-index: 1; }
+.g-gold { background: linear-gradient(135deg, #F5C66B, #D98E1F); color: var(--navy); }
+.g-gold .ic { background: rgba(28,42,62,.14); }
+.g-teal { background: linear-gradient(135deg, #34D1C2, #13808C); }
+.g-blue { background: linear-gradient(135deg, #6E9BFF, #3A4FC0); }
+.g-red { background: linear-gradient(135deg, #FF7A85, #B5304E); }
+.g-violet { background: linear-gradient(135deg, #A98BFF, #5B3FC4); }
+.g-slate { background: linear-gradient(135deg, #3B4D6B, #22314A); }
+
+/* Kleine KPI's (boekhouding) */
+.mini { background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 14px 16px; }
+.mini .v { font-size: 22px; font-weight: 700; }
+.mini .l { font-size: 13px; color: var(--mid); }
+.mini .s { font-size: 12px; color: var(--dim); }
+.mini.ok .v { color: var(--green); } .mini.bad .v { color: var(--red); }
+
+/* Ring */
+.ringbox { display: flex; align-items: center; gap: 16px; position: relative; z-index: 1; }
+.ring { position: relative; width: 86px; height: 86px; flex: none; }
+.ring svg { transform: rotate(-90deg); }
+.ring .t { position: absolute; inset: 0; display: grid; place-items: center; font-weight: 700; font-size: 20px; }
+
+/* Tags en lijsten */
+.tag { display: inline-block; font-size: 12px; padding: 2px 9px; border-radius: 999px; background: rgba(255,255,255,.08); color: var(--mid); white-space: nowrap; font-weight: 500; }
+.tag.ok { background: rgba(61,214,140,.14); color: var(--green); }
+.tag.warn { background: rgba(242,169,59,.16); color: var(--amber); }
+.tag.bad { background: rgba(240,97,109,.16); color: var(--red); }
+.tag.info { background: rgba(91,141,239,.16); color: #8FB0FF; }
+.tag.gold { background: rgba(232,168,56,.18); color: var(--gold2); }
+.lijst .it { display: flex; gap: 12px; padding: 11px 0; border-bottom: 1px solid var(--line); align-items: flex-start; }
+.lijst .it:last-child { border-bottom: 0; }
+.dot { width: 10px; height: 10px; border-radius: 50%; margin-top: 6px; flex: none; }
+.p0 { background: var(--red); box-shadow: 0 0 0 4px rgba(240,97,109,.15); }
+.p1 { background: var(--amber); box-shadow: 0 0 0 4px rgba(242,169,59,.15); }
+.p2 { background: var(--blue); box-shadow: 0 0 0 4px rgba(91,141,239,.15); }
+.p3 { background: var(--dim); }
+.it .t { font-weight: 500; }
+.it .r { margin-left: auto; text-align: right; flex: none; }
+
+/* Leads */
+.lead { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 12px; padding: 10px 0; border-bottom: 1px solid var(--line); align-items: center; }
+.lead:last-child { border-bottom: 0; }
+.lead .nm { font-weight: 500; }
+.lead .meter { grid-column: 1 / -1; height: 5px; border-radius: 4px; background: rgba(255,255,255,.06); overflow: hidden; }
+.lead .meter > div { height: 100%; border-radius: 4px; }
+
+/* Tabellen */
+.tbl { width: 100%; overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font-size: 14px; }
+th { text-align: left; font-size: 11.5px; text-transform: uppercase; letter-spacing: .06em; color: var(--dim); font-weight: 500; padding: 8px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+td { padding: 10px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+tr:last-child td { border-bottom: 0; }
+td.num, th.num { text-align: right; white-space: nowrap; }
+tr.totaal td { font-weight: 700; border-top: 1px solid rgba(255,255,255,.18); }
+tr.vervallen td { background: rgba(240,97,109,.07); }
+ul.compact { margin: 2px 0 0; padding-left: 18px; color: var(--mid); font-size: 13px; }
+
+/* Funnel */
+.funnel { display: flex; flex-direction: column; gap: 8px; }
+.fstap { position: relative; margin: 0 auto; border-radius: 12px; padding: 10px 14px; display: flex; justify-content: space-between; align-items: center; gap: 10px; min-width: 210px; }
+.fstap .nm { font-weight: 500; }
+.fstap .n { font-weight: 700; font-size: 18px; }
+.fstap .pc { font-size: 12px; opacity: .85; margin-left: 6px; font-weight: 500; }
+.fstap.lek { outline: 2px solid var(--red); outline-offset: 2px; }
+
+/* Grafieken */
+.chartbox { position: relative; width: 100%; }
+.h220 { height: 220px; } .h260 { height: 260px; } .h200 { height: 200px; }
+.legende { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 12.5px; color: var(--mid); margin-top: 10px; }
+.legende i { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
+
+/* Mijlpalen */
+.tijdlijn { position: relative; padding-left: 20px; }
+.tijdlijn::before { content: ''; position: absolute; left: 5px; top: 6px; bottom: 6px; width: 2px; background: var(--line); }
+.mp { position: relative; padding: 6px 0 10px; }
+.mp::before { content: ''; position: absolute; left: -20px; top: 11px; width: 12px; height: 12px; border-radius: 50%; background: var(--bg2); border: 2px solid var(--dim); }
+.mp.ok::before { background: var(--green); border-color: var(--green); }
+.mp.nu::before { background: var(--gold); border-color: var(--gold); box-shadow: 0 0 0 5px rgba(232,168,56,.2); }
+.mp.mis::before { background: var(--red); border-color: var(--red); }
+.mp .w { font-weight: 700; font-size: 13px; color: var(--gold2); }
+.mp.toek .w { color: var(--mid); }
+
+/* Radar-keuze en uren */
+.keuze { margin-top: 8px; display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+button.kb { background: var(--panel2); color: var(--txt); border: 1px solid var(--line); border-radius: 8px; padding: 5px 12px; font-size: 13px; font-weight: 500; }
+button.kb.actief[data-b="GO"] { background: var(--green); color: #06301B; border-color: transparent; }
+button.kb.actief[data-b="MAYBE"] { background: var(--gold); color: var(--navy); border-color: transparent; }
+button.kb.actief[data-b="SKIP"] { background: var(--red); color: #fff; border-color: transparent; }
+button:disabled { opacity: .5; cursor: wait; }
+.urenin { display: inline-flex; gap: 6px; align-items: center; justify-content: flex-end; }
+.urenin input { width: 74px; background: rgba(0,0,0,.25); border: 1px solid var(--line); color: var(--txt); border-radius: 8px; padding: 6px 8px; font: inherit; text-align: right; }
+.urenin button { background: var(--panel2); color: var(--txt); border: 1px solid var(--line); border-radius: 8px; padding: 6px 10px; font-size: 13px; }
+.urenin .ok { color: var(--green); font-size: 12px; } .urenin .fout { color: var(--red); font-size: 12px; }
+
+/* Aanmelden */
+#login { max-width: 400px; margin: 12vh auto; padding: 28px; border-radius: 20px; background: var(--panel); border: 1px solid var(--line); }
+#login h2 { font-family: 'Playfair Display', serif; margin: 0 0 6px; }
+#login input { width: 100%; font: inherit; padding: 11px 12px; border: 1px solid var(--line); border-radius: 10px; margin: 14px 0; background: rgba(0,0,0,.25); color: var(--txt); }
+#msg { font-size: 14px; color: var(--mid); margin-top: 12px; min-height: 1em; }
+
+@media (max-width: 1100px) {
+  .c3 { grid-column: span 6; } .c4, .c5, .c7, .c8 { grid-column: span 12; } .c6 { grid-column: span 12; }
+}
+@media (max-width: 900px) {
+  .shell { grid-template-columns: minmax(0, 1fr); }
+  aside.side { position: static; height: auto; padding: 14px 16px; gap: 12px; border-right: 0; border-bottom: 1px solid var(--line); }
+  nav.tabs { flex-direction: row; overflow-x: auto; }
+  nav.tabs .lbl { display: none; }
+  nav.tabs button { width: auto; padding: 9px 12px; }
+  .side .foot { flex-direction: row; flex-wrap: wrap; align-items: center; margin-top: 0; }
+  main { padding: 18px 16px 32px; }
+  .kop h2 { font-size: 24px; }
+}
+@media (max-width: 560px) {
+  .c3 { grid-column: span 12; }
+  .kpi .v { font-size: 28px; }
+  .lijst .it { flex-wrap: wrap; }
+  .it .r { margin-left: 22px; text-align: left; width: 100%; }
+}
+</style>
 </head>
 <body>
-<header>
-  <div class="top">
-    <h1>Mechele <span>intern</span></h1>
-    <div class="meta">
-      <span id="stamp"></span>
-      <button class="ghost hidden" id="refresh" type="button">Vernieuwen</button>
-      <button class="ghost hidden" id="logout" type="button">Afmelden</button>
-    </div>
-  </div>
-  <nav class="tabs hidden" id="tabs" role="tablist">
-    <button type="button" role="tab" data-tab="vandaag">Vandaag<span class="n hidden" id="n-vandaag">0</span></button>
-    <button type="button" role="tab" data-tab="overzicht">Overzicht en groeiplan</button>
-    <button type="button" role="tab" data-tab="boekhouding">Boekhouding</button>
-  </nav>
-</header>
 
 <div id="login" class="hidden">
   <h2>Aanmelden</h2>
   <div class="muted">Je krijgt een aanmeldlink per mail.</div>
   <form id="loginform">
     <input type="email" id="email" autocomplete="email" placeholder="E-mailadres" required>
-    <button type="submit">Stuur aanmeldlink</button>
+    <button type="submit" class="prim">Stuur aanmeldlink</button>
   </form>
   <div id="msg"></div>
+  <button class="ghost hidden" id="logout2" type="button" style="margin-top:12px">Afmelden</button>
 </div>
 
-<main id="app" class="hidden">
+<div class="shell hidden" id="shell">
+  <aside class="side">
+    <div class="brand"><div class="logo">M</div><h1>Mechele<span>intern</span></h1></div>
+    <nav class="tabs" id="tabs" role="tablist">
+      <div class="lbl">Menu</div>
+      <button type="button" role="tab" data-tab="vandaag">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8v4l3 2"/><circle cx="12" cy="12" r="9"/></svg>
+        Vandaag<span class="n hidden" id="n-vandaag">0</span></button>
+      <button type="button" role="tab" data-tab="overzicht">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/></svg>
+        Overzicht en groeiplan</button>
+      <button type="button" role="tab" data-tab="boekhouding">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 10h18M7 15h4"/></svg>
+        Boekhouding</button>
+    </nav>
+    <div class="foot">
+      <div class="stamp" id="stamp"></div>
+      <button class="ghost" id="refresh" type="button">Vernieuwen</button>
+      <button class="ghost" id="logout" type="button">Afmelden</button>
+    </div>
+  </aside>
 
-  <!-- TAB 1: VANDAAG, alleen acties -->
-  <div class="pane" id="pane-vandaag" role="tabpanel" aria-hidden="true">
-    <section class="card">
-      <h2>Acties</h2>
-      <div id="acties"></div>
-    </section>
-    <div class="two">
-      <section class="card">
-        <h2>Radar: te beslissen <a href="https://docs.google.com/spreadsheets/d/166wgQIkOi7BX6W7dIWam7o8xc3lRXH8vttrhBTWIorU/edit" target="_blank" rel="noopener">Open de sheet</a></h2>
-        <div id="radar"></div>
-      </section>
-      <div>
-        <section class="card">
-          <h2>Deadlines binnen 14 dagen</h2>
-          <div class="tbl" id="deadlines"></div>
-        </section>
-        <section class="card">
-          <h2>Leads die op antwoord wachten <a href="https://docs.google.com/spreadsheets/d/1KThc6u2AG9mV7qnrLROSJ_MEhGMRLNgvkp6EVGTnHY4/edit" target="_blank" rel="noopener">Open de sheet</a></h2>
-          <div class="tbl" id="leads"></div>
-        </section>
-        <section class="card">
-          <h2>Te versturen en openstaande facturen</h2>
-          <div class="tbl" id="fact-vandaag"></div>
-        </section>
+  <main id="app">
+    <!-- TAB 1: VANDAAG -->
+    <div class="pane" id="pane-vandaag" role="tabpanel" aria-hidden="true">
+      <div class="kop"><div><h2 id="groet">Goedendag, <em>Steven</em></h2><div class="sub" id="vandaag-sub"></div></div></div>
+      <div class="row" id="v-kpis"></div>
+      <div class="row">
+        <div class="c7 stack">
+          <section class="card"><h3>Acties</h3><div class="lijst" id="acties"></div></section>
+          <section class="card"><h3>Radar: te beslissen <a href="https://docs.google.com/spreadsheets/d/166wgQIkOi7BX6W7dIWam7o8xc3lRXH8vttrhBTWIorU/edit" target="_blank" rel="noopener">Open de sheet</a></h3><div class="lijst" id="radar"></div></section>
+          <section class="card"><h3>Wacht op gunning</h3><div class="lijst" id="gunning"></div></section>
+        </div>
+        <div class="c5 stack">
+          <section class="card"><h3>Leads die wachten <a href="https://docs.google.com/spreadsheets/d/1KThc6u2AG9mV7qnrLROSJ_MEhGMRLNgvkp6EVGTnHY4/edit" target="_blank" rel="noopener">Open de sheet</a></h3><div id="leads"></div></section>
+          <section class="card"><h3>Deadlines binnen 14 dagen</h3><div class="lijst" id="deadlines"></div></section>
+          <section class="card"><h3>Facturen</h3><div class="tbl" id="fact-vandaag"></div></section>
+        </div>
       </div>
     </div>
-  </div>
 
-  <!-- TAB 2: OVERZICHT EN GROEIPLAN -->
-  <div class="pane" id="pane-overzicht" role="tabpanel" aria-hidden="true">
-    <div class="grid" id="kpis"></div>
-    <div class="two">
-      <section class="card">
-        <h2>Groeiplan</h2>
-        <div id="groei"></div>
-      </section>
-      <section class="card">
-        <h2>Outreach-funnel <a href="https://docs.google.com/spreadsheets/d/1KThc6u2AG9mV7qnrLROSJ_MEhGMRLNgvkp6EVGTnHY4/edit" target="_blank" rel="noopener">Open de sheet</a></h2>
-        <div id="funnel"></div>
-      </section>
+    <!-- TAB 2: OVERZICHT EN GROEIPLAN -->
+    <div class="pane" id="pane-overzicht" role="tabpanel" aria-hidden="true">
+      <div class="kop"><div><h2>Overzicht en <em>groeiplan</em></h2><div class="sub">Doel 2030: EUR 2 miljoen omzet, Mechele als hoofdberoep.</div></div></div>
+      <div class="row" id="o-kpis"></div>
+      <div class="row">
+        <section class="card c5"><h3>Verkooptrechter <a href="https://docs.google.com/spreadsheets/d/1KThc6u2AG9mV7qnrLROSJ_MEhGMRLNgvkp6EVGTnHY4/edit" target="_blank" rel="noopener">Open de sheet</a></h3><div id="funnel"></div></section>
+        <section class="card c7"><h3>Mails per werkdag <span class="muted" id="mails-sub"></span></h3><div class="chartbox h260"><canvas id="ch-mails"></canvas></div><div id="mails-kpi" class="legende"></div></section>
+      </div>
+      <div class="row">
+        <section class="card c7"><h3>Omzet per maand <span class="muted">excl. btw, uit de maandcijfers</span></h3><div class="chartbox h220"><canvas id="ch-omzet"></canvas></div><h4>Mijlpalen</h4><div class="tijdlijn" id="mijlpalen"></div></section>
+        <section class="card c5"><h3>Alle bedrijven in de sheet <span class="muted" id="status-sub"></span></h3><div class="chartbox h220"><canvas id="ch-status"></canvas></div><div class="legende" id="status-leg"></div><div class="tbl" id="status-tbl" style="margin-top:10px"></div></section>
+      </div>
+      <div class="row">
+        <section class="card c12"><h3>Uren en effectieve uurprijs <span class="muted">vloer EUR 110 per uur</span></h3>
+          <div class="row" style="margin:0">
+            <div class="c6"><h4 style="margin-top:0">Per maand</h4><div class="tbl" id="uren-maand"></div></div>
+            <div class="c6"><h4 style="margin-top:0">Per dossier</h4><div class="tbl" id="uren-dossier"></div></div>
+          </div>
+        </section>
+      </div>
+      <div class="row">
+        <section class="card c12"><h3>Klanten <a href="https://drive.google.com/drive/folders/1wGTweyFln5kdgEotHkctnPLDXcDL4PqU" target="_blank" rel="noopener">Klantdossiers in Drive</a></h3><div class="tbl" id="klanten"></div><div id="attesten"></div></section>
+      </div>
+      <div class="row">
+        <section class="card c12"><h3>Dossiers</h3><div class="tbl" id="dossiers"></div></section>
+      </div>
+      <div class="row">
+        <section class="card c12"><h3>Meldingen dossiers</h3><div class="lijst" id="meldingen"></div></section>
+      </div>
     </div>
-    <section class="card">
-      <h2>Outreach-verloop</h2>
-      <div id="outreach"></div>
-    </section>
-    <section class="card">
-      <h2>Klanten <a href="https://drive.google.com/drive/folders/1wGTweyFln5kdgEotHkctnPLDXcDL4PqU" target="_blank" rel="noopener">Klantdossiers in Drive</a></h2>
-      <div class="tbl" id="klanten"></div>
-      <div id="attesten"></div>
-    </section>
-    <section class="card">
-      <h2>Dossiers</h2>
-      <div class="tbl" id="dossiers"></div>
-    </section>
-    <section class="card">
-      <h2>Meldingen dossiers</h2>
-      <div id="meldingen"></div>
-    </section>
-  </div>
 
-  <!-- TAB 3: BOEKHOUDING -->
-  <div class="pane" id="pane-boekhouding" role="tabpanel" aria-hidden="true">
-    <div class="grid" id="bh-kpis"></div>
-    <div class="two">
-      <section class="card">
-        <h2>Resultaat <span class="muted" id="bh-jaar"></span></h2>
-        <div class="tbl" id="bh-resultaat"></div>
-      </section>
-      <section class="card">
-        <h2>Reserve voor btw, sociale bijdragen en belasting</h2>
-        <div class="tbl" id="bh-reserve"></div>
-      </section>
+    <!-- TAB 3: BOEKHOUDING -->
+    <div class="pane" id="pane-boekhouding" role="tabpanel" aria-hidden="true">
+      <div class="kop"><div><h2><em>Boekhouding</em></h2><div class="sub" id="bh-jaar"></div></div></div>
+      <div class="row" id="bh-kpis"></div>
+      <div class="row">
+        <section class="card c8"><h3>Per maand <span class="muted">betaald tegenover kosten</span></h3><div class="chartbox h260"><canvas id="ch-bh"></canvas></div><div class="tbl" id="bh-maanden" style="margin-top:12px"></div></section>
+        <section class="card c4"><h3>Kosten per bucket</h3><div class="chartbox h200"><canvas id="ch-bucket"></canvas></div><div class="tbl" id="bh-buckets" style="margin-top:10px"></div></section>
+      </div>
+      <div class="row">
+        <section class="card c6"><h3>Resultaat</h3><div class="tbl" id="bh-resultaat"></div></section>
+        <section class="card c6"><h3>Reserve voor btw, sociale bijdragen en belasting</h3><div class="tbl" id="bh-reserve"></div></section>
+      </div>
+      <div class="row">
+        <section class="card c12"><h3>Facturatie</h3>
+          <div class="row" style="margin:0">
+            <div class="c6"><h4 style="margin-top:0">Te factureren</h4><div class="tbl" id="fact-te-factureren"></div></div>
+            <div class="c6"><h4 style="margin-top:0">Openstaand en vervallen</h4><div class="tbl" id="fact-openstaand"></div></div>
+          </div>
+          <div id="fact-abonnementen"></div>
+        </section>
+      </div>
+      <div class="row"><section class="card c12"><h3>Facturen</h3><div class="tbl" id="bh-facturen"></div></section></div>
+      <div class="row"><section class="card c12"><h3>Kosten</h3><div class="tbl" id="bh-kosten"></div></section></div>
     </div>
-    <section class="card">
-      <h2>Per maand</h2>
-      <div id="bh-maanden"></div>
-    </section>
-    <div class="two">
-      <section class="card">
-        <h2>Kosten per bucket</h2>
-        <div class="tbl" id="bh-buckets"></div>
-      </section>
-      <section class="card">
-        <h2>Facturatie</h2>
-        <h3 class="sub">Te factureren</h3>
-        <div class="tbl" id="fact-te-factureren"></div>
-        <h3 class="sub">Openstaand en vervallen</h3>
-        <div class="tbl" id="fact-openstaand"></div>
-        <div id="fact-abonnementen"></div>
-      </section>
-    </div>
-    <section class="card">
-      <h2>Facturen</h2>
-      <div class="tbl" id="bh-facturen"></div>
-    </section>
-    <section class="card">
-      <h2>Kosten</h2>
-      <div class="tbl" id="bh-kosten"></div>
-    </section>
-  </div>
-</main>
+  </main>
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.js"></script>
 <script src="../shared/shared.js"></script>
 <script>
 (function () {
   'use strict';
   var M = window.MC, sb = M.sb, $ = M.$, esc = M.esc, eur = M.eur, eurCent = M.eurCent, num = M.num, pct = M.pct;
   var fmtDatum = M.fmtDatum, dagenTot = M.dagenTot, dagTag = M.dagTag, tag = M.tag;
+
+  var KLEUR = { gold: '#E8A838', gold2: '#F5C66B', teal: '#2EC4B6', blue: '#5B8DEF', red: '#F0616D', green: '#3DD68C', amber: '#F2A93B', violet: '#A98BFF', mid: '#A9B4C6', dim: '#74829A', line: 'rgba(255,255,255,.07)' };
+  var VLOER = 110;
+  var RICHTUREN = { small: 4, medium: 6, large: 10 };
 
   // Mijlpalen uit het groeiplan (versie 3 oktober 2026)
   var MIJLPALEN = [
@@ -169,18 +357,84 @@
   };
   var FACTUUR_STATUS = { te_factureren: ['te factureren', 'warn'], gefactureerd: ['gefactureerd', 'info'], betaald: ['betaald', 'ok'], geannuleerd: ['geannuleerd', ''] };
   var BUCKET = { mechele: 'Mechele', netwerk: 'Netwerk', brookmoor: 'Brookmoor Press', pass_through: 'Klant pass-through' };
+  var LEADSTATUS = { Geantwoord: ['jij bent aan zet', 'bad'], Wacht_op_prospect: ['prospect aan zet', 'info'], Gereageerd_stil: ['gereageerd, stil', ''], Gesprek_gehad: ['gesprek gehad', 'gold'], Afspraak_gepland: ['afspraak gepland', 'gold'] };
+  // Melding-types die ook tijdens het wachten op de gunning een actie vragen
+  var MELDING_ACTIE = ['gunning', 'vraag_aanbesteder', 'erratum', 'forum'];
+
+  var ICON = {
+    alert: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9L1.8 18a2 2 0 001.7 3h17a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0z"/></svg>',
+    mail: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>',
+    radar: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><path d="M12 12l6-6"/></svg>',
+    euro: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M17 6a7 7 0 100 12M4 10h9M4 14h9"/></svg>',
+    users: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="9" cy="8" r="4"/><path d="M2 21a7 7 0 0114 0M16 4a4 4 0 010 8M22 21a7 7 0 00-4-6.3"/></svg>',
+    target: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></svg>'
+  };
 
   var tabs = M.initTabs($('tabs'), 'vandaag');
+  var charts = {};
 
-  function toonLogin() {
-    $('login').classList.remove('hidden');
-    $('app').classList.add('hidden');
-    $('tabs').classList.add('hidden');
-    $('logout').classList.add('hidden');
-    $('refresh').classList.add('hidden');
-    $('stamp').textContent = '';
+  /* ---------- hulpfuncties ---------- */
+  function groetTekst() {
+    var u = Number(new Date().toLocaleString('nl-BE', { hour: 'numeric', hour12: false, timeZone: 'Europe/Brussels' }));
+    return u < 6 ? 'Goedenacht' : u < 12 ? 'Goeiemorgen' : u < 18 ? 'Goeiemiddag' : 'Goedenavond';
+  }
+  function kpi(o) {
+    var inhoud = o.ring != null
+      ? '<div class="ringbox">' + ring(o.ring, o.ringTekst, o.ringKleur) + '<div><div class="l">' + esc(o.l) + '</div><div class="s">' + esc(o.s || '') + '</div></div></div>'
+      : '<div class="top"><div class="l">' + esc(o.l) + '</div><div class="ic">' + (ICON[o.icon] || '') + '</div></div><div><div class="v">' + esc(o.v) + '</div><div class="s">' + esc(o.s || '') + '</div></div>';
+    return '<div class="kpi ' + (o.cls || 'g-slate') + ' ' + (o.span || 'c3') + '">' + inhoud + '</div>';
+  }
+  function ring(p, tekst, kleur) {
+    var r = 36, omtrek = 2 * Math.PI * r, v = Math.max(0, Math.min(1, p));
+    return '<div class="ring"><svg width="86" height="86" viewBox="0 0 86 86"><circle cx="43" cy="43" r="' + r + '" fill="none" stroke="rgba(255,255,255,.18)" stroke-width="9"/>' +
+      (v > 0 ? '<circle cx="43" cy="43" r="' + r + '" fill="none" stroke="' + (kleur || '#fff') + '" stroke-width="9" stroke-linecap="round" stroke-dasharray="' + (omtrek * v).toFixed(1) + ' ' + omtrek.toFixed(1) + '"/>' : '') +
+      '</svg><div class="t">' + esc(tekst) + '</div></div>';
+  }
+  function mini(o) {
+    return '<div class="mini c4 ' + (o.c || '') + '"><div class="l">' + esc(o.l) + '</div><div class="v">' + esc(o.v) + '</div><div class="s">' + esc(o.s || '') + '</div></div>';
+  }
+  function grafiek(id, cfg) {
+    if (!window.Chart) return;
+    if (charts[id]) charts[id].destroy();
+    var el = $(id);
+    if (el) charts[id] = new window.Chart(el, cfg);
+  }
+  function herteken() { Object.keys(charts).forEach(function (k) { try { charts[k].resize(); } catch (e) { /* niets */ } }); }
+  if (window.Chart) {
+    window.Chart.defaults.color = KLEUR.mid;
+    window.Chart.defaults.borderColor = KLEUR.line;
+    window.Chart.defaults.font.family = "'DM Sans', system-ui, sans-serif";
+    window.Chart.defaults.plugins.legend.display = false;
+    window.Chart.defaults.plugins.tooltip.backgroundColor = '#0F1B2E';
+    window.Chart.defaults.plugins.tooltip.borderColor = 'rgba(255,255,255,.12)';
+    window.Chart.defaults.plugins.tooltip.borderWidth = 1;
+    window.Chart.defaults.plugins.tooltip.padding = 10;
+  }
+  // Grafieken in een verborgen tab krijgen pas hun maat als de tab zichtbaar wordt
+  Array.prototype.forEach.call($('tabs').querySelectorAll('button[data-tab]'), function (b) {
+    b.addEventListener('click', function () { setTimeout(herteken, 30); });
+  });
+  window.addEventListener('hashchange', function () { setTimeout(herteken, 30); });
+
+  function eersteVanMaand() {
+    var s = new Date().toLocaleDateString('sv-SE', { timeZone: 'Europe/Brussels' });
+    return s.slice(0, 8) + '01';
+  }
+  function uurprijsTag(bedrag, uren) {
+    if (!uren || num(uren) <= 0) return '<span class="muted">vul uren in</span>';
+    var p = num(bedrag) / num(uren);
+    return tag('EUR ' + Math.round(p).toLocaleString('nl-BE') + '/u', p < VLOER ? 'bad' : 'ok');
+  }
+  function urenVeld(soort, id, waarde) {
+    return '<span class="urenin"><input type="number" min="0" step="0.25" inputmode="decimal" aria-label="Uren" value="' + esc(waarde == null || num(waarde) === 0 ? '' : waarde) + '" placeholder="uren">' +
+      '<button type="button" class="uren-save" data-soort="' + esc(soort) + '" data-id="' + esc(id) + '">Bewaar</button><span class="st"></span></span>';
   }
 
+  /* ---------- aanmelden ---------- */
+  function toonLogin() {
+    $('login').classList.remove('hidden');
+    $('shell').classList.add('hidden');
+  }
   $('loginform').addEventListener('submit', async function (e) {
     e.preventDefault();
     var email = $('email').value.trim().toLowerCase();
@@ -188,10 +442,12 @@
     var res = await sb.auth.signInWithOtp({ email: email, options: { emailRedirectTo: window.location.origin + '/intern/' } });
     $('msg').textContent = res.error ? 'Versturen mislukt: ' + res.error.message : 'Als dit adres toegang heeft, staat er een aanmeldlink in je mailbox.';
   });
-  $('logout').addEventListener('click', async function () { await sb.auth.signOut(); toonLogin(); });
+  async function afmelden() { await sb.auth.signOut(); $('logout2').classList.add('hidden'); toonLogin(); }
+  $('logout').addEventListener('click', afmelden);
+  $('logout2').addEventListener('click', afmelden);
   $('refresh').addEventListener('click', laad);
 
-  // Beslissing GO / MAYBE / SKIP vanop het dashboard
+  // Radar: GO / MAYBE / SKIP
   $('radar').addEventListener('click', async function (e) {
     var btn = e.target.closest('button.kb');
     if (!btn) return;
@@ -203,7 +459,24 @@
     knoppen.forEach(function (k) { k.disabled = false; });
     if (res.error) { msg.textContent = 'Mislukt: ' + res.error.message; return; }
     knoppen.forEach(function (k) { k.classList.toggle('actief', k.getAttribute('data-b') === b); });
-    msg.textContent = res.data && res.data.naar_sheet ? 'Opgeslagen, sheet volgt binnen een minuut.' : 'Opgeslagen in de databank (sheet nog niet gekoppeld).';
+    msg.textContent = res.data && res.data.naar_sheet ? 'Opgeslagen, sheet volgt binnen een minuut.' : 'Opgeslagen in de databank.';
+  });
+
+  // Uren bewaren (per dossier of per maand)
+  $('app').addEventListener('click', async function (e) {
+    var btn = e.target.closest('button.uren-save');
+    if (!btn) return;
+    var box = btn.parentNode, inp = box.querySelector('input'), st = box.querySelector('.st');
+    var uren = Number(String(inp.value).replace(',', '.'));
+    if (!inp.value || isNaN(uren) || uren < 0) { st.className = 'st fout'; st.textContent = 'ongeldig'; return; }
+    btn.disabled = true; st.className = 'st'; st.textContent = '...';
+    var res = btn.getAttribute('data-soort') === 'dossier'
+      ? await sb.rpc('zet_dossier_uren_web', { p_dossier: btn.getAttribute('data-id'), p_uren: uren })
+      : await sb.rpc('zet_maand_uren_web', { p_maand: btn.getAttribute('data-id'), p_uren: uren });
+    btn.disabled = false;
+    if (res.error) { st.className = 'st fout'; st.textContent = res.error.message; return; }
+    st.className = 'st ok'; st.textContent = 'bewaard';
+    setTimeout(laad, 600);
   });
 
   async function laad() {
@@ -215,240 +488,300 @@
       if (/geen toegang|permission|JWT/i.test(fout.message)) {
         toonLogin();
         $('msg').textContent = 'Dit account heeft geen toegang.';
-        $('logout').classList.remove('hidden');
+        $('logout2').classList.remove('hidden');
       } else {
         $('stamp').textContent = 'Fout bij laden: ' + fout.message;
       }
       return;
     }
     $('login').classList.add('hidden');
-    $('app').classList.remove('hidden');
-    $('tabs').classList.remove('hidden');
-    $('logout').classList.remove('hidden');
-    $('refresh').classList.remove('hidden');
+    $('shell').classList.remove('hidden');
     var dash = d.data || {};
-    renderVandaag(dash);
-    renderOverzicht(dash);
-    renderBoekhouding(b.data || {}, dash.facturatie || {});
-    $('stamp').textContent = 'Stand ' + fmtDatum(dash.gegenereerd, true);
+    var stappen = [
+      ['Vandaag', function () { renderVandaag(dash); }],
+      ['Overzicht', function () { renderOverzicht(dash); }],
+      ['Boekhouding', function () { renderBoekhouding(b.data || {}, dash.facturatie || {}); }]
+    ];
+    var fouten = [];
+    stappen.forEach(function (s) { try { s[1](); } catch (err) { fouten.push(s[0]); if (window.console) console.error(err); } });
+    $('stamp').textContent = 'Stand ' + fmtDatum(dash.gegenereerd, true) + (fouten.length ? ' (fout in ' + fouten.join(', ') + ')' : '');
+    setTimeout(herteken, 30);
+  }
+
+  /* ---------- gedeelde afleidingen ---------- */
+  function dossierFase(dossiers) {
+    var m = {};
+    dossiers.forEach(function (x) { m[(x.klantcode || '') + '|' + (x.omschrijving || '')] = x.fase; });
+    return function (melding) { return m[(melding.klantcode || '') + '|' + (melding.dossier || '')]; };
   }
 
   /* ---------- TAB 1: VANDAAG ---------- */
   function renderVandaag(d) {
     var radar = d.radar || [], dossiers = d.dossiers || [], meldingen = d.meldingen || [];
     var klanten = d.klanten || [], attesten = d.attesten || [], f = d.facturatie || {};
-    var ps = (d.outreach && d.outreach.per_status) || {};
+    var ps = (d.outreach && d.outreach.per_status) || {}, st = (d.outreach && d.outreach.stats) || {};
+    var leads = st.leads || [];
+    var faseVan = dossierFase(dossiers);
     var acties = [];
-    function actie(p, h) { acties.push({ p: p, h: h }); }
+    function actie(p, h, r) { acties.push({ p: p, h: h, r: r || '' }); }
 
-    // 0: dringend
+    $('groet').innerHTML = esc(groetTekst()) + ', <em>Steven</em>';
+    $('vandaag-sub').textContent = new Date().toLocaleDateString('nl-BE', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric', timeZone: 'Europe/Brussels' });
+
+    // 0: dringend. Meldingen bij een dossier dat op de gunning wacht, tellen enkel als actie als ze iets vragen.
+    var gunningInfo = [];
     meldingen.forEach(function (m) {
-      actie(0, tag(m.type, 'bad') + ' ' + esc(m.klantcode || '') + ' ' + esc(m.dossier || '') + ': ' + esc(m.impact || m.samenvatting || ''));
+      if (faseVan(m) === 'gunning' && MELDING_ACTIE.indexOf(m.type) < 0) { gunningInfo.push(m); return; }
+      actie(0, tag(m.type, 'bad') + ' <span class="t">' + esc(m.klantcode || '') + ' ' + esc(m.dossier || '') + '</span><div class="muted">' + esc(m.impact || m.samenvatting || '') + '</div>');
     });
     (f.vervallen || []).forEach(function (x) {
-      actie(0, tag('vervallen', 'bad') + ' Factuur ' + esc(x.factuurnummer || x.type) + ' ' + esc(x.klantcode) + ' ' + eurCent(x.bedrag_eur) + ', ' + esc(x.dagen_vervallen) + ' dagen over de vervaldatum: herinnering sturen.');
+      actie(0, '<span class="t">Factuur ' + esc(x.factuurnummer || x.type) + ' ' + esc(x.klantcode) + ' is ' + esc(x.dagen_vervallen) + ' dagen vervallen</span><div class="muted">Herinnering sturen.</div>', eurCent(x.bedrag_eur));
     });
     // 1: deze week
     dossiers.forEach(function (x) {
       var n = dagenTot(x.deadline);
-      if (x.fase === 'errata' && n != null && n <= 7) actie(1, dagTag(x.deadline) + ' Deadline ' + esc(x.omschrijving) + ' (' + esc(x.klantcode) + '): forum en documenten op het platform nakijken.');
-      if (x.fase === 'status_onduidelijk') actie(1, tag('status', 'warn') + ' ' + esc(x.omschrijving) + ': ingediend of niet? Zeg het in de chat.');
-      if (x.fase === 'nazorg' && !x.succesfee_gefactureerd) actie(1, tag('factuur', 'warn') + ' Succesfee ' + esc(x.omschrijving) + ' ' + esc(eur(x.succesfee_eur)) + ' factureren.');
+      if (x.fase === 'errata' && n != null && n <= 7) actie(1, '<span class="t">Deadline ' + esc(x.omschrijving) + ' (' + esc(x.klantcode) + ')</span><div class="muted">Forum en documenten op het platform nakijken.</div>', dagTag(x.deadline));
+      if (x.fase === 'status_onduidelijk') actie(1, '<span class="t">' + esc(x.omschrijving) + ': ingediend of niet?</span><div class="muted">Zeg het in de chat.</div>', tag('status', 'warn'));
+      if (x.fase === 'nazorg' && !x.succesfee_gefactureerd) actie(1, '<span class="t">Succesfee ' + esc(x.omschrijving) + ' factureren</span>', esc(eur(x.succesfee_eur)));
     });
     (f.te_factureren || []).forEach(function (x) {
-      actie(1, tag('factuur', 'warn') + ' Te factureren: ' + esc(x.klantcode || '') + ' ' + esc(x.omschrijving || x.type) + ' ' + eurCent(x.bedrag_eur));
+      actie(1, '<span class="t">Te factureren: ' + esc(x.klantcode || '') + ' ' + esc(x.omschrijving || x.type) + '</span>', eurCent(x.bedrag_eur));
     });
     radar.filter(function (r) { var n = dagenTot(r.deadline); return r.beslissing !== 'SKIP' && n != null && n <= 7; }).forEach(function (r) {
-      actie(1, dagTag(r.deadline) + ' Radar ' + esc(r.klantcode || '') + ': ' + esc(r.titel) + ' staat op ' + esc(r.beslissing) + ' en sluit ' + esc(fmtDatum(r.deadline, true)) + '.');
+      actie(1, '<span class="t">Radar ' + esc(r.klantcode || '') + ': ' + esc(r.titel) + '</span><div class="muted">Staat op ' + esc(r.beslissing) + ', sluit ' + esc(fmtDatum(r.deadline, true)) + '.</div>', dagTag(r.deadline));
     });
-    // 2: deze week opvolgen
-    var wachtend = num(ps.Geantwoord);
-    if (wachtend) actie(2, tag('leads', 'info') + ' ' + wachtend + ' bedrijf(ven) met status Geantwoord wachten op jouw antwoord in de sheet.');
+    // 2: opvolgen
+    var aanZet = num(ps.Geantwoord);
+    if (aanZet) actie(1, '<span class="t">' + aanZet + ' lead(s) wachten op jouw antwoord</span><div class="muted">Status Geantwoord in de sheet.</div>', tag('leads', 'bad'));
+    var opvolgen = leads.filter(function (l) { return l.status === 'Wacht_op_prospect' && l.dagen != null && l.dagen >= 7; });
+    if (opvolgen.length) actie(2, '<span class="t">' + opvolgen.length + ' lead(s) 7 dagen of langer stil</span><div class="muted">Opvolgconcept met een nee-vraag: ' + esc(opvolgen.map(function (l) { return l.bedrijf; }).join(', ')) + '.</div>', tag('opvolgen', 'warn'));
     var nieuw = radar.filter(function (r) { return r.beslissing === 'nieuw'; }).length;
     var maybe = radar.filter(function (r) { return r.beslissing === 'MAYBE'; }).length;
-    if (nieuw) actie(2, tag('radar', 'info') + ' ' + nieuw + ' nieuwe match(es) beoordelen.');
-    if (maybe) actie(2, tag('radar') + ' ' + maybe + ' MAYBE nog open: beslis GO of SKIP.');
+    if (nieuw) actie(2, '<span class="t">' + nieuw + ' nieuwe match(es) beoordelen</span>', tag('radar', 'info'));
+    if (maybe) actie(2, '<span class="t">' + maybe + ' MAYBE nog open</span><div class="muted">Beslis GO of SKIP.</div>', tag('radar'));
     attesten.filter(function (a) { return a.dagen_resterend <= 30; }).forEach(function (a) {
-      actie(2, tag('attest', 'warn') + ' ' + esc(a.klantcode) + ' ' + esc(a.type) + ' vervalt over ' + esc(a.dagen_resterend) + ' dagen.');
+      actie(2, '<span class="t">' + esc(a.klantcode) + ' ' + esc(a.type) + ' vervalt over ' + esc(a.dagen_resterend) + ' dagen</span>', tag('attest', 'warn'));
     });
     // 3: intake van actieve klanten
     klanten.filter(function (k) { return k.status === 'actief' && (k.ontbreekt || []).length; }).forEach(function (k) {
-      actie(3, tag('intake') + ' ' + esc(k.klantcode) + ' ' + esc(k.naam) + ': ' + k.ontbreekt.length + ' stuk(ken) ontbreken in de kennisbank (' + esc(k.ontbreekt[0]) + (k.ontbreekt.length > 1 ? ', ...' : '') + ').');
+      actie(3, '<span class="t">' + esc(k.klantcode) + ' ' + esc(k.naam) + ': ' + k.ontbreekt.length + ' stuk(ken) ontbreken</span><div class="muted">' + esc(k.ontbreekt.join(', ')) + '</div>', tag('intake'));
     });
-
     acties.sort(function (a, b) { return a.p - b.p; });
     $('acties').innerHTML = acties.length
-      ? acties.map(function (x) { return '<div class="item prio' + x.p + '">' + x.h + '</div>'; }).join('')
+      ? acties.map(function (x) { return '<div class="it"><span class="dot p' + x.p + '"></span><div>' + x.h + '</div><div class="r">' + x.r + '</div></div>'; }).join('')
       : '<div class="empty">Niets dringends. Goed bezig.</div>';
     var dringend = acties.filter(function (x) { return x.p <= 1; }).length;
     $('n-vandaag').textContent = dringend;
     $('n-vandaag').classList.toggle('hidden', !dringend);
 
-    // Radar met keuzeknoppen
+    // KPI's
+    var wachtProspect = leads.filter(function (l) { return l.status === 'Wacht_op_prospect'; });
+    var factTotaal = num(f.totalen && f.totalen.te_factureren) + num(f.totalen && f.totalen.vervallen);
+    $('v-kpis').innerHTML = [
+      kpi({ cls: dringend ? 'g-red' : 'g-teal', icon: 'alert', l: 'Dringend', v: dringend, s: dringend ? 'acties voor deze week' : 'niets dringends' }),
+      kpi({ cls: 'g-gold', icon: 'mail', l: 'Leads aan zet', v: wachtProspect.length + aanZet, s: aanZet + ' wachten op jou, ' + opvolgen.length + ' al 7+ dagen stil' }),
+      kpi({ cls: 'g-blue', icon: 'radar', l: 'Radar', v: radar.length, s: nieuw + ' nieuw, ' + maybe + ' MAYBE' }),
+      kpi({ cls: num(f.totalen && f.totalen.vervallen) ? 'g-red' : 'g-violet', icon: 'euro', l: 'Te factureren en vervallen', v: eur(factTotaal) || 'EUR 0', s: 'openstaand ' + (eur(f.totalen && f.totalen.openstaand) || 'EUR 0') })
+    ].join('');
+
+    // Radar
     $('radar').innerHTML = radar.length ? radar.map(function (r) {
       var cls = r.beslissing === 'GO' ? 'ok' : r.beslissing === 'MAYBE' ? 'warn' : 'info';
       var link = M.safeUrl(r.url);
-      return '<div class="item"><div class="t">' + (link ? '<a href="' + link + '" target="_blank" rel="noopener">' + esc(r.titel) + '</a>' : esc(r.titel)) + '</div>' +
+      return '<div class="it"><span class="dot p2"></span><div style="min-width:0;flex:1"><div class="t">' + (link ? '<a href="' + link + '" target="_blank" rel="noopener">' + esc(r.titel) + '</a>' : esc(r.titel)) + '</div>' +
         '<div class="muted">' + esc(r.organisatie) + ' | ' + esc(r.klantcode || '') + ' ' + esc(r.klant || '') + ' | score ' + esc(r.ai_score == null ? '-' : r.ai_score) + '</div>' +
         '<div style="margin-top:4px">' + tag(r.beslissing, cls) + ' ' + dagTag(r.deadline) + ' <span class="muted">' + esc(fmtDatum(r.deadline, true)) + '</span></div>' +
         (r.ai_advies ? '<div class="muted" style="margin-top:4px">' + esc(r.ai_advies) + '</div>' : '') +
         '<div class="keuze" data-id="' + esc(r.id) + '">' + ['GO', 'MAYBE', 'SKIP'].map(function (b) {
           return '<button type="button" class="kb' + (r.beslissing === b ? ' actief' : '') + '" data-b="' + b + '">' + b + '</button>';
-        }).join('') + '<span class="kmsg muted"></span></div></div>';
+        }).join('') + '<span class="kmsg muted"></span></div></div></div>';
     }).join('') : '<div class="empty">Niets te beslissen.</div>';
 
-    // Deadlines binnen 14 dagen: lopende dossiers plus radar GO/MAYBE
+    // Wacht op gunning: ingediende dossiers met hun laatste nieuws, geen actie
+    var ing = dossiers.filter(function (x) { return x.fase === 'gunning'; });
+    $('gunning').innerHTML = ing.length ? ing.map(function (x) {
+      var sinds = x.ingediend_op ? Math.max(0, -dagenTot(x.ingediend_op)) : null;
+      var info = gunningInfo.filter(function (m) { return m.dossier === x.omschrijving; });
+      return '<div class="it"><span class="dot p3"></span><div style="min-width:0;flex:1"><div class="t">' + esc(x.omschrijving) + '</div>' +
+        '<div class="muted">' + esc(x.klantcode) + ' ' + esc(x.klant || '') + (x.ingediend_op ? ', ingediend ' + esc(fmtDatum(x.ingediend_op)) : '') + '</div>' +
+        (x.klant_status ? '<div style="margin-top:4px">' + esc(x.klant_status) + '</div>' : '') +
+        info.map(function (m) { return '<div class="muted" style="margin-top:4px">' + esc(m.impact || m.samenvatting || '') + '</div>'; }).join('') +
+        '</div><div class="r">' + (sinds != null ? tag(sinds + ' d', 'info') : '') + '<div class="muted" style="margin-top:4px">' + M.waardeHtml(x.contractwaarde_min_eur, x.contractwaarde_max_eur, null) + '</div></div></div>';
+    }).join('') : '<div class="empty">Geen dossiers die op een gunning wachten.</div>';
+
+    // Leads met dagen sinds jouw laatste mail
+    var lh = '';
+    if (!d.outreach) lh = '<div class="empty">Nog geen telling.</div>';
+    else if (!leads.length) lh = '<div class="empty">Geen lopende leads.</div>';
+    else {
+      lh = leads.map(function (l) {
+        var s = LEADSTATUS[l.status] || [l.status, ''], dagen = l.dagen, rechts, kleur, breedte;
+        if (dagen != null) {
+          kleur = dagen >= 14 ? KLEUR.red : dagen >= 7 ? KLEUR.amber : KLEUR.teal;
+          rechts = tag(dagen + ' d stil', dagen >= 14 ? 'bad' : dagen >= 7 ? 'warn' : 'ok');
+          breedte = Math.min(100, Math.round(dagen / 14 * 100));
+        } else rechts = tag(s[0], s[1]);
+        return '<div class="lead"><div style="min-width:0"><div class="nm">' + esc(l.bedrijf) + '</div><div class="muted">' + esc(s[0]) +
+          (l.sinds ? ', laatste mail ' + esc(fmtDatum(l.sinds)) : '') + (l.ondertekend ? ' ' + tag('ondertekend', 'ok') : l.offerte ? ' ' + tag('offerte verstuurd', 'gold') : '') + '</div></div>' +
+          '<div>' + rechts + '</div>' + (dagen != null ? '<div class="meter"><div style="width:' + Math.max(4, breedte) + '%;background:' + kleur + '"></div></div>' : '') + '</div>';
+      }).join('') + '<div class="muted" style="margin-top:8px">Dagen sinds jouw laatste mail (WACHT OP PROSPECT in kolom N). Oranje vanaf 7 dagen: eerste opvolging. Rood vanaf 14: laatste opvolging. Stand ' + esc(fmtDatum(d.outreach.bijgewerkt, true)) + '.</div>';
+    }
+    $('leads').innerHTML = lh;
+
+    // Deadlines binnen 14 dagen: enkel lopende dossiers (errata) en radar GO/MAYBE. Ingediende dossiers staan bij "Wacht op gunning".
     var dl = [];
-    dossiers.filter(function (x) { return x.fase !== 'klaar'; }).forEach(function (x) {
+    dossiers.filter(function (x) { return x.fase === 'errata'; }).forEach(function (x) {
       var n = dagenTot(x.deadline);
-      if (n != null && n <= 14) dl.push({ d: x.deadline, wat: x.omschrijving, wie: x.klantcode, soort: 'dossier', status: (FASE[x.fase] || [x.fase])[0] });
+      if (n != null && n >= 0 && n <= 14) dl.push({ d: x.deadline, wat: x.omschrijving, wie: x.klantcode, soort: 'dossier' });
     });
     radar.filter(function (r) { return r.beslissing === 'GO' || r.beslissing === 'MAYBE'; }).forEach(function (r) {
       var n = dagenTot(r.deadline);
-      if (n != null && n <= 14) dl.push({ d: r.deadline, wat: r.titel, wie: r.klantcode, soort: 'radar', status: r.beslissing });
+      if (n != null && n >= 0 && n <= 14) dl.push({ d: r.deadline, wat: r.titel, wie: r.klantcode, soort: 'radar ' + r.beslissing });
     });
     dl.sort(function (a, b) { return new Date(a.d) - new Date(b.d); });
-    $('deadlines').innerHTML = dl.length ? '<table><thead><tr><th>Wanneer</th><th>Wat</th><th>Klant</th><th>Status</th></tr></thead><tbody>' +
-      dl.map(function (x) {
-        return '<tr><td>' + dagTag(x.d) + '<div class="muted">' + esc(fmtDatum(x.d, true)) + '</div></td><td>' + esc(x.wat) + '<div class="muted">' + esc(x.soort) + '</div></td><td>' + esc(x.wie || '-') + '</td><td>' + tag(x.status) + '</td></tr>';
-      }).join('') + '</tbody></table>' : '<div class="empty">Geen deadlines binnen 14 dagen.</div>';
+    $('deadlines').innerHTML = dl.length ? dl.map(function (x) {
+      return '<div class="it"><span class="dot p1"></span><div style="min-width:0;flex:1"><div class="t">' + esc(x.wat) + '</div><div class="muted">' + esc(x.wie || '-') + ', ' + esc(x.soort) + ', ' + esc(fmtDatum(x.d, true)) + '</div></div><div class="r">' + dagTag(x.d) + '</div></div>';
+    }).join('') : '<div class="empty">Geen deadlines binnen 14 dagen.</div>';
 
-    // Leads: telling per status uit de outreach-sheet (namen staan in de sheet)
-    var leadsHtml = '';
-    if (d.outreach) {
-      var rijen = [
-        ['Geantwoord, wacht op jouw antwoord', num(ps.Geantwoord), 'warn'],
-        ['Wacht op prospect (jij antwoordde, zij zijn aan zet)', num(ps.Wacht_op_prospect), 'info'],
-        ['Geen reactie na opvolging', num(ps.Geen_reactie), ''],
-        ['Gesprek gehad', num(ps.Gesprek_gehad), 'info'],
-        ['Afspraak gepland', num(ps.Afspraak_gepland), 'info'],
-        ['Niet geinteresseerd', num(ps.Niet_geinteresseerd), ''],
-        ['Uitgeschreven', num(ps.Uitgeschreven), '']
-      ];
-      leadsHtml = '<table><tbody>' + rijen.map(function (r) {
-        return '<tr><td>' + esc(r[0]) + '</td><td class="num">' + tag(r[1], r[1] && r[2] ? r[2] : '') + '</td></tr>';
-      }).join('') + '</tbody></table><div class="muted" style="margin-top:6px">Stand ' + esc(fmtDatum(d.outreach.bijgewerkt, true)) + '. Namen en mails staan in de sheet.</div>';
-    } else leadsHtml = '<div class="empty">Nog geen telling.</div>';
-    $('leads').innerHTML = leadsHtml;
-
-    // Facturen vandaag: te factureren plus vervallen
+    // Facturen
     var fr = (f.te_factureren || []).map(function (x) {
       return '<tr><td>' + esc(x.klantcode || '-') + '</td><td>' + esc(x.omschrijving || x.type) + '</td><td>' + tag('te factureren', 'warn') + '</td><td class="num">' + eurCent(x.bedrag_eur) + '</td></tr>';
     }).concat((f.vervallen || []).map(function (x) {
       return '<tr class="vervallen"><td>' + esc(x.klantcode || '-') + '</td><td>' + esc(x.factuurnummer || x.type) + '</td><td>' + tag(x.dagen_vervallen + ' d vervallen', 'bad') + '</td><td class="num">' + eurCent(x.bedrag_eur) + '</td></tr>';
     }));
-    $('fact-vandaag').innerHTML = fr.length ? '<table><thead><tr><th>Klant</th><th>Wat</th><th>Status</th><th class="num">Bedrag</th></tr></thead><tbody>' + fr.join('') + '</tbody></table>'
-      : '<div class="empty">Niets te versturen, niets vervallen.</div>';
+    $('fact-vandaag').innerHTML = fr.length ? '<table><tbody>' + fr.join('') + '</tbody></table>' : '<div class="empty">Niets te versturen, niets vervallen.</div>';
   }
 
   /* ---------- TAB 2: OVERZICHT EN GROEIPLAN ---------- */
   function renderOverzicht(d) {
     var radar = d.radar || [], dossiers = d.dossiers || [], meldingen = d.meldingen || [];
-    var klanten = d.klanten || [], attesten = d.attesten || [], t = d.telling || {};
+    var klanten = d.klanten || [], attesten = d.attesten || [], t = d.telling || {}, f = d.facturatie || {};
     var volgende = MIJLPALEN.filter(function (m) { return m.tier1 && new Date(m.datum) >= new Date(); })[0];
-    var lopend = dossiers.filter(function (x) { return x.fase !== 'klaar'; });
     var ps = (d.outreach && d.outreach.per_status) || {}, st = (d.outreach && d.outreach.stats) || null;
+    var tier1 = t.tier1 || 0, maand = (d.maandcijfers || []).slice();
+    var tot = f.totalen || {};
 
-    $('kpis').innerHTML = M.kpiTegels([
-      { v: (t.tier1 || 0) + (volgende ? ' / ' + volgende.tier1 : ''), l: 'Tier 1-klanten', s: volgende ? 'doel ' + volgende.label : '' },
-      { v: t.klanten_actief || 0, l: 'Actieve klanten', s: 'alle formules' },
-      { v: radar.length, l: 'Radar te beoordelen', s: 'MAYBE, GO en nieuw vandaag' },
-      { v: lopend.length, l: 'Lopende dossiers', s: 'tot en met nazorg' },
-      { v: st ? num(st.positief) : '-', l: 'Leads met interesse', s: st ? num(st.reacties) + ' reacties, ' + num(ps.Gesprek_gehad) + ' gesprek(ken)' : '' },
-      { v: t.matches_7d || 0, l: 'Matches 7 dagen', s: (t.tenders_7d || 0) + ' publicaties ingelezen' }
-    ]);
+    // KPI's
+    $('o-kpis').innerHTML = [
+      volgende ? kpi({ cls: 'g-gold', ring: tier1 / volgende.tier1, ringTekst: tier1 + '/' + volgende.tier1, ringKleur: '#1C2A3E', l: 'Tier 1-klanten', s: 'doel ' + volgende.label + ', nog ' + dagenTot(volgende.datum) + ' dagen' })
+        : kpi({ cls: 'g-gold', icon: 'users', l: 'Tier 1-klanten', v: tier1 }),
+      kpi({ cls: 'g-teal', icon: 'euro', l: 'Betaald dit jaar', v: eur(tot.omzet_betaald_dit_jaar) || 'EUR 0', s: 'gefactureerd deze maand ' + (eur(tot.omzet_gefactureerd_deze_maand) || 'EUR 0') }),
+      kpi({ cls: 'g-blue', icon: 'mail', l: 'Leads met interesse', v: st ? num(st.positief) : '-', s: st ? num(st.reacties) + ' reacties op ' + num(st.aangeschreven) + ' aangeschreven' : '' }),
+      kpi({ cls: 'g-violet', icon: 'target', l: 'Matches 7 dagen', v: t.matches_7d || 0, s: (t.tenders_7d || 0) + ' publicaties, ' + radar.length + ' op de radar' })
+    ].join('');
 
-    // Groeiplan
-    var maand = d.maandcijfers || [], laatste = maand.length ? maand[maand.length - 1] : null, tier1 = t.tier1 || 0, html = '';
-    if (volgende) {
-      var p = Math.min(100, Math.round(tier1 / volgende.tier1 * 100));
-      html += '<div><b>' + tier1 + ' van ' + volgende.tier1 + '</b> Tier 1-klanten voor ' + esc(volgende.label) + ' <span class="muted">(' + dagenTot(volgende.datum) + ' dagen)</span><div class="bar"><div style="width:' + p + '%"></div></div></div>';
-    }
-    html += '<div class="tbl" style="margin-top:12px"><table><thead><tr><th>Mijlpaal</th><th>Doel</th><th>Stand</th></tr></thead><tbody>' +
-      MIJLPALEN.map(function (m) {
-        var voorbij = new Date(m.datum) < new Date(), stand;
-        if (m.tier1) stand = tier1 >= m.tier1 ? tag('gehaald', 'ok') : (voorbij ? tag('gemist', 'bad') : tag('open'));
-        else if (m.omzetMaand) {
-          var gehaald = maand.some(function (c) { return Number(c.omzet_eur) > m.omzetMaand; });
-          stand = gehaald ? tag('gehaald', 'ok') : (voorbij ? tag('gemist', 'bad') : tag('open'));
-        } else stand = tag('open');
-        return '<tr><td>' + esc(m.label) + '</td><td>' + esc(m.tekst) + '</td><td>' + stand + '</td></tr>';
-      }).join('') + '</tbody></table></div>';
-    if (maand.length) {
-      html += '<h3 class="sub">Maandcijfers</h3><div class="tbl"><table><thead><tr><th>Maand</th><th class="num">Omzet</th><th class="num">Tier 1</th><th class="num">Tier 2</th><th class="num">Uren</th></tr></thead><tbody>' +
-        maand.map(function (c) {
-          return '<tr><td>' + esc(M.fmtMaand(c.maand)) + '</td><td class="num">' + esc(eur(c.omzet_eur) || '-') + '</td><td class="num">' + esc(c.tier1_klanten == null ? '-' : c.tier1_klanten) + '</td><td class="num">' + esc(c.tier2_klanten == null ? '-' : c.tier2_klanten) + '</td><td class="num">' + esc(c.uren == null ? '-' : c.uren) + '</td></tr>';
-        }).join('') + '</tbody></table></div>';
-    } else html += '<div class="muted" style="margin-top:10px">Omzet en uren verschijnen hier na de maandcontrole op de eerste werkdag van de maand.</div>';
-    $('groei').innerHTML = html;
-
-    // Funnel: aangeschreven, reacties, interesse, gesprek, klant. Plan rekende op 40% van reactie naar gesprek.
+    // Verkooptrechter: aangeschreven, reactie, interesse, offerte, ondertekend
     if (st) {
-      var aangeschreven = num(st.aangeschreven), reacties = num(st.reacties), positief = num(st.positief);
-      var gesprek = num(ps.Gesprek_gehad) + num(ps.Afspraak_gepland), klant = 0;
       var stappen = [
-        ['Aangeschreven', aangeschreven, null, ''],
-        ['Reacties', reacties, aangeschreven, ''],
-        ['Interesse', positief, reacties, ''],
-        ['Gesprek of afspraak', gesprek, positief, positief && gesprek / positief < 0.4 ? 'lek' : ''],
-        ['Nieuwe betalende klant', klant, gesprek, gesprek && !klant ? 'lek' : '']
+        ['Aangeschreven', num(st.aangeschreven), KLEUR.blue],
+        ['Reactie', num(st.reacties), '#4A78D8'],
+        ['Interesse', num(st.positief), KLEUR.teal],
+        ['Offerte verstuurd', num(st.offerte), KLEUR.gold],
+        ['Ondertekend', num(st.ondertekend), KLEUR.green]
       ];
-      var fmax = Math.max(1, aangeschreven);
-      $('funnel').innerHTML = '<div class="funnel">' + stappen.map(function (s) {
-        var w = Math.max(1, Math.round(s[1] / fmax * 100));
-        var conv = s[2] ? '<span class="pct">' + Math.round(s[1] / s[2] * 100) + '%</span>' : '';
-        return '<div class="stap ' + s[3] + '"><div>' + esc(s[0]) + '</div><div class="b"><div style="width:' + w + '%"></div></div><div class="n">' + s[1] + conv + '</div></div>';
-      }).join('') + '</div><div class="muted" style="margin-top:8px">Percentage = omzetting tegenover de stap erboven. Rood = onder de aanname uit het groeiplan (40% van interesse naar gesprek). Nieuwe klanten uit outreach: nog geen geregistreerd.</div>';
+      var breed = [100, 84, 68, 52, 40];
+      $('funnel').innerHTML = '<div class="funnel">' + stappen.map(function (s, i) {
+        var vorige = i ? stappen[i - 1][1] : null;
+        var conv = vorige ? Math.round(s[1] / vorige * 100) : null;
+        var lek = vorige && s[1] === 0;
+        var donker = s[2] === KLEUR.gold || s[2] === KLEUR.green;
+        return '<div class="fstap' + (lek ? ' lek' : '') + '" style="width:' + breed[i] + '%;background:linear-gradient(90deg,' + s[2] + 'EE,' + s[2] + '99);color:' + (donker ? '#1C2A3E' : '#fff') + '"><span class="nm">' + esc(s[0]) + '</span><span><span class="n">' + s[1] + '</span>' + (conv != null ? '<span class="pc">' + conv + '%</span>' : '') + '</span></div>';
+      }).join('') + '</div><div class="muted" style="margin-top:12px">Percentage = omzetting tegenover de stap erboven. Rood omrand = niemand haalde die stap. Offerte en ondertekend tellen de markeringen OFFERTE VERSTUURD en ONDERTEKEND in kolom N van de sheet.</div>';
     } else $('funnel').innerHTML = '<div class="empty">Nog geen telling.</div>';
 
-    // Outreach-verloop (zoals voorheen)
-    var o = d.outreach, ov = d.outreach_vorige;
-    if (!o) {
-      $('outreach').innerHTML = '<div class="empty">De cijfers verschijnen na de eerste telling (elke twee uur tussen 09:20 en 23:40).</div>';
-    } else {
-      var vps = (ov && ov.per_status) || {};
-      var oh = '<div class="muted">Stand ' + esc(o.bijgewerkt ? fmtDatum(o.bijgewerkt, true) : fmtDatum(o.datum)) + ', ' + esc(o.totaal) + ' bedrijven in de sheet' + (o.bron === 'make' ? '' : ' (oude telling, wordt bij de volgende run vervangen)') + '</div>';
-      if (st) {
-        var m = st.mails || {};
-        oh += '<div class="grid mini">' + M.kpiTegels([
-          { v: num(m.totaal), l: 'Mails verstuurd', s: 'mail 1: ' + num(m.mail1) + ', mail 2: ' + num(m.mail2) + ', mail 3: ' + num(m.mail3) },
-          { v: num(st.aangeschreven), l: 'Bedrijven aangeschreven', s: num(st.nog_te_versturen) + ' wachten op mail 1, ' + num(st.niet_bruikbaar) + ' niet bruikbaar' },
-          { v: num(st.reacties), l: 'Reacties', s: pct(st.reactie_pct) + ' van aangeschreven, ' + num(st.positief) + ' met interesse of gesprek (' + pct(st.positief_pct) + ')' },
-          { v: num(st.deze_week), l: 'Mails deze week', s: 'vorige week ' + num(st.vorige_week) + ', bounces ' + num(st.bounces) + ' (' + pct(st.bounce_pct) + ')' }
-        ]) + '</div>';
-        var pd = st.per_dag || [];
-        if (pd.length) {
-          var max = 1;
-          pd.forEach(function (x) { max = Math.max(max, num(x.m1) + num(x.m2) + num(x.m3)); });
-          var hoogte = function (v) { return Math.round(num(v) / max * 90); };
-          oh += '<h3 class="sub">Verstuurd per werkdag</h3><div class="dagen">' + pd.map(function (x) {
-            var tot = num(x.m1) + num(x.m2) + num(x.m3), dm = String(x.datum || '').split('-');
-            var label = dm.length === 3 ? dm[2] + '/' + dm[1] : esc(x.datum);
-            return '<div class="dag" title="' + esc(label + ': mail 1 ' + num(x.m1) + ', mail 2 ' + num(x.m2) + ', mail 3 ' + num(x.m3)) + '"><div class="stapel">' +
-              (num(x.m1) ? '<div class="s1" style="height:' + hoogte(x.m1) + 'px"></div>' : '') +
-              (num(x.m2) ? '<div class="s2" style="height:' + hoogte(x.m2) + 'px"></div>' : '') +
-              (num(x.m3) ? '<div class="s3" style="height:' + hoogte(x.m3) + 'px"></div>' : '') +
-              '</div><div class="n">' + tot + '</div><div>' + label + '</div></div>';
-          }).join('') + '</div><div class="legende"><span class="sw s1"></span>mail 1<span class="sw s2"></span>mail 2<span class="sw s3"></span>mail 3</div>';
-        }
-      }
-      var volgorde = ['Nieuw', 'Hold', 'Email1_verstuurd', 'Email2_verstuurd', 'Email3_verstuurd', 'Geantwoord', 'Wacht_op_prospect', 'Geen_reactie', 'Gesprek_gehad', 'Afspraak_gepland', 'Niet_geinteresseerd', 'Uitgeschreven', 'Bounce', 'Uitgesloten', 'Contactgegevens_ontbreken'];
-      var keys = volgorde.filter(function (k) { return ps[k] != null; }).concat(Object.keys(ps).filter(function (k) { return volgorde.indexOf(k) < 0; }));
-      oh += '<h3 class="sub">Huidige status per bedrijf' + (ov ? ' <span class="muted">(verschil tegenover ' + esc(fmtDatum(ov.datum)) + ')</span>' : '') + '</h3><div class="tbl"><table><tbody>' +
-        keys.map(function (k) {
-          var diff = ov && vps[k] != null ? ps[k] - vps[k] : null;
-          return '<tr><td>' + esc(k.replace(/_/g, ' ')) + '</td><td class="num"><b>' + esc(ps[k]) + '</b></td><td class="muted num">' + (diff != null && diff !== 0 ? (diff > 0 ? '+' : '') + diff : '') + '</td></tr>';
-        }).join('') + '</tbody></table></div><div class="muted" style="margin-top:6px">Een bedrijf staat maar onder een status: wie mail 3 kreeg, telt niet meer bij mail 1 of 2.</div>';
-      $('outreach').innerHTML = oh;
+    // Mails per werkdag (gestapeld)
+    if (st && (st.per_dag || []).length) {
+      var pd = st.per_dag, lbl = pd.map(function (x) { var p = String(x.datum).split('-'); return p.length === 3 ? p[2] + '/' + p[1] : x.datum; });
+      grafiek('ch-mails', {
+        type: 'bar',
+        data: { labels: lbl, datasets: [
+          { label: 'Mail 1', data: pd.map(function (x) { return num(x.m1); }), backgroundColor: KLEUR.blue, borderRadius: 4, stack: 's' },
+          { label: 'Mail 2', data: pd.map(function (x) { return num(x.m2); }), backgroundColor: KLEUR.teal, borderRadius: 4, stack: 's' },
+          { label: 'Mail 3', data: pd.map(function (x) { return num(x.m3); }), backgroundColor: KLEUR.gold, borderRadius: 4, stack: 's' }
+        ] },
+        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: true, position: 'bottom', labels: { boxWidth: 10, boxHeight: 10, useBorderRadius: true, borderRadius: 3 } } },
+          scales: { x: { stacked: true, grid: { display: false } }, y: { stacked: true, beginAtZero: true, ticks: { precision: 0 } } } }
+      });
+      var m = st.mails || {};
+      $('mails-sub').textContent = num(st.deze_week) + ' deze week, vorige week ' + num(st.vorige_week);
+      $('mails-kpi').innerHTML = '<span>Totaal ' + num(m.totaal) + ' mails</span><span>Reactiegraad ' + esc(pct(st.reactie_pct)) + '</span><span>Interesse ' + esc(pct(st.positief_pct)) + '</span><span>Bounces ' + num(st.bounces) + ' (' + esc(pct(st.bounce_pct)) + ')</span>';
     }
 
-    // Klanten: intake enkel beoordeeld voor actieve klanten en prospects
+    // Omzet per maand met het doel van februari 2027
+    if (maand.length) {
+      grafiek('ch-omzet', {
+        type: 'bar',
+        data: { labels: maand.map(function (c) { return M.fmtMaand(c.maand); }), datasets: [
+          { type: 'bar', label: 'Omzet', data: maand.map(function (c) { return num(c.omzet_eur); }), backgroundColor: maand.map(function (c) { return num(c.omzet_eur) >= 5000 ? KLEUR.green : KLEUR.gold; }), borderRadius: 6, maxBarThickness: 46 },
+          { type: 'line', label: 'Doel feb 2027 (EUR 5.000)', data: maand.map(function () { return 5000; }), borderColor: KLEUR.red, borderDash: [6, 6], borderWidth: 2, pointRadius: 0 }
+        ] },
+        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: true, position: 'bottom', labels: { boxWidth: 10, boxHeight: 10 } },
+          tooltip: { callbacks: { label: function (c) { return c.dataset.label + ': ' + eur(c.parsed.y); } } } },
+          scales: { x: { grid: { display: false } }, y: { beginAtZero: true, ticks: { callback: function (v) { return eur(v); } } } } }
+      });
+    }
+    // Mijlpalen als tijdlijn
+    var nuGezet = false;
+    $('mijlpalen').innerHTML = MIJLPALEN.map(function (mp) {
+      var voorbij = new Date(mp.datum) < new Date(), gehaald = false;
+      if (mp.tier1) gehaald = tier1 >= mp.tier1;
+      else if (mp.omzetMaand) gehaald = maand.some(function (c) { return num(c.omzet_eur) > mp.omzetMaand; });
+      var cls = gehaald ? 'ok' : voorbij ? 'mis' : (!nuGezet ? 'nu' : 'toek');
+      if (cls === 'nu') nuGezet = true;
+      var extra = cls === 'nu' && mp.tier1 ? ' ' + tag(tier1 + ' van ' + mp.tier1 + ', nog ' + dagenTot(mp.datum) + ' d', 'gold') : cls === 'ok' ? ' ' + tag('gehaald', 'ok') : cls === 'mis' ? ' ' + tag('gemist', 'bad') : '';
+      return '<div class="mp ' + cls + '"><div class="w">' + esc(mp.label) + extra + '</div><div>' + esc(mp.tekst) + '</div></div>';
+    }).join('');
+
+    // Status van alle bedrijven in de sheet (donut)
+    if (d.outreach) {
+      var groepen = [
+        ['Reeks loopt', ['Nieuw', 'Hold', 'Email1_verstuurd', 'Email2_verstuurd', 'Email3_verstuurd'], KLEUR.blue],
+        ['Interesse', ['Geantwoord', 'Wacht_op_prospect', 'Gesprek_gehad', 'Afspraak_gepland', 'Gereageerd_stil'], KLEUR.teal],
+        ['Stil na opvolging', ['Geen_reactie'], KLEUR.violet],
+        ['Neen', ['Niet_geinteresseerd', 'Uitgeschreven'], KLEUR.red],
+        ['Niet bruikbaar', ['Bounce', 'Uitgesloten', 'Contactgegevens_ontbreken'], KLEUR.dim]
+      ];
+      var bekend = [].concat.apply([], groepen.map(function (g) { return g[1]; }));
+      var overig = Object.keys(ps).filter(function (k) { return bekend.indexOf(k) < 0; });
+      if (overig.length) groepen.push(['Andere', overig, '#5A6E8A']);
+      var waarden = groepen.map(function (g) { return g[1].reduce(function (s, k) { return s + num(ps[k]); }, 0); });
+      grafiek('ch-status', {
+        type: 'doughnut',
+        data: { labels: groepen.map(function (g) { return g[0]; }), datasets: [{ data: waarden, backgroundColor: groepen.map(function (g) { return g[2]; }), borderColor: '#0F1B2E', borderWidth: 3, hoverOffset: 6 }] },
+        options: { responsive: true, maintainAspectRatio: false, cutout: '68%' }
+      });
+      $('status-sub').textContent = num(d.outreach.totaal) + ' bedrijven';
+      $('status-leg').innerHTML = groepen.map(function (g, i) { return '<span><i style="background:' + g[2] + '"></i>' + esc(g[0]) + ' ' + waarden[i] + '</span>'; }).join('');
+      var ov = d.outreach_vorige, vps = (ov && ov.per_status) || {};
+      var volgorde = ['Nieuw', 'Hold', 'Email1_verstuurd', 'Email2_verstuurd', 'Email3_verstuurd', 'Geantwoord', 'Wacht_op_prospect', 'Gereageerd_stil', 'Geen_reactie', 'Gesprek_gehad', 'Afspraak_gepland', 'Niet_geinteresseerd', 'Uitgeschreven', 'Bounce', 'Uitgesloten', 'Contactgegevens_ontbreken'];
+      var keys = volgorde.filter(function (k) { return ps[k] != null; }).concat(Object.keys(ps).filter(function (k) { return volgorde.indexOf(k) < 0; }));
+      $('status-tbl').innerHTML = '<table><thead><tr><th>Status</th><th class="num">Nu</th><th class="num">' + (ov ? 'sinds ' + esc(fmtDatum(ov.datum)) : '') + '</th></tr></thead><tbody>' + keys.map(function (k) {
+        var diff = ov && vps[k] != null ? ps[k] - vps[k] : null;
+        return '<tr><td>' + esc(k.replace(/_/g, ' ')) + '</td><td class="num"><b>' + esc(ps[k]) + '</b></td><td class="num muted">' + (diff ? (diff > 0 ? '+' : '') + diff : '') + '</td></tr>';
+      }).join('') + '</tbody></table>';
+    }
+
+    // Uren per maand (met de lopende maand erbij) en effectieve uurprijs
+    var huidig = eersteVanMaand();
+    if (!maand.some(function (c) { return String(c.maand).slice(0, 10) === huidig; })) maand.push({ maand: huidig, omzet_eur: null, uren: null });
+    $('uren-maand').innerHTML = '<table><thead><tr><th>Maand</th><th class="num">Omzet</th><th class="num">Uren</th><th class="num">Per uur</th></tr></thead><tbody>' + maand.map(function (c) {
+      var m = String(c.maand).slice(0, 10);
+      return '<tr><td>' + esc(M.fmtMaand(m)) + '</td><td class="num">' + esc(c.omzet_eur == null ? '-' : eur(c.omzet_eur)) + '</td><td class="num">' + urenVeld('maand', m, c.uren) + '</td><td class="num">' + (c.omzet_eur == null ? '<span class="muted">na maandcontrole</span>' : uurprijsTag(c.omzet_eur, c.uren)) + '</td></tr>';
+    }).join('') + '</tbody></table><div class="muted" style="margin-top:6px">Alle uren voor Mechele in die maand: screening, verkoop, dossiers en administratie.</div>';
+    var metFee = dossiers.filter(function (x) { return x.dossierfee_eur || x.fase !== 'klaar'; });
+    $('uren-dossier').innerHTML = metFee.length ? '<table><thead><tr><th>Dossier</th><th class="num">Fee</th><th class="num">Uren</th><th class="num">Per uur</th></tr></thead><tbody>' + metFee.map(function (x) {
+      var rt = RICHTUREN[String(x.tier || '').toLowerCase()];
+      return '<tr><td>' + esc(x.klantcode) + ' ' + esc(x.omschrijving) + '<div class="muted">' + esc(x.tier || 'tier onbekend') + (rt ? ', richturen ' + rt + ' u' : '') + '</div></td><td class="num">' + esc(x.dossierfee_eur ? eur(x.dossierfee_eur) : '-') + '</td><td class="num">' + urenVeld('dossier', x.id, x.uren_besteed) + '</td><td class="num">' + (x.dossierfee_eur ? uurprijsTag(x.dossierfee_eur, x.uren_besteed) : '<span class="muted">geen fee</span>') + '</td></tr>';
+    }).join('') + '</tbody></table><div class="muted" style="margin-top:6px">Uurprijs = dossierfee gedeeld door de bestede uren. Rood onder EUR ' + VLOER + '.</div>' : '<div class="empty">Nog geen dossiers.</div>';
+
+    // Klanten
     $('klanten').innerHTML = klanten.length ? '<table><thead><tr><th>Code</th><th>Klant</th><th>Status</th><th>Formule</th><th>Segment</th><th>Intake: ontbreekt</th></tr></thead><tbody>' +
       klanten.map(function (k) {
         var stc = k.status === 'actief' ? 'ok' : k.status === 'prospect' ? 'info' : '', ontbreekt = k.ontbreekt || [], intake;
         if (k.status === 'gepauzeerd' || k.status === 'gestopt') intake = '<span class="muted">niet van toepassing</span>';
         else intake = ontbreekt.length ? '<ul class="compact">' + ontbreekt.map(function (o) { return '<li>' + esc(o) + '</li>'; }).join('') + '</ul>' : tag('volledig', 'ok');
-        return '<tr><td>' + esc(k.klantcode || '-') + '</td><td>' + esc(k.naam) + '<div class="muted">' + esc(k.fte != null ? k.fte + ' FTE' : '') + '</div></td><td>' + tag(k.status, stc) + '</td><td>' + esc(k.formule || '-') + '</td><td>' + esc(k.segment || '-') + '</td><td>' + intake + '</td></tr>';
+        var formule = k.formule === 'proef' ? tag('proef', 'warn') + '<div class="muted">staat niet in de vaste tarieven</div>' : esc(k.formule || '-');
+        return '<tr><td>' + esc(k.klantcode || '-') + '</td><td>' + esc(k.naam) + '<div class="muted">' + esc(k.fte != null ? k.fte + ' FTE' : '') + '</div></td><td>' + tag(k.status, stc) + '</td><td>' + formule + '</td><td>' + esc(k.segment || '-') + '</td><td>' + intake + '</td></tr>';
       }).join('') + '</tbody></table>' : '<div class="empty">Geen klanten.</div>';
     $('attesten').innerHTML = attesten.length ? '<div class="muted" style="margin-top:10px">Attesten die binnen 60 dagen vervallen: ' + attesten.map(function (a) { return esc(a.klantcode) + ' ' + esc(a.type) + ' (' + esc(a.dagen_resterend) + ' d)'; }).join(', ') + '</div>' : '';
 
@@ -458,28 +791,28 @@
         var fs = FASE[x.fase] || [x.fase, ''];
         var waarde = M.waardeHtml(x.contractwaarde_min_eur, x.contractwaarde_max_eur, x.looptijd_jaren) || '<span class="muted">onbekend</span>';
         var fee = [x.dossierfee_eur ? 'dossier ' + eur(x.dossierfee_eur) : '', x.succesfee_eur ? 'succes ' + eur(x.succesfee_eur) : (x.succesfee_pct ? String(x.succesfee_pct).replace('.', ',') + '%' : '')].filter(Boolean).join(', ');
-        return '<tr><td>' + esc(x.klantcode) + (x.geen_mails ? '<div class="muted">geen mails</div>' : '') + '</td><td>' + esc(x.omschrijving) + '<div class="muted">' + esc(x.aanbesteder || '') + '</div></td><td>' + tag(fs[0], fs[1]) + (x.status ? '<div class="muted">' + esc(x.status) + '</div>' : '') + (x.klant_status ? '<div class="muted">klant ziet: ' + esc(x.klant_status) + '</div>' : '') + '</td><td>' + dagTag(x.deadline) + '<div class="muted">' + esc(fmtDatum(x.deadline, true)) + '</div></td><td>' + waarde + '</td><td>' + (fee ? esc(fee) : '<span class="muted">nog te bepalen</span>') + '</td></tr>';
+        var dl = x.fase === 'errata' ? dagTag(x.deadline) : '';
+        return '<tr><td>' + esc(x.klantcode) + (x.geen_mails ? '<div class="muted">geen mails</div>' : '') + '</td><td>' + esc(x.omschrijving) + '<div class="muted">' + esc(x.aanbesteder || '') + '</div></td><td>' + tag(fs[0], fs[1]) + (x.status ? '<div class="muted">' + esc(x.status) + '</div>' : '') + (x.klant_status ? '<div class="muted">klant ziet: ' + esc(x.klant_status) + '</div>' : '') + '</td><td>' + dl + '<div class="muted">' + esc(fmtDatum(x.deadline, true)) + '</div></td><td>' + waarde + '</td><td>' + (fee ? esc(fee) : '<span class="muted">nog te bepalen</span>') + '</td></tr>';
       }).join('') + '</tbody></table>' : '<div class="empty">Nog geen dossiers.</div>';
 
     // Meldingen
     $('meldingen').innerHTML = meldingen.length ? meldingen.map(function (m) {
-      return '<div class="item"><div class="t">' + tag(m.type, 'warn') + ' ' + esc(m.klantcode || '') + ' ' + esc(m.dossier || '') + '</div><div class="muted">' + esc(fmtDatum(m.datum, true)) + '</div><div style="margin-top:4px">' + esc(m.samenvatting || '') + '</div>' + (m.impact ? '<div class="muted" style="margin-top:4px">Impact: ' + esc(m.impact) + '</div>' : '') + '</div>';
+      return '<div class="it"><span class="dot p2"></span><div style="min-width:0;flex:1"><div class="t">' + tag(m.type, 'warn') + ' ' + esc(m.klantcode || '') + ' ' + esc(m.dossier || '') + '</div><div class="muted">' + esc(fmtDatum(m.datum, true)) + '</div><div style="margin-top:4px">' + esc(m.samenvatting || '') + '</div>' + (m.impact ? '<div class="muted" style="margin-top:4px">Impact: ' + esc(m.impact) + '</div>' : '') + '</div></div>';
     }).join('') : '<div class="empty">Geen open meldingen.</div>';
   }
 
   /* ---------- TAB 3: BOEKHOUDING ---------- */
   function renderBoekhouding(b, f) {
     var tot = b.totalen || {}, par = b.parameters || {}, pm = b.per_maand || [], kb = b.kosten_per_bucket || {};
-    $('bh-jaar').textContent = b.jaar ? 'kalenderjaar ' + b.jaar + ', alle bedragen excl. btw' : '';
-
-    $('bh-kpis').innerHTML = M.kpiTegels([
-      { v: eurCent(tot.gefactureerd), l: 'Gefactureerd', s: 'dit jaar' },
-      { v: eurCent(tot.betaald), l: 'Betaald', s: 'dit jaar', c: 'ok' },
-      { v: eurCent(tot.openstaand), l: 'Openstaand', s: 'nog niet vervallen' },
-      { v: eurCent(tot.vervallen), l: 'Vervallen', s: 'over de vervaldatum', c: num(tot.vervallen) ? 'bad' : '' },
-      { v: eurCent(tot.kosten_alle), l: 'Kosten', s: 'alle buckets, excl. btw' },
-      { v: eurCent(tot.netto_na_reserves), l: 'Netto na reserves', s: 'indicatief', c: num(tot.netto_na_reserves) < 0 ? 'bad' : 'ok' }
-    ]);
+    $('bh-jaar').textContent = b.jaar ? 'Kalenderjaar ' + b.jaar + ', alle bedragen excl. btw.' : '';
+    $('bh-kpis').innerHTML = [
+      mini({ v: eurCent(tot.gefactureerd), l: 'Gefactureerd', s: 'dit jaar' }),
+      mini({ v: eurCent(tot.betaald), l: 'Betaald', s: 'dit jaar', c: 'ok' }),
+      mini({ v: eurCent(tot.openstaand), l: 'Openstaand', s: 'nog niet vervallen' }),
+      mini({ v: eurCent(tot.vervallen), l: 'Vervallen', s: 'over de vervaldatum', c: num(tot.vervallen) ? 'bad' : '' }),
+      mini({ v: eurCent(tot.kosten_alle), l: 'Kosten', s: 'alle buckets, excl. btw' }),
+      mini({ v: eurCent(tot.netto_na_reserves), l: 'Netto na reserves', s: 'indicatief', c: num(tot.netto_na_reserves) < 0 ? 'bad' : 'ok' })
+    ].join('');
 
     function rij(l, v, cls) { var n = num(v); if (n === 0) n = 0; return '<tr' + (cls ? ' class="' + cls + '"' : '') + '><td>' + l + '</td><td class="num">' + eurCent(n) + '</td></tr>'; }
     var dec = function (v) { return esc(String(v == null ? '' : v).replace('.', ',')); };
@@ -487,43 +820,48 @@
       rij('Betaald (omzet)', tot.betaald) +
       rij('Bedrijfskosten (Mechele, netwerk, niet doorgefactureerde pass-through)', -num(tot.kosten_bedrijf)) +
       rij('Brookmoor Press en doorgefactureerde pass-through', -(num(tot.kosten_alle) - num(tot.kosten_bedrijf))) +
-      rij('<b>Resultaat voor reserves</b>', tot.resultaat, 'totaal') +
+      rij('Resultaat voor reserves', tot.resultaat, 'totaal') +
       '</tbody></table><div class="muted" style="margin-top:6px">Kasbasis: betaalde facturen min geboekte kosten. Geen boekhoudkundig resultaat.</div>';
-
     $('bh-reserve').innerHTML = '<table><tbody>' +
       rij('Btw verschuldigd op betaalde omzet (' + dec(par.btw_pct) + '%)', tot.btw_verschuldigd) +
       rij('Btw aftrekbaar op kosten', -num(tot.btw_aftrekbaar)) +
-      rij('<b>Btw opzij te zetten</b>', tot.btw_saldo, 'totaal') +
+      rij('Btw opzij te zetten', tot.btw_saldo, 'totaal') +
       rij('Sociale bijdragen (' + dec(par.sociaal_pct) + '% boven ' + eurCent(par.sociaal_drempel_eur) + ')', tot.reserve_sociaal) +
       rij('Belasting (' + dec(par.belasting_pct) + '% marginaal, aanname)', tot.reserve_belasting) +
-      rij('<b>Netto na reserves</b>', tot.netto_na_reserves, 'totaal') +
-      '</tbody></table><div class="muted" style="margin-top:6px">Percentages staan in app_config en worden op advies van de boekhouder aangepast. De belastingreserve is een vloer voor wat je niet uitgeeft.</div>';
+      rij('Netto na reserves', tot.netto_na_reserves, 'totaal') +
+      '</tbody></table><div class="muted" style="margin-top:6px">Percentages staan in app_config en worden op advies van de boekhouder aangepast.</div>';
 
-    // Per maand: staafjes plus tabel
     if (pm.length) {
-      var max = 1;
-      pm.forEach(function (x) { max = Math.max(max, num(x.betaald), num(x.kosten)); });
-      var h = function (v) { return Math.max(num(v) ? 2 : 0, Math.round(num(v) / max * 100)); };
-      var mh = '<div class="maanden">' + pm.map(function (x) {
-        return '<div class="maand" title="' + esc(M.fmtMaand(x.maand) + ': betaald ' + eurCent(x.betaald) + ', kosten ' + eurCent(x.kosten)) + '"><div class="staaf"><div class="in" style="height:' + h(x.betaald) + 'px"></div><div class="uit" style="height:' + h(x.kosten) + 'px"></div></div><div class="n">' + esc(eur(x.resultaat)) + '</div><div>' + esc(M.fmtMaand(x.maand)) + '</div></div>';
-      }).join('') + '</div><div class="legende"><span class="sw" style="background:var(--ok)"></span>betaald<span class="sw" style="background:var(--bad)"></span>kosten, cijfer = resultaat</div>';
+      grafiek('ch-bh', {
+        type: 'bar',
+        data: { labels: pm.map(function (x) { return M.fmtMaand(x.maand); }), datasets: [
+          { label: 'Betaald', data: pm.map(function (x) { return num(x.betaald); }), backgroundColor: KLEUR.teal, borderRadius: 6, maxBarThickness: 38 },
+          { label: 'Kosten', data: pm.map(function (x) { return num(x.kosten); }), backgroundColor: KLEUR.red, borderRadius: 6, maxBarThickness: 38 },
+          { type: 'line', label: 'Resultaat', data: pm.map(function (x) { return num(x.resultaat); }), borderColor: KLEUR.gold, backgroundColor: KLEUR.gold, tension: .25, pointRadius: 4 }
+        ] },
+        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: true, position: 'bottom', labels: { boxWidth: 10, boxHeight: 10 } },
+          tooltip: { callbacks: { label: function (c) { return c.dataset.label + ': ' + eurCent(c.parsed.y); } } } },
+          scales: { x: { grid: { display: false } }, y: { ticks: { callback: function (v) { return eur(v); } } } } }
+      });
       var s = { g: 0, b: 0, k: 0, r: 0 };
-      mh += '<div class="tbl" style="margin-top:10px"><table><thead><tr><th>Maand</th><th class="num">Gefactureerd</th><th class="num">Betaald</th><th class="num">Kosten</th><th class="num">Resultaat</th></tr></thead><tbody>' +
+      $('bh-maanden').innerHTML = '<table><thead><tr><th>Maand</th><th class="num">Gefactureerd</th><th class="num">Betaald</th><th class="num">Kosten</th><th class="num">Resultaat</th></tr></thead><tbody>' +
         pm.map(function (x) {
           s.g += num(x.gefactureerd); s.b += num(x.betaald); s.k += num(x.kosten); s.r += num(x.resultaat);
           return '<tr><td>' + esc(M.fmtMaand(x.maand)) + '</td><td class="num">' + eurCent(x.gefactureerd) + '</td><td class="num">' + eurCent(x.betaald) + '</td><td class="num">' + eurCent(x.kosten) + '</td><td class="num">' + eurCent(x.resultaat) + '</td></tr>';
-        }).join('') + '<tr class="totaal"><td>Totaal</td><td class="num">' + eurCent(s.g) + '</td><td class="num">' + eurCent(s.b) + '</td><td class="num">' + eurCent(s.k) + '</td><td class="num">' + eurCent(s.r) + '</td></tr></tbody></table></div>';
-      $('bh-maanden').innerHTML = mh;
+        }).join('') + '<tr class="totaal"><td>Totaal</td><td class="num">' + eurCent(s.g) + '</td><td class="num">' + eurCent(s.b) + '</td><td class="num">' + eurCent(s.k) + '</td><td class="num">' + eurCent(s.r) + '</td></tr></tbody></table>';
     } else $('bh-maanden').innerHTML = '<div class="empty">Nog geen facturen of kosten dit jaar.</div>';
 
-    // Kosten per bucket
-    var bks = Object.keys(BUCKET), bt = 0;
-    $('bh-buckets').innerHTML = '<table><thead><tr><th>Bucket</th><th class="num">Dit jaar</th></tr></thead><tbody>' + bks.map(function (k) {
+    var bks = Object.keys(BUCKET), bt = 0, bkleur = [KLEUR.gold, KLEUR.blue, KLEUR.violet, KLEUR.dim];
+    grafiek('ch-bucket', {
+      type: 'doughnut',
+      data: { labels: bks.map(function (k) { return BUCKET[k]; }), datasets: [{ data: bks.map(function (k) { return num(kb[k]); }), backgroundColor: bkleur, borderColor: '#0F1B2E', borderWidth: 3 }] },
+      options: { responsive: true, maintainAspectRatio: false, cutout: '66%', plugins: { tooltip: { callbacks: { label: function (c) { return c.label + ': ' + eurCent(c.parsed); } } } } }
+    });
+    $('bh-buckets').innerHTML = '<table><tbody>' + bks.map(function (k, i) {
       bt += num(kb[k]);
-      return '<tr><td>' + esc(BUCKET[k]) + '</td><td class="num">' + eurCent(kb[k]) + '</td></tr>';
-    }).join('') + '<tr class="totaal"><td>Totaal</td><td class="num">' + eurCent(bt) + '</td></tr></tbody></table><div class="muted" style="margin-top:6px">Zelfde btw-nummer en boekhouding, intern apart gelabeld. Pass-through valt uit de bedrijfskosten zodra hij doorgefactureerd is.</div>';
+      return '<tr><td><span class="legende" style="margin:0"><span><i style="background:' + bkleur[i] + '"></i>' + esc(BUCKET[k]) + '</span></span></td><td class="num">' + eurCent(kb[k]) + '</td></tr>';
+    }).join('') + '<tr class="totaal"><td>Totaal</td><td class="num">' + eurCent(bt) + '</td></tr></tbody></table>';
 
-    // Facturatie: te factureren, openstaand, abonnementen (uit dashboard_data)
     var tf = f.te_factureren || [], open = f.openstaand || [], verv = f.vervallen || [], ab = f.abonnementen_actief || {}, abLijst = ab.lijst || [];
     $('fact-te-factureren').innerHTML = tf.length ? '<table><thead><tr><th>Klant</th><th>Omschrijving</th><th>Periode</th><th class="num">Bedrag</th></tr></thead><tbody>' +
       tf.map(function (x) {
@@ -536,19 +874,16 @@
       return '<tr><td>' + esc(x.klantcode || '-') + '<div class="muted">' + esc(x.klant || '') + '</div></td><td>' + esc(x.factuurnummer || '-') + '<div class="muted">' + esc(x.type || '') + '</div></td><td>' + (x.vervaldatum ? dagTag(x.vervaldatum) : tag('geen vervaldatum')) + '<div class="muted">' + esc(fmtDatum(x.vervaldatum)) + '</div></td><td class="num">' + eurCent(x.bedrag_eur) + '</td></tr>';
     }));
     $('fact-openstaand').innerHTML = rijen.length ? '<table><thead><tr><th>Klant</th><th>Factuur</th><th>Vervaldatum</th><th class="num">Bedrag</th></tr></thead><tbody>' + rijen.join('') + '</tbody></table>' : '<div class="empty">Geen openstaande facturen.</div>';
-    $('fact-abonnementen').innerHTML = abLijst.length ? '<div class="muted" style="margin-top:10px">Actieve abonnementen (' + esc(ab.aantal != null ? ab.aantal : abLijst.length) + '): ' +
+    $('fact-abonnementen').innerHTML = abLijst.length ? '<div class="muted" style="margin-top:12px">Actieve abonnementen (' + esc(ab.aantal != null ? ab.aantal : abLijst.length) + '): ' +
       abLijst.map(function (a) { return esc(a.klantcode) + ' ' + esc(a.formule || '') + ' ' + eurCent(a.bedrag_eur) + (a.minimum_tot ? ' (minimum tot ' + esc(fmtDatum(a.minimum_tot)) + ')' : ''); }).join(', ') + '</div>'
-      : '<div class="muted" style="margin-top:10px">Geen actieve abonnementen.</div>';
+      : '<div class="muted" style="margin-top:12px">Geen actieve abonnementen.</div>';
 
-    // Facturen dit jaar
     var fl = b.facturen || [];
     $('bh-facturen').innerHTML = fl.length ? '<table><thead><tr><th>Datum</th><th>Nummer</th><th>Klant</th><th>Omschrijving</th><th>Status</th><th class="num">Bedrag</th></tr></thead><tbody>' +
       fl.map(function (x) {
         var stt = FACTUUR_STATUS[x.status] || [x.status, ''];
         return '<tr><td>' + esc(fmtDatum(x.factuurdatum)) + '</td><td>' + esc(x.factuurnummer || '-') + '</td><td>' + esc(x.klantcode || '-') + '<div class="muted">' + esc(x.klant || '') + '</div></td><td>' + esc(x.omschrijving || '') + '<div class="muted">' + esc(x.type) + '</div></td><td>' + tag(stt[0], stt[1]) + (x.betaald_op ? '<div class="muted">' + esc(fmtDatum(x.betaald_op)) + '</div>' : '') + '</td><td class="num">' + eurCent(x.bedrag_eur) + '</td></tr>';
       }).join('') + '</tbody></table>' : '<div class="empty">Nog geen facturen dit jaar.</div>';
-
-    // Kosten dit jaar
     var kl = b.kosten || [];
     $('bh-kosten').innerHTML = kl.length ? '<table><thead><tr><th>Datum</th><th>Leverancier</th><th>Omschrijving</th><th>Bucket</th><th class="num">Excl. btw</th><th class="num">Btw</th></tr></thead><tbody>' +
       kl.map(function (x) {
