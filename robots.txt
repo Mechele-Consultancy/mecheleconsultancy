@@ -1,6 +1,4 @@
 User-agent: *
 Allow: /
-Disallow: /bedankt/
-Disallow: /intern/
 
 Sitemap: https://mecheleconsultancy.be/sitemap.xml
