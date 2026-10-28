@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://mecheleconsultancy.be/</loc><lastmod>2026-10-17</lastmod></url>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://mecheleconsultancy.be/</loc>
+    <lastmod>2026-10-28</lastmod>
+    <xhtml:link rel="alternate" hreflang="nl-BE" href="https://mecheleconsultancy.be/"/>
+    <xhtml:link rel="alternate" hreflang="fr-BE" href="https://mecheleconsultancy.be/fr/"/>
+  </url>
+  <url>
+    <loc>https://mecheleconsultancy.be/fr/</loc>
+    <lastmod>2026-10-28</lastmod>
+    <xhtml:link rel="alternate" hreflang="nl-BE" href="https://mecheleconsultancy.be/"/>
+    <xhtml:link rel="alternate" hreflang="fr-BE" href="https://mecheleconsultancy.be/fr/"/>
+  </url>
   <url><loc>https://mecheleconsultancy.be/gids/</loc><lastmod>2026-10-01</lastmod></url>
 </urlset>
