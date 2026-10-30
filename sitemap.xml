@@ -2,15 +2,50 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://mecheleconsultancy.be/</loc>
-    <lastmod>2026-10-28</lastmod>
+    <lastmod>2026-10-30</lastmod>
     <xhtml:link rel="alternate" hreflang="nl-BE" href="https://mecheleconsultancy.be/"/>
     <xhtml:link rel="alternate" hreflang="fr-BE" href="https://mecheleconsultancy.be/fr/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mecheleconsultancy.be/en/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mecheleconsultancy.be/"/>
   </url>
   <url>
     <loc>https://mecheleconsultancy.be/fr/</loc>
-    <lastmod>2026-10-28</lastmod>
+    <lastmod>2026-10-30</lastmod>
     <xhtml:link rel="alternate" hreflang="nl-BE" href="https://mecheleconsultancy.be/"/>
     <xhtml:link rel="alternate" hreflang="fr-BE" href="https://mecheleconsultancy.be/fr/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mecheleconsultancy.be/en/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mecheleconsultancy.be/"/>
   </url>
-  <url><loc>https://mecheleconsultancy.be/gids/</loc><lastmod>2026-10-01</lastmod></url>
+  <url>
+    <loc>https://mecheleconsultancy.be/en/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <xhtml:link rel="alternate" hreflang="nl-BE" href="https://mecheleconsultancy.be/"/>
+    <xhtml:link rel="alternate" hreflang="fr-BE" href="https://mecheleconsultancy.be/fr/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mecheleconsultancy.be/en/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mecheleconsultancy.be/"/>
+  </url>
+  <url>
+    <loc>https://mecheleconsultancy.be/gids/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <xhtml:link rel="alternate" hreflang="nl-BE" href="https://mecheleconsultancy.be/gids/"/>
+    <xhtml:link rel="alternate" hreflang="fr-BE" href="https://mecheleconsultancy.be/fr/guide/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mecheleconsultancy.be/en/guide/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mecheleconsultancy.be/gids/"/>
+  </url>
+  <url>
+    <loc>https://mecheleconsultancy.be/fr/guide/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <xhtml:link rel="alternate" hreflang="nl-BE" href="https://mecheleconsultancy.be/gids/"/>
+    <xhtml:link rel="alternate" hreflang="fr-BE" href="https://mecheleconsultancy.be/fr/guide/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mecheleconsultancy.be/en/guide/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mecheleconsultancy.be/gids/"/>
+  </url>
+  <url>
+    <loc>https://mecheleconsultancy.be/en/guide/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <xhtml:link rel="alternate" hreflang="nl-BE" href="https://mecheleconsultancy.be/gids/"/>
+    <xhtml:link rel="alternate" hreflang="fr-BE" href="https://mecheleconsultancy.be/fr/guide/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mecheleconsultancy.be/en/guide/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mecheleconsultancy.be/gids/"/>
+  </url>
 </urlset>

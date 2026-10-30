@@ -6,7 +6,7 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Hulp bij overheidsopdrachten voor kmo's | Mechele Consultancy</title>
 <meta content="Overheidsopdrachten zonder zoekwerk: elke werkdag screening, elke week de passende opdrachten in uw mailbox, elke maand een volledig rapport, en begeleiding tot de indiening." name="description"/>
-<link href="https://mecheleconsultancy.be/" rel="canonical"/><link href="https://mecheleconsultancy.be/" hreflang="nl-BE" rel="alternate"/><link href="https://mecheleconsultancy.be/fr/" hreflang="fr-BE" rel="alternate"/><link href="https://mecheleconsultancy.be/" hreflang="x-default" rel="alternate"/>
+<link href="https://mecheleconsultancy.be/" rel="canonical"/><link href="https://mecheleconsultancy.be/" hreflang="nl-BE" rel="alternate"/><link href="https://mecheleconsultancy.be/fr/" hreflang="fr-BE" rel="alternate"/><link href="https://mecheleconsultancy.be/en/" hreflang="en" rel="alternate"/><link href="https://mecheleconsultancy.be/" hreflang="x-default" rel="alternate"/>
 <link href="/favicon.svg" rel="icon" type="image/svg+xml"/>
 <meta content="website" property="og:type"/>
 <meta content="https://mecheleconsultancy.be/" property="og:url"/>
@@ -42,7 +42,8 @@
  },
  "availableLanguage": [
   "nl",
-  "fr"
+  "fr",
+  "en"
  ],
  "knowsAbout": [
   "overheidsopdrachten",
@@ -928,7 +929,7 @@ footer {
 </head>
 <body>
 <!-- LANGUAGE BAR -->
-<div class="lang-bar"><a aria-current="page" class="lang-btn active" href="/" hreflang="nl">NL</a><a class="lang-btn" href="/fr/" hreflang="fr">FR</a></div>
+<div class="lang-bar"><a aria-current="page" class="lang-btn active" href="/" hreflang="nl">NL</a><a class="lang-btn" href="/fr/" hreflang="fr">FR</a><a class="lang-btn" href="/en/" hreflang="en">EN</a></div>
 <!-- NAV -->
 <nav>
 <a class="logo" href="/">
@@ -1413,6 +1414,7 @@ Aanbestedingsbegeleiding voor KMO's
     data.append('toestemming', 'ja');
     data.append('toestemming_tekst', consentText);
     data.append('bron', 'mecheleconsultancy.be/home');
+    data.append('taal', 'nl');
     data.append('tijdstip', new Date().toISOString());
     data.append('website', form.website.value);
     btn.disabled = true;

@@ -10,3 +10,11 @@
 # anders draait een browser tot 4 uur na een update nog met de oude shared.js.
 /shared/*
   Cache-Control: public, max-age=0, must-revalidate
+
+# Gidsen (pdf): niet indexeren, enkel bereikbaar via de link in de mail
+/gids/*.pdf
+  X-Robots-Tag: noindex
+/fr/guide/*.pdf
+  X-Robots-Tag: noindex
+/en/guide/*.pdf
+  X-Robots-Tag: noindex
