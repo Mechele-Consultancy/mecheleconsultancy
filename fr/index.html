@@ -6,7 +6,7 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Aide aux marchés publics pour les PME | Mechele Consultancy</title>
 <meta content="Les marchés publics sans recherche : analyse chaque jour ouvrable, chaque semaine les marchés qui vous correspondent, chaque mois un rapport complet, et un accompagnement jusqu'à la remise de l'offre." name="description"/>
-<link href="https://mecheleconsultancy.be/fr/" rel="canonical"/><link href="https://mecheleconsultancy.be/" hreflang="nl-BE" rel="alternate"/><link href="https://mecheleconsultancy.be/fr/" hreflang="fr-BE" rel="alternate"/><link href="https://mecheleconsultancy.be/" hreflang="x-default" rel="alternate"/>
+<link href="https://mecheleconsultancy.be/fr/" rel="canonical"/><link href="https://mecheleconsultancy.be/" hreflang="nl-BE" rel="alternate"/><link href="https://mecheleconsultancy.be/fr/" hreflang="fr-BE" rel="alternate"/><link href="https://mecheleconsultancy.be/en/" hreflang="en" rel="alternate"/><link href="https://mecheleconsultancy.be/" hreflang="x-default" rel="alternate"/>
 <link href="/favicon.svg" rel="icon" type="image/svg+xml"/>
 <meta content="website" property="og:type"/>
 <meta content="https://mecheleconsultancy.be/fr/" property="og:url"/>
@@ -14,7 +14,7 @@
 <meta content="fr_BE" property="og:locale"/>
 <meta content="Aide aux marchés publics pour les PME | Mechele Consultancy" property="og:title"/>
 <meta content="Les marchés publics sans recherche : analyse chaque jour ouvrable, chaque semaine les marchés qui vous correspondent, chaque mois un rapport complet, et un accompagnement jusqu'à la remise de l'offre." property="og:description"/>
-<meta content="https://mecheleconsultancy.be/gids/og-image.jpg" property="og:image"/>
+<meta content="https://mecheleconsultancy.be/fr/guide/og-image.jpg" property="og:image"/>
 <meta content="1200" property="og:image:width"/>
 <meta content="630" property="og:image:height"/>
 <meta content="summary_large_image" name="twitter:card"/>
@@ -42,7 +42,8 @@
  },
  "availableLanguage": [
   "nl",
-  "fr"
+  "fr",
+  "en"
  ],
  "knowsAbout": [
   "overheidsopdrachten",
@@ -51,7 +52,7 @@
   "marchés publics",
   "public procurement"
  ],
- "image": "https://mecheleconsultancy.be/gids/og-image.jpg",
+ "image": "https://mecheleconsultancy.be/fr/guide/og-image.jpg",
  "hasOfferCatalog": {
   "@type": "OfferCatalog",
   "name": "Diensten",
@@ -865,7 +866,7 @@ footer {
 </head>
 <body>
 <!-- LANGUAGE BAR -->
-<div class="lang-bar"><a class="lang-btn" href="/" hreflang="nl">NL</a><a aria-current="page" class="lang-btn active" href="/fr/" hreflang="fr">FR</a></div>
+<div class="lang-bar"><a class="lang-btn" href="/" hreflang="nl">NL</a><a aria-current="page" class="lang-btn active" href="/fr/" hreflang="fr">FR</a><a class="lang-btn" href="/en/" hreflang="en">EN</a></div>
 <!-- NAV -->
 <nav>
 <a class="logo" href="/fr/">
@@ -905,7 +906,7 @@ Nous analysons chaque jour ouvrable toutes les publications, vous envoyons chaqu
 <div class="hero-actions">
 <a class="btn-primary" href="#contact">Demander des informations</a>
 <a class="btn-secondary" href="#diensten">Nos services</a>
-<a class="btn-secondary btn-gids" href="/gids/">Guide gratuit (en néerlandais)</a>
+<a class="btn-secondary btn-gids" href="/fr/guide/">Guide gratuit</a>
 </div>
 </div>
 </section>
@@ -1229,6 +1230,57 @@ Numéro d'entreprise
 </div>
 </div>
 </section>
+<!-- GUIDE: formulaire vers Make.com, scenario "Gids aanvragen website" (taal=fr) -->
+<section class="guide" id="guide">
+<div class="section-inner">
+<div class="guide-box">
+<div class="guide-text">
+<p class="section-label">Guide gratuit</p>
+<h2 class="section-title">D'abord un peu de lecture ?</h2>
+<p>Un guide sobre pour chefs d'entreprise : ce qu'il y a à gagner dans les marchés publics, où les trouver et pourquoi de bonnes entreprises perdent quand même.</p>
+<p>Vous recevez le pdf immédiatement par e-mail. <a href="/fr/guide/">Que contient-il ?</a></p>
+<img alt="Couverture du guide sur les marchés publics" class="guide-cover" src="/fr/guide/boek-cover.jpg" width="150"/>
+</div>
+<form class="guide-form" data-webhook="https://hook.eu1.make.com/rjzdzoqmwejqvvd3d3cw6xvxriwfknhs" id="gids-form" novalidate="">
+<div class="gf-field">
+<label for="gf-voornaam">Prénom</label>
+<input autocomplete="given-name" id="gf-voornaam" maxlength="60" name="voornaam" required="" type="text"/>
+<p class="gf-err">Indiquez votre prénom.</p>
+</div>
+<div class="gf-field">
+<label for="gf-email">Adresse e-mail professionnelle</label>
+<input autocomplete="email" id="gf-email" maxlength="120" name="email" required="" type="email"/>
+<p class="gf-err">Indiquez une adresse e-mail valide.</p>
+</div>
+<div class="gf-field">
+<label for="gf-sector">Secteur</label>
+<select id="gf-sector" name="sector" required="">
+<option value="">Choisissez votre secteur</option>
+<option value="Schoonmaak">Nettoyage</option>
+<option value="Bouw en renovatie">Construction et rénovation</option>
+<option value="Dakwerken">Toitures</option>
+<option value="Groenonderhoud">Entretien des espaces verts</option>
+<option value="Technisch onderhoud">Maintenance technique</option>
+<option value="Andere">Autre</option>
+</select>
+<p class="gf-err">Choisissez votre secteur.</p>
+</div>
+<div aria-hidden="true" class="gf-hp">
+<label for="gf-website">Laissez ce champ vide</label>
+<input autocomplete="off" id="gf-website" name="website" tabindex="-1" type="text"/>
+</div>
+<div class="gf-consent">
+<input id="gf-toestemming" name="toestemming" required="" type="checkbox" value="1"/>
+<label for="gf-toestemming">J'accepte que Mechele Consultancy m'envoie le guide et, de temps en temps, des informations utiles sur les marchés publics. Je peux me désinscrire à tout moment par un court e-mail. Voir la <a href="/fr/guide/#privacy">déclaration de confidentialité</a>.</label>
+<p class="gf-err">Cochez cette case pour recevoir le guide.</p>
+</div>
+<button class="btn-primary" type="submit">Envoyez-moi le guide</button>
+<p class="gf-send-err" role="alert">L'envoi n'a pas abouti. Réessayez, ou écrivez à <a href="mailto:steven@mecheleconsultancy.be?subject=Guide%20march%C3%A9s%20publics">steven@mecheleconsultancy.be</a> et vous recevrez le guide par retour de mail.</p>
+</form>
+</div>
+</div>
+</section>
+
 <!-- FOOTER -->
 <footer>
 <div class="footer-left">
@@ -1241,5 +1293,58 @@ Conseil en marchés publics pour PME
 </div>
 <div class="footer-btw">BE 0810.155.282</div>
 </footer>
+<script>
+(function () {
+  var form = document.getElementById('gids-form');
+  if (!form) return;
+  var emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+  function box(el) { return el.closest('.gf-field') || el.closest('.gf-consent'); }
+  function check(el) {
+    var ok = el.type === 'checkbox' ? el.checked
+           : el.type === 'email' ? emailRe.test(el.value.trim())
+           : el.value.trim() !== '';
+    var b = box(el); if (b) b.classList.toggle('invalid', !ok);
+    return ok;
+  }
+  form.querySelectorAll('input[required], select[required]').forEach(function (el) {
+    el.addEventListener(el.type === 'checkbox' || el.tagName === 'SELECT' ? 'change' : 'input', function () {
+      var b = box(el); if (b && b.classList.contains('invalid')) check(el);
+    });
+  });
+  var btn = form.querySelector('button[type="submit"]');
+  var sendErr = form.querySelector('.gf-send-err');
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    sendErr.classList.remove('show');
+    if (form.website.value) return; // honeypot
+    var ok = true, first = null;
+    form.querySelectorAll('input[required], select[required]').forEach(function (el) {
+      if (!check(el)) { ok = false; first = first || el; }
+    });
+    if (!ok) { first.focus(); return; }
+    var consentText = form.querySelector('label[for="gf-toestemming"]').textContent.replace(/\s+/g, ' ').trim();
+    var data = new URLSearchParams();
+    data.append('voornaam', form.voornaam.value.trim());
+    data.append('email', form.email.value.trim().toLowerCase());
+    data.append('bedrijf', '');
+    data.append('sector', form.sector.value);
+    data.append('toestemming', 'ja');
+    data.append('toestemming_tekst', consentText);
+    data.append('bron', 'mecheleconsultancy.be/fr/home');
+    data.append('taal', 'fr');
+    data.append('tijdstip', new Date().toISOString());
+    data.append('website', form.website.value);
+    btn.disabled = true;
+    btn.textContent = 'Un instant...';
+    fetch(form.getAttribute('data-webhook'), { method: 'POST', mode: 'no-cors', body: data })
+      .then(function () { window.location.href = '/fr/merci/'; })
+      .catch(function () {
+        btn.disabled = false;
+        btn.textContent = 'Envoyez-moi le guide';
+        sendErr.classList.add('show');
+      });
+  });
+})();
+</script>
 </body>
 </html>
