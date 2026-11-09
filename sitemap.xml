@@ -48,4 +48,7 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://mecheleconsultancy.be/en/guide/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://mecheleconsultancy.be/gids/"/>
   </url>
+  <url>
+    <loc>https://mecheleconsultancy.be/en/philippines/</loc>
+  </url>
 </urlset>
