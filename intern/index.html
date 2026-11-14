@@ -186,6 +186,21 @@ button:disabled { opacity: .5; cursor: wait; }
 .urenin button { background: var(--panel2); color: var(--txt); border: 1px solid var(--line); border-radius: 8px; padding: 6px 10px; font-size: 13px; }
 .urenin .ok { color: var(--green); font-size: 12px; } .urenin .fout { color: var(--red); font-size: 12px; }
 
+/* Cockpit */
+.cp-status { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: baseline; padding: 12px 16px; margin-bottom: 16px; border-radius: 14px; border: 1px solid var(--line); background: var(--panel); }
+.cp-status.ok { border-color: rgba(61,214,140,.35); }
+.cp-status.bad { border-color: rgba(240,97,109,.45); background: rgba(240,97,109,.08); }
+.cp-status .cp-s { font-weight: 700; }
+.cp-status.ok .cp-s { color: var(--green); }
+.cp-status.bad .cp-s { color: var(--red); }
+.cp-status ul { margin: 4px 0 0; padding-left: 18px; width: 100%; color: var(--mid); font-size: 14px; }
+.cp-bar { height: 10px; border-radius: 6px; background: rgba(255,255,255,.08); overflow: hidden; margin-top: 10px; }
+.cp-bar > div { height: 100%; border-radius: 6px; background: linear-gradient(90deg, var(--gold2), var(--gold)); }
+.cp-score-t { font-size: 18px; font-weight: 700; }
+a.kb { display: inline-block; text-decoration: none; background: var(--panel2); color: var(--txt); border: 1px solid var(--line); border-radius: 8px; padding: 5px 12px; font-size: 13px; font-weight: 500; }
+.cp-fout { color: var(--red); font-size: 13px; }
+.cp-rij .keuze { margin-top: 10px; }
+
 /* Aanmelden */
 #login { max-width: 400px; margin: 12vh auto; padding: 28px; border-radius: 20px; background: var(--panel); border: 1px solid var(--line); }
 #login h2 { font-family: 'Playfair Display', serif; margin: 0 0 6px; }
@@ -234,6 +249,9 @@ button:disabled { opacity: .5; cursor: wait; }
       <button type="button" role="tab" data-tab="vandaag">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8v4l3 2"/><circle cx="12" cy="12" r="9"/></svg>
         Vandaag<span class="n hidden" id="n-vandaag">0</span></button>
+      <button type="button" role="tab" data-tab="cockpit">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 18a8 8 0 1116 0"/><path d="M12 18l4-6"/><path d="M12 6v2M6 12h2M18 12h-2"/></svg>
+        Cockpit<span class="n hidden" id="n-cockpit">0</span></button>
       <button type="button" role="tab" data-tab="overzicht">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/></svg>
         Overzicht en groeiplan</button>
@@ -264,6 +282,22 @@ button:disabled { opacity: .5; cursor: wait; }
           <section class="card"><h3>Deadlines binnen 14 dagen</h3><div class="lijst" id="deadlines"></div></section>
           <section class="card"><h3>Facturen</h3><div class="tbl" id="fact-vandaag"></div></section>
         </div>
+      </div>
+    </div>
+
+    <!-- TAB: COCKPIT -->
+    <div class="pane" id="pane-cockpit" role="tabpanel" aria-hidden="true">
+      <div class="kop"><div><h2><em>Cockpit</em></h2><div class="sub">Wat op jou wacht en of de systemen draaien.</div></div></div>
+      <div class="cp-status" id="cp-status"><span class="muted">Laden...</span></div>
+      <div class="row">
+        <section class="card c12"><h3>Scorebord</h3><div id="cp-score"></div></section>
+      </div>
+      <div class="row" id="cp-kpis"></div>
+      <div class="row">
+        <section class="card c12"><h3>Wachtrij <span class="muted" id="cp-wr-sub"></span></h3><div class="lijst" id="cp-wachtrij"></div></section>
+      </div>
+      <div class="row">
+        <section class="card c12"><h3>Prospects per status <span class="muted" id="cp-sync"></span></h3><div class="tbl" id="cp-prospects"></div></section>
       </div>
     </div>
 
@@ -496,6 +530,7 @@ button:disabled { opacity: .5; cursor: wait; }
     }
     $('login').classList.add('hidden');
     $('shell').classList.remove('hidden');
+    laadCockpit();
     var dash = d.data || {};
     var stappen = [
       ['Vandaag', function () { renderVandaag(dash); }],
@@ -890,6 +925,231 @@ button:disabled { opacity: .5; cursor: wait; }
         return '<tr><td>' + esc(fmtDatum(x.datum)) + '</td><td>' + esc(x.leverancier) + '</td><td>' + esc(x.omschrijving || '') + (x.klantcode ? '<div class="muted">' + esc(x.klantcode) + '</div>' : '') + '</td><td>' + tag(BUCKET[x.bucket] || x.bucket) + (x.doorgefactureerd ? ' ' + tag('doorgefactureerd', 'ok') : '') + '</td><td class="num">' + eurCent(x.bedrag_excl_eur) + '</td><td class="num">' + eurCent(x.btw_eur) + '</td></tr>';
       }).join('') + '</tbody></table>' : '<div class="empty">Nog geen kosten dit jaar.</div>';
   }
+
+  /* ---------- TAB: COCKPIT ---------- */
+  var cpBusy = {}, cpFout = {}, cpReeks = 0, cpData = null;
+  function cpEl(naam, cls, tekst) {
+    var e = document.createElement(naam);
+    if (cls) e.className = cls;
+    if (tekst != null) e.textContent = tekst;
+    return e;
+  }
+  function cpGeleden(iso) {
+    var t = iso ? new Date(iso).getTime() : NaN;
+    if (isNaN(t)) return '';
+    var min = Math.max(0, Math.round((Date.now() - t) / 60000));
+    if (min < 60) return min + ' min geleden';
+    if (min < 1440) return Math.round(min / 60) + ' u geleden';
+    return Math.round(min / 1440) + ' d geleden';
+  }
+  function cpProbleem(p) {
+    if (p == null) return '';
+    if (typeof p === 'string') return p;
+    if (typeof p === 'object') {
+      var t = p.melding || p.omschrijving || p.naam || p.systeem || p.titel;
+      if (t) return String(t);
+      try { return JSON.stringify(p); } catch (e) { return ''; }
+    }
+    return String(p);
+  }
+  function cpGetal(v) { var n = Number(v); return isFinite(n) ? n : 0; }
+  function cpDatumOk(d) { return d && !isNaN(new Date(d).getTime()); }
+
+  function cpTekenStatus(d, melding) {
+    var box = $('cp-status');
+    box.textContent = '';
+    box.className = 'cp-status';
+    if (melding) {
+      box.classList.add('bad');
+      box.appendChild(cpEl('span', 'cp-s', melding));
+      return;
+    }
+    var sys = d && d.systemen;
+    var tijd = cpDatumOk(d && d.gemaakt_op) ? 'Gegevens van ' + fmtDatum(d.gemaakt_op, true) : 'Tijdstip van de gegevens onbekend';
+    if (!sys || typeof sys !== 'object' || sys.in_orde == null) {
+      box.appendChild(cpEl('span', 'cp-s', 'Systeemstatus onbekend'));
+    } else if (sys.in_orde) {
+      box.classList.add('ok');
+      box.appendChild(cpEl('span', 'cp-s', 'Alle systemen in orde'));
+    } else {
+      box.classList.add('bad');
+      box.appendChild(cpEl('span', 'cp-s', 'Niet alle systemen in orde'));
+    }
+    box.appendChild(cpEl('span', 'muted', tijd));
+    var pr = (sys && Array.isArray(sys.problemen) ? sys.problemen : []).map(cpProbleem).filter(Boolean);
+    if (sys && sys.in_orde === false && pr.length) {
+      var ul = cpEl('ul');
+      pr.forEach(function (t) { ul.appendChild(cpEl('li', '', t)); });
+      box.appendChild(ul);
+    }
+  }
+
+  function cpTekenScore(d) {
+    var doel = (d.doel && typeof d.doel === 'object') ? d.doel : {};
+    var t1 = d.tier1_klanten, tdoel = doel.tier1_doel;
+    var box = $('cp-score');
+    box.textContent = '';
+    var tekst = 'Tier 1-klanten: ' + (t1 == null ? '-' : cpGetal(t1)) + ' van ' + (tdoel == null ? '-' : cpGetal(tdoel)) + (cpDatumOk(doel.tegen) ? ' tegen ' + fmtDatum(doel.tegen) : '');
+    box.appendChild(cpEl('div', 'cp-score-t', tekst));
+    var bar = cpEl('div', 'cp-bar'), vul = cpEl('div');
+    var p = cpGetal(tdoel) > 0 ? Math.max(0, Math.min(100, cpGetal(t1) / cpGetal(tdoel) * 100)) : 0;
+    vul.style.width = p.toFixed(0) + '%';
+    bar.setAttribute('role', 'progressbar');
+    bar.setAttribute('aria-valuemin', '0');
+    bar.setAttribute('aria-valuemax', '100');
+    bar.setAttribute('aria-valuenow', p.toFixed(0));
+    bar.appendChild(vul);
+    box.appendChild(bar);
+
+    var pro = (d.prospects && typeof d.prospects === 'object') ? d.prospects : {};
+    var aanSteven = Array.isArray(pro.wacht_op_steven) ? pro.wacht_op_steven.length : 0;
+    var aanProspect = Array.isArray(pro.wacht_op_prospect) ? pro.wacht_op_prospect.length : 0;
+    var open = cpGetal(d.open_totaal), dringend = cpGetal(d.dringend), verlopen = cpGetal(d.verlopen_zonder_beslissing);
+    $('cp-kpis').innerHTML = [
+      kpi({ cls: 'g-gold', icon: 'target', l: 'Open acties', v: open, s: verlopen ? verlopen + ' verlopen zonder beslissing' : 'niets verlopen' }),
+      kpi({ cls: dringend ? 'g-red' : 'g-teal', icon: 'alert', l: 'Dringend', v: dringend, s: dringend ? 'prioriteit 1' : 'niets dringends' }),
+      kpi({ cls: aanSteven ? 'g-blue' : 'g-slate', icon: 'mail', l: 'Prospects wachten op jou', v: aanSteven, s: 'status Geantwoord' }),
+      kpi({ cls: 'g-slate', icon: 'users', l: 'Prospects wachten op prospect', v: aanProspect, s: 'status Wacht op prospect' })
+    ].join('');
+
+    var n = $('n-cockpit');
+    n.textContent = open;
+    n.classList.toggle('hidden', !open);
+  }
+
+  function cpRij(a) {
+    var id = a && a.id != null ? String(a.id) : '';
+    var p = a.prioriteit === 1 ? 'p0' : a.prioriteit === 2 ? 'p1' : 'p3';
+    var rij = cpEl('div', 'it cp-rij');
+    rij.setAttribute('data-id', id);
+    rij.appendChild(cpEl('span', 'dot ' + p));
+    var kol = cpEl('div');
+    kol.style.cssText = 'min-width:0;flex:1';
+    var kop = cpEl('div', 't');
+    if (a.type) { kop.appendChild(cpEl('span', 'tag ' + (a.prioriteit === 1 ? 'bad' : a.prioriteit === 2 ? 'warn' : ''), String(a.type).replace(/_/g, ' '))); kop.appendChild(document.createTextNode(' ')); }
+    kop.appendChild(document.createTextNode(a.titel != null ? String(a.titel) : 'Zonder titel'));
+    kol.appendChild(kop);
+    if (a.samenvatting) kol.appendChild(cpEl('div', 'muted', String(a.samenvatting)));
+    var wanneer = cpGeleden(a.aangemaakt_op);
+    if (wanneer) kol.appendChild(cpEl('div', 'muted', 'Aangemaakt ' + wanneer));
+    var keuze = cpEl('div', 'keuze');
+    if (typeof a.link === 'string' && /^https:\/\//i.test(a.link)) {
+      var l = cpEl('a', 'kb', 'Openen');
+      l.href = a.link; l.target = '_blank'; l.rel = 'noopener noreferrer';
+      keuze.appendChild(l);
+    }
+    var bezig = !!cpBusy[id];
+    [['goedgekeurd', a.type === 'mail_concept' ? 'Goedkeuren' : 'Afgehandeld'], ['overgeslagen', 'Overslaan']].forEach(function (b) {
+      var k = cpEl('button', 'kb', b[1]);
+      k.type = 'button';
+      k.setAttribute('data-beslis', b[0]);
+      k.disabled = bezig;
+      keuze.appendChild(k);
+    });
+    var m = cpEl('span', 'cp-fout kmsg', bezig ? 'Opslaan...' : (cpFout[id] || ''));
+    if (bezig) m.className = 'muted kmsg';
+    keuze.appendChild(m);
+    kol.appendChild(keuze);
+    rij.appendChild(kol);
+    return rij;
+  }
+
+  function cpTekenWachtrij(d) {
+    var lijst = Array.isArray(d.acties) ? d.acties.filter(function (a) { return a && typeof a === 'object'; }) : [];
+    lijst.sort(function (a, b) {
+      var pa = a.prioriteit == null ? 99 : Number(a.prioriteit), pb = b.prioriteit == null ? 99 : Number(b.prioriteit);
+      if (pa !== pb) return pa - pb;
+      return (new Date(a.aangemaakt_op).getTime() || 0) - (new Date(b.aangemaakt_op).getTime() || 0);
+    });
+    var box = $('cp-wachtrij');
+    box.textContent = '';
+    $('cp-wr-sub').textContent = lijst.length ? lijst.length + (lijst.length === 1 ? ' open actie' : ' open acties') : '';
+    if (!lijst.length) { box.appendChild(cpEl('div', 'empty', 'Niets dat op jou wacht.')); return; }
+    lijst.forEach(function (a) { box.appendChild(cpRij(a)); });
+  }
+
+  function cpTekenProspects(d) {
+    var pro = (d.prospects && typeof d.prospects === 'object') ? d.prospects : null;
+    var box = $('cp-prospects');
+    box.textContent = '';
+    $('cp-sync').textContent = pro && cpDatumOk(pro.laatste_sync) ? 'laatste sync ' + fmtDatum(pro.laatste_sync, true) : '';
+    var ps = pro && pro.per_status && typeof pro.per_status === 'object' ? pro.per_status : {};
+    var keys = Object.keys(ps).sort(function (a, b) { return cpGetal(ps[b]) - cpGetal(ps[a]) || (a < b ? -1 : 1); });
+    if (!keys.length) { box.appendChild(cpEl('div', 'empty', 'Nog geen prospectgegevens.')); return; }
+    var tabel = cpEl('table'), kop = cpEl('thead'), kr = cpEl('tr');
+    kr.appendChild(cpEl('th', '', 'Status'));
+    kr.appendChild(cpEl('th', 'num', 'Aantal'));
+    kop.appendChild(kr); tabel.appendChild(kop);
+    var body = cpEl('tbody');
+    keys.forEach(function (k) {
+      var tr = cpEl('tr');
+      tr.appendChild(cpEl('td', '', k.replace(/_/g, ' ')));
+      tr.appendChild(cpEl('td', 'num', String(cpGetal(ps[k]))));
+      body.appendChild(tr);
+    });
+    if (pro.totaal != null) {
+      var tt = cpEl('tr', 'totaal');
+      tt.appendChild(cpEl('td', '', 'Totaal'));
+      tt.appendChild(cpEl('td', 'num', String(cpGetal(pro.totaal))));
+      body.appendChild(tt);
+    }
+    tabel.appendChild(body);
+    box.appendChild(tabel);
+  }
+
+  function cpTeken(d) {
+    var stappen = [cpTekenStatus, cpTekenScore, cpTekenWachtrij, cpTekenProspects];
+    stappen.forEach(function (f) { try { f(d); } catch (err) { if (window.console) console.error(err); } });
+  }
+
+  async function laadCockpit() {
+    var nr = ++cpReeks;
+    try {
+      var res = await sb.rpc('cockpit_data');
+      if (nr !== cpReeks) return;
+      if (res.error) {
+        if (!cpData) cpTeken({});
+        cpTekenStatus(cpData || {}, 'Cockpit laden mislukt: ' + res.error.message);
+        return;
+      }
+      var d = res.data && typeof res.data === 'object' ? res.data : {};
+      cpData = d;
+      cpTeken(d);
+    } catch (err) {
+      if (nr !== cpReeks) return;
+      if (window.console) console.error(err);
+      if (!cpData) cpTeken({});
+      cpTekenStatus(cpData || {}, 'Cockpit laden mislukt: ' + (err && err.message ? err.message : 'onbekende fout'));
+    }
+  }
+
+  $('cp-wachtrij').addEventListener('click', async function (e) {
+    var btn = e.target.closest('button[data-beslis]');
+    if (!btn || btn.disabled) return;
+    var rij = btn.closest('.cp-rij');
+    var id = rij ? rij.getAttribute('data-id') : '';
+    if (!id || cpBusy[id]) return;
+    cpBusy[id] = true;
+    delete cpFout[id];
+    Array.prototype.forEach.call(rij.querySelectorAll('button'), function (k) { k.disabled = true; });
+    var msg = rij.querySelector('.kmsg');
+    if (msg) { msg.className = 'muted kmsg'; msg.textContent = 'Opslaan...'; }
+    var fout = null;
+    try {
+      var res = await sb.rpc('actie_beslissen_web', { p_id: id, p_beslissing: btn.getAttribute('data-beslis') });
+      if (res.error) fout = res.error.message || 'Onbekende fout';
+    } catch (err) {
+      fout = err && err.message ? err.message : 'Onbekende fout';
+    }
+    if (fout) {
+      cpFout[id] = 'Mislukt: ' + fout;
+      delete cpBusy[id];
+      if (cpData) cpTekenWachtrij(cpData);
+      return;
+    }
+    try { await laadCockpit(); } finally { delete cpBusy[id]; }
+    if (cpData) cpTekenWachtrij(cpData);
+  });
 
   sb.auth.onAuthStateChange(function (event, session) {
     if (event === 'SIGNED_IN' && session) {
