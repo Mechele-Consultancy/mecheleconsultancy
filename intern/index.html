@@ -215,7 +215,8 @@ a.kb { display: inline-block; text-decoration: none; background: var(--panel2); 
 @keyframes cpzweef { to { transform: translate(60px, 40px) scale(1.12); } }
 /* hero */
 .cp-hero { display: grid; grid-template-columns: auto minmax(0, 1fr) minmax(240px, 34%); gap: 22px; align-items: center; margin-bottom: 18px; }
-.cp-orb { position: relative; width: 104px; height: 104px; border-radius: 50%; --o1: var(--c1); --o2: var(--c2); --o3: var(--c3); }
+.cp-orb { position: relative; width: 104px; height: 104px; border-radius: 50%; --o1: var(--c1); --o2: var(--c2); --o3: var(--c3); animation: cppols 2.8s ease-in-out infinite; }
+@keyframes cppols { 0%, 100% { transform: scale(.94); filter: brightness(.95); } 50% { transform: scale(1.06); filter: brightness(1.18); } }
 .cp-orb::before { content: ''; position: absolute; inset: -18px; border-radius: 50%; background: radial-gradient(circle, color-mix(in srgb, var(--o1) 45%, transparent), transparent 68%); filter: blur(10px); animation: cpadem 4.5s ease-in-out infinite; }
 .cp-orb span { position: absolute; inset: 0; border-radius: 50%; overflow: hidden; background: radial-gradient(circle at 32% 28%, rgba(255,255,255,.9), transparent 22%), conic-gradient(from 0deg, var(--o1), var(--o2), var(--o3), var(--o1));
   box-shadow: inset 0 0 24px rgba(255,255,255,.35), 0 0 40px color-mix(in srgb, var(--o2) 55%, transparent); animation: cpdraai 9s linear infinite; }
@@ -306,7 +307,7 @@ a.kb { display: inline-block; text-decoration: none; background: var(--panel2); 
 @media (max-width: 700px) { .cp-bento > .cp-score-kaart, .cp-score-kaart #cp-score { grid-template-columns: minmax(0, 1fr); } #pane-cockpit .cp-score-t { white-space: normal; } }
 @media (max-width: 560px) { #pane-cockpit { padding: 18px 14px 10px; border-radius: 22px; } .cp-hero { gap: 14px; } .cp-orb { width: 66px; height: 66px; } #cp-groet { font-size: 25px; } #cp-samen { font-size: 14px; }
   .cp-bento { gap: 12px; } .cp-bento > #cp-kpis { gap: 12px; } #pane-cockpit .kpi .v { font-size: 32px; } #pane-cockpit td.cp-bal { width: 32%; } }
-@media (prefers-reduced-motion: reduce) { .cp-aurora::before, .cp-aurora::after, .cp-orb::before, .cp-orb span, .cp-orb span::after, .cp-eyebrow .live::before { animation: none; } }
+@media (prefers-reduced-motion: reduce) { .cp-aurora::before, .cp-aurora::after, .cp-orb, .cp-orb::before, .cp-orb span, .cp-orb span::after, .cp-eyebrow .live::before { animation: none; } }
 /* Aanmelden */
 #login { max-width: 400px; margin: 12vh auto; padding: 28px; border-radius: 20px; background: var(--panel); border: 1px solid var(--line); }
 #login h2 { font-family: 'Playfair Display', serif; margin: 0 0 6px; }
