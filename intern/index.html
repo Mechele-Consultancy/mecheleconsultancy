@@ -9,7 +9,7 @@
 <title>Intern | Mechele Consultancy</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@400;500;700&family=Orbitron:wght@500;700;800&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@400;500;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 /* Intern dashboard v2 (22/10/2026). Eigen stijl, los van shared.css (klantportaal blijft ongewijzigd). */
 :root {
@@ -201,107 +201,112 @@ a.kb { display: inline-block; text-decoration: none; background: var(--panel2); 
 .cp-fout { color: var(--red); font-size: 13px; }
 .cp-rij .keuze { margin-top: 10px; }
 
-/* Cortana (cockpit) - sinds 16/11/2026: HUD-stijl, enkel binnen #pane-cockpit */
-#pane-cockpit { --hud: #45D6FF; --hud2: #D8F6FF; --hud-dim: #86A9C2; --hud-line: rgba(69,214,255,.28); --hud-panel: rgba(10,34,58,.72); --rood: #FF5D6E; --amber: #FFB547;
-  --hfont: 'Orbitron', 'Rajdhani', system-ui, sans-serif; --lfont: 'Rajdhani', 'DM Sans', system-ui, sans-serif;
-  position: relative; margin: -6px -8px 0; padding: 20px 22px 12px; border-radius: 18px; isolation: isolate; overflow: hidden; border: 1px solid rgba(69,214,255,.12);
-  background: radial-gradient(1000px 380px at 50% -12%, rgba(69,214,255,.20), transparent 62%), linear-gradient(180deg, #071425, #050D19); }
-#pane-cockpit::before { content: ''; position: absolute; left: -20%; right: -20%; bottom: -10%; height: 46%; z-index: -1; pointer-events: none; opacity: .5;
-  background-image: linear-gradient(rgba(69,214,255,.16) 1px, transparent 1px), linear-gradient(90deg, rgba(69,214,255,.16) 1px, transparent 1px); background-size: 46px 46px;
-  transform: perspective(420px) rotateX(62deg); transform-origin: 50% 0; -webkit-mask: linear-gradient(transparent, #000 70%); mask: linear-gradient(transparent, #000 70%); }
-#pane-cockpit::after { content: ''; position: absolute; left: 0; right: 0; top: -30%; height: 30%; z-index: -1; pointer-events: none;
-  background: linear-gradient(180deg, transparent, rgba(69,214,255,.06) 70%, rgba(69,214,255,.16) 99%, transparent); animation: cpscan 9s linear infinite; }
-@keyframes cpscan { to { transform: translateY(460%); } }
-/* kop */
-#pane-cockpit .kop { margin-bottom: 14px; align-items: center; }
-#pane-cockpit .kop h2 { font-family: var(--hfont); font-weight: 800; font-size: 30px; letter-spacing: .3em; text-transform: uppercase; color: var(--hud2); text-shadow: 0 0 22px rgba(69,214,255,.55), 0 0 2px #fff; }
-#pane-cockpit .kop h2 em { color: inherit; }
-#pane-cockpit .kop .sub { font-family: var(--lfont); font-weight: 600; font-size: 15px; letter-spacing: .08em; color: var(--hud-dim); }
-.cp-telemetrie { display: flex; gap: 8px; flex-wrap: wrap; font-family: var(--lfont); font-weight: 600; font-size: 13px; letter-spacing: .12em; text-transform: uppercase; }
-.cp-telemetrie span { padding: 5px 10px; border: 1px solid var(--hud-line); background: rgba(69,214,255,.06); color: var(--hud2); clip-path: polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%); }
-.cp-telemetrie b { color: var(--hud); font-weight: 700; font-variant-numeric: tabular-nums; }
-.cp-telemetrie .live::before { content: ''; display: inline-block; width: 7px; height: 7px; border-radius: 50%; margin-right: 7px; background: #3DFFA8; box-shadow: 0 0 8px #3DFFA8; animation: cppuls 1.6s ease-in-out infinite; vertical-align: 1px; }
-/* panelen met HUD-hoeken */
-#pane-cockpit .card, #pane-cockpit .cp-status, #pane-cockpit .kpi { position: relative; border-radius: 3px; background: linear-gradient(180deg, rgba(69,214,255,.07), transparent 60px), var(--hud-panel); border: 1px solid rgba(69,214,255,.16); box-shadow: inset 0 0 30px rgba(69,214,255,.04); backdrop-filter: blur(6px); }
-#pane-cockpit .card::before, #pane-cockpit .cp-status::before, #pane-cockpit .kpi::before,
-#pane-cockpit .card::after, #pane-cockpit .cp-status::after, #pane-cockpit .kpi::after { content: ''; position: absolute; width: 16px; height: 16px; pointer-events: none; border: 2px solid var(--hud); filter: drop-shadow(0 0 4px rgba(69,214,255,.8)); background: none; border-radius: 0; opacity: 1; }
-#pane-cockpit .card::before, #pane-cockpit .cp-status::before, #pane-cockpit .kpi::before { top: -1px; left: -1px; border-right: 0; border-bottom: 0; }
-#pane-cockpit .card::after, #pane-cockpit .cp-status::after, #pane-cockpit .kpi::after { bottom: -1px; right: -1px; top: auto; left: auto; border-left: 0; border-top: 0; }
-#pane-cockpit .card h3 { font-family: var(--lfont); font-size: 17px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--hud); justify-content: flex-start; margin-bottom: 14px; padding-bottom: 10px; border-bottom: 1px solid var(--hud-line); }
-#pane-cockpit .card h3::before { content: '//'; margin-right: 10px; color: var(--hud-dim); font-weight: 600; letter-spacing: 0; }
-#pane-cockpit .card h3 .muted { margin-left: auto; font-family: var(--lfont); font-size: 14px; font-weight: 600; letter-spacing: .06em; text-transform: none; color: var(--hud-dim); }
-#pane-cockpit .muted { color: var(--hud-dim); }
-/* status met kern */
-.cp-hud { display: flex; gap: 18px; align-items: center; margin-bottom: 16px; }
-.cp-hud .cp-status { flex: 1; margin-bottom: 0; min-height: 84px; align-content: center; padding: 14px 20px; }
-.cp-core { position: relative; width: 96px; height: 96px; flex: none; --c: #45D6FF; }
-.cp-core::before, .cp-core::after, .cp-core i, .cp-core b { content: ''; position: absolute; border-radius: 50%; }
-.cp-core::before { inset: 0; background: conic-gradient(var(--c) 0 22%, transparent 22% 25%, var(--c) 25% 47%, transparent 47% 50%, var(--c) 50% 72%, transparent 72% 75%, var(--c) 75% 97%, transparent 97%);
-  -webkit-mask: radial-gradient(circle, transparent 62%, #000 63% 68%, transparent 69%); mask: radial-gradient(circle, transparent 62%, #000 63% 68%, transparent 69%); animation: cpdraai 12s linear infinite; filter: drop-shadow(0 0 6px var(--c)); }
-.cp-core::after { inset: 10px; background: repeating-conic-gradient(var(--c) 0 2deg, transparent 2deg 10deg); -webkit-mask: radial-gradient(circle, transparent 66%, #000 67% 72%, transparent 73%); mask: radial-gradient(circle, transparent 66%, #000 67% 72%, transparent 73%); opacity: .6; animation: cpdraai 30s linear infinite reverse; }
-.cp-core b { inset: 22px; border: 1px solid var(--c); opacity: .4; }
-.cp-core i { inset: 32px; background: radial-gradient(circle, #fff 0 12%, var(--c) 32%, transparent 72%); box-shadow: 0 0 30px var(--c), 0 0 60px var(--c); animation: cppuls 3s ease-in-out infinite; }
-.cp-hud:has(.cp-status.bad) .cp-core { --c: #FF5D6E; }
+/* Cortana (cockpit) - sinds 16/11/2026: glas en aurora, bento-indeling, enkel binnen #pane-cockpit */
+#pane-cockpit { --c1: #3BE3FF; --c2: #8B7CFF; --c3: #E06BFF; --wit: #F2F6FF; --zacht: #A7B4CC; --dim: #7A88A3; --glas: rgba(255,255,255,.045); --rand: rgba(255,255,255,.09); --rood: #FF5F79; --amber: #FFB648; --groen: #3DF2A6;
+  --kop: 'Space Grotesk', 'DM Sans', system-ui, sans-serif; --mono: 'JetBrains Mono', ui-monospace, monospace;
+  position: relative; isolation: isolate; margin: -6px -8px 0; padding: 26px 26px 14px; border-radius: 28px; overflow: hidden; background: #070A14; border: 1px solid rgba(255,255,255,.06); }
+.cp-aurora { position: absolute; inset: 0; z-index: -1; pointer-events: none; overflow: hidden; }
+.cp-aurora::before, .cp-aurora::after, .cp-aurora i { content: ''; position: absolute; border-radius: 50%; filter: blur(90px); opacity: .55; }
+.cp-aurora::before { width: 560px; height: 420px; left: -140px; top: -180px; background: #1AA8D9; animation: cpzweef 22s ease-in-out infinite alternate; }
+.cp-aurora::after { width: 520px; height: 460px; right: -160px; top: 120px; background: #6A4CFF; opacity: .45; animation: cpzweef 26s ease-in-out infinite alternate-reverse; }
+.cp-aurora i { width: 420px; height: 320px; left: 30%; bottom: -220px; background: #C04BE8; opacity: .28; }
+.cp-aurora b { position: absolute; inset: 0; background-image: linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px); background-size: 44px 44px;
+  -webkit-mask: radial-gradient(ellipse at 50% 0%, #000 20%, transparent 75%); mask: radial-gradient(ellipse at 50% 0%, #000 20%, transparent 75%); }
+@keyframes cpzweef { to { transform: translate(60px, 40px) scale(1.12); } }
+/* hero */
+.cp-hero { display: grid; grid-template-columns: auto minmax(0, 1fr) minmax(240px, 34%); gap: 22px; align-items: center; margin-bottom: 18px; }
+.cp-orb { position: relative; width: 104px; height: 104px; border-radius: 50%; --o1: var(--c1); --o2: var(--c2); --o3: var(--c3); }
+.cp-orb::before { content: ''; position: absolute; inset: -18px; border-radius: 50%; background: radial-gradient(circle, color-mix(in srgb, var(--o1) 45%, transparent), transparent 68%); filter: blur(10px); animation: cpadem 4.5s ease-in-out infinite; }
+.cp-orb span { position: absolute; inset: 0; border-radius: 50%; overflow: hidden; background: radial-gradient(circle at 32% 28%, rgba(255,255,255,.9), transparent 22%), conic-gradient(from 0deg, var(--o1), var(--o2), var(--o3), var(--o1));
+  box-shadow: inset 0 0 24px rgba(255,255,255,.35), 0 0 40px color-mix(in srgb, var(--o2) 55%, transparent); animation: cpdraai 9s linear infinite; }
+.cp-orb span::after { content: ''; position: absolute; inset: 14%; border-radius: 50%; background: radial-gradient(circle at 60% 65%, color-mix(in srgb, var(--o1) 80%, #fff), transparent 60%); filter: blur(6px); mix-blend-mode: screen; animation: cpdraai 6s linear infinite reverse; }
+.cp-hero:has(.cp-status.bad) .cp-orb { --o1: #FF5F79; --o2: #FF8A5B; --o3: #C2185B; }
 @keyframes cpdraai { to { transform: rotate(360deg); } }
-@keyframes cppuls { 0%, 100% { opacity: .75; transform: scale(.92); } 50% { opacity: 1; transform: scale(1.04); } }
-#pane-cockpit .cp-status .cp-s { font-family: var(--hfont); font-size: 18px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
-#pane-cockpit .cp-status .muted { font-family: var(--lfont); font-size: 15px; font-weight: 600; letter-spacing: .05em; }
-#pane-cockpit .cp-status.ok .cp-s { color: var(--hud2); text-shadow: 0 0 14px rgba(69,214,255,.6); }
-#pane-cockpit .cp-status.bad { border-color: rgba(255,93,110,.5); background: rgba(255,93,110,.10); }
-#pane-cockpit .cp-status.bad::before, #pane-cockpit .cp-status.bad::after { border-color: var(--rood); }
-#pane-cockpit .cp-status.bad .cp-s { color: #FFB0B8; text-shadow: 0 0 14px rgba(255,93,110,.6); }
-#pane-cockpit .cp-status ul { color: #FFD3D8; font-size: 15px; }
-/* scorebord */
-#pane-cockpit .cp-score-t { font-family: var(--lfont); font-size: 21px; font-weight: 700; letter-spacing: .04em; color: var(--hud2); }
-#pane-cockpit .cp-bar { height: 14px; border-radius: 0; margin-top: 12px; background: repeating-linear-gradient(90deg, rgba(69,214,255,.13) 0 12px, transparent 12px 15px); }
-#pane-cockpit .cp-bar > div { border-radius: 0; background: repeating-linear-gradient(90deg, var(--hud) 0 12px, transparent 12px 15px); box-shadow: 0 0 14px rgba(69,214,255,.7); min-width: 0; }
+@keyframes cpadem { 0%, 100% { opacity: .65; transform: scale(.95); } 50% { opacity: 1; transform: scale(1.06); } }
+.cp-eyebrow { font-family: var(--mono); font-size: 12px; letter-spacing: .18em; text-transform: uppercase; color: var(--zacht); display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.cp-eyebrow .live { display: inline-flex; align-items: center; gap: 6px; color: var(--groen); }
+.cp-eyebrow .live::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: var(--groen); box-shadow: 0 0 10px var(--groen); animation: cpadem 1.8s ease-in-out infinite; }
+#cp-groet { margin: 6px 0 4px; font-family: var(--kop); font-weight: 700; font-size: 34px; line-height: 1.1; letter-spacing: -.02em; color: var(--wit); }
+#cp-groet em { font-style: normal; background: linear-gradient(90deg, var(--c1), var(--c2) 55%, var(--c3)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+#cp-samen { margin: 0; color: var(--zacht); font-size: 15.5px; }
+/* glaspanelen */
+#pane-cockpit .card, #pane-cockpit .cp-status, #pane-cockpit .kpi { position: relative; border-radius: 20px; background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)); border: 1px solid var(--rand);
+  box-shadow: 0 1px 0 rgba(255,255,255,.08) inset, 0 20px 40px -24px rgba(0,0,0,.7); backdrop-filter: blur(14px) saturate(140%); -webkit-backdrop-filter: blur(14px) saturate(140%); }
+#pane-cockpit .card { padding: 20px 22px; }
+#pane-cockpit .card h3 { font-family: var(--mono); font-size: 12px; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; color: var(--zacht); margin-bottom: 14px; }
+#pane-cockpit .card h3 .muted { font-family: var(--mono); font-size: 11.5px; letter-spacing: .06em; text-transform: none; color: var(--dim); }
+#pane-cockpit .muted { color: var(--dim); }
+/* status */
+#pane-cockpit .cp-status { margin: 0; padding: 14px 18px; display: flex; flex-direction: column; gap: 4px; align-items: flex-start; }
+#pane-cockpit .cp-status .cp-s { font-family: var(--kop); font-weight: 600; font-size: 16px; display: inline-flex; align-items: center; gap: 8px; }
+#pane-cockpit .cp-status .cp-s::before { content: ''; width: 9px; height: 9px; border-radius: 50%; background: var(--dim); }
+#pane-cockpit .cp-status.ok { border-color: rgba(61,242,166,.28); }
+#pane-cockpit .cp-status.ok .cp-s { color: var(--wit); }
+#pane-cockpit .cp-status.ok .cp-s::before { background: var(--groen); box-shadow: 0 0 12px var(--groen); }
+#pane-cockpit .cp-status.bad { border-color: rgba(255,95,121,.45); background: linear-gradient(180deg, rgba(255,95,121,.14), rgba(255,95,121,.04)); }
+#pane-cockpit .cp-status.bad .cp-s { color: #FFC4CE; }
+#pane-cockpit .cp-status.bad .cp-s::before { background: var(--rood); box-shadow: 0 0 12px var(--rood); }
+#pane-cockpit .cp-status .muted { font-family: var(--mono); font-size: 11.5px; }
+#pane-cockpit .cp-status ul { margin: 4px 0 0; color: #FFD6DD; font-size: 14px; }
+/* bento */
+.cp-bento { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 16px; }
+.cp-bento > .cp-score-kaart { grid-column: span 12; display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: 6px 24px; padding: 16px 22px; }
+.cp-score-kaart h3 { margin: 0 !important; }
+.cp-score-kaart #cp-score { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: 20px; }
+#pane-cockpit .cp-score-kaart .cp-bar { margin-top: 0; }
+.cp-bento > #cp-kpis { grid-column: span 12; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; margin: 0; }
+.cp-bento > .cp-wr-kaart { grid-column: span 7; }
+.cp-bento > .cp-pr-kaart { grid-column: span 5; }
+#pane-cockpit .cp-score-t { font-family: var(--kop); font-size: 18px; white-space: nowrap; font-weight: 600; color: var(--wit); letter-spacing: -.01em; }
+#pane-cockpit .cp-bar { height: 10px; border-radius: 999px; margin-top: 16px; background: rgba(255,255,255,.07); }
+#pane-cockpit .cp-bar > div { border-radius: 999px; background: linear-gradient(90deg, var(--c1), var(--c2), var(--c3)); box-shadow: 0 0 18px rgba(139,124,255,.6); }
 /* tellers */
-#pane-cockpit .kpi { min-height: 116px; color: var(--txt); padding: 16px 18px; overflow: visible; }
-#pane-cockpit .kpi .l { font-family: var(--lfont); font-size: 14.5px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--hud-dim); opacity: 1; }
-#pane-cockpit .kpi .ic { width: 32px; height: 32px; background: rgba(69,214,255,.10); border: 1px solid var(--hud-line); border-radius: 50%; color: var(--hud); }
-#pane-cockpit .kpi .v { font-family: var(--lfont); font-size: 46px; line-height: 1; font-weight: 700; color: var(--hud2); text-shadow: 0 0 18px rgba(69,214,255,.55); margin-top: 6px; font-variant-numeric: tabular-nums; }
-#pane-cockpit .kpi .s { font-family: var(--lfont); font-size: 14px; font-weight: 600; color: var(--hud-dim); opacity: 1; }
-#pane-cockpit .kpi.g-red { background: linear-gradient(180deg, rgba(255,93,110,.16), transparent 70px), var(--hud-panel) !important; border-color: rgba(255,93,110,.45); }
-#pane-cockpit .kpi.g-red::before, #pane-cockpit .kpi.g-red::after { border-color: var(--rood); filter: drop-shadow(0 0 4px rgba(255,93,110,.8)); }
-#pane-cockpit .kpi.g-red .v { color: #FFC2C8; text-shadow: 0 0 18px rgba(255,93,110,.7); }
-#pane-cockpit .kpi.g-red .ic { color: var(--rood); border-color: rgba(255,93,110,.5); background: rgba(255,93,110,.12); }
-#pane-cockpit .kpi.g-gold, #pane-cockpit .kpi.g-teal, #pane-cockpit .kpi.g-blue, #pane-cockpit .kpi.g-slate { background: linear-gradient(180deg, rgba(69,214,255,.07), transparent 60px), var(--hud-panel) !important; }
+#pane-cockpit #cp-kpis .kpi { grid-column: auto; min-height: 0; padding: 16px 18px; color: var(--wit); overflow: hidden; }
+#pane-cockpit .kpi::after { display: none; }
+#pane-cockpit .kpi .l { font-family: var(--mono); font-size: 11.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--zacht); opacity: 1; }
+#pane-cockpit .kpi .ic { width: 30px; height: 30px; border-radius: 10px; background: rgba(255,255,255,.06); color: var(--c1); }
+#pane-cockpit .kpi .v { font-family: var(--kop); font-size: 40px; font-weight: 700; letter-spacing: -.03em; color: var(--wit); margin-top: 8px; line-height: 1; font-variant-numeric: tabular-nums; }
+#pane-cockpit .kpi .s { font-size: 13px; color: var(--dim); opacity: 1; margin-top: 6px; }
+#pane-cockpit .kpi.g-gold, #pane-cockpit .kpi.g-teal, #pane-cockpit .kpi.g-blue, #pane-cockpit .kpi.g-slate, #pane-cockpit .kpi.g-red { background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)) !important; }
+#pane-cockpit .kpi.g-red { border-color: rgba(255,95,121,.45); background: linear-gradient(160deg, rgba(255,95,121,.22), rgba(255,95,121,.04) 60%) !important; }
+#pane-cockpit .kpi.g-red .v { color: #FFD0D8; }
+#pane-cockpit .kpi.g-red .ic { color: var(--rood); }
+#pane-cockpit .kpi.g-blue { border-color: rgba(59,227,255,.35); background: linear-gradient(160deg, rgba(59,227,255,.16), rgba(139,124,255,.05) 60%) !important; }
+#pane-cockpit .kpi.g-blue .v { background: linear-gradient(90deg, var(--c1), var(--c2)); -webkit-background-clip: text; background-clip: text; color: transparent; }
 /* wachtrij */
-#pane-cockpit .lijst { counter-reset: cpnr; }
-#pane-cockpit .lijst .it { counter-increment: cpnr; display: grid; grid-template-columns: 46px minmax(0, 1fr); gap: 0 14px; padding: 14px 16px 14px 12px; margin-bottom: 10px; border: 1px solid rgba(69,214,255,.14); border-left: 3px solid var(--hud-dim); border-radius: 2px; background: linear-gradient(90deg, rgba(69,214,255,.06), transparent 40%); }
-#pane-cockpit .lijst .it::before { content: counter(cpnr, decimal-leading-zero); font-family: var(--lfont); font-size: 26px; font-weight: 700; color: var(--hud-dim); align-self: start; line-height: 1.2; text-align: center; }
-#pane-cockpit .lijst .it:last-child { margin-bottom: 0; border-bottom: 1px solid rgba(69,214,255,.14); }
-#pane-cockpit .lijst .it:has(.dot.p0) { border-left-color: var(--rood); background: linear-gradient(90deg, rgba(255,93,110,.12), transparent 45%); }
-#pane-cockpit .lijst .it:has(.dot.p0)::before { color: var(--rood); text-shadow: 0 0 10px rgba(255,93,110,.7); }
-#pane-cockpit .lijst .it:has(.dot.p1) { border-left-color: var(--amber); }
-#pane-cockpit .lijst .it:has(.dot.p1)::before { color: var(--amber); }
-#pane-cockpit .lijst .it .dot { display: none; }
-#pane-cockpit .it .t { font-size: 16px; font-weight: 700; color: #fff; }
-#pane-cockpit .it .muted { font-size: 14px; }
-#pane-cockpit .tag { border-radius: 0; font-family: var(--lfont); font-size: 12.5px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; padding: 2px 8px; background: rgba(69,214,255,.12); color: var(--hud); border: 1px solid var(--hud-line); margin-right: 6px; }
-#pane-cockpit .tag.bad { background: rgba(255,93,110,.16); color: #FFB0B8; border-color: rgba(255,93,110,.45); }
-#pane-cockpit .tag.warn { background: rgba(255,181,71,.14); color: #FFD08A; border-color: rgba(255,181,71,.4); }
-#pane-cockpit .keuze { margin-top: 12px; }
-#pane-cockpit button.kb, #pane-cockpit a.kb { font-family: var(--lfont); font-size: 15px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; padding: 6px 18px; border-radius: 0; background: rgba(69,214,255,.05); border: 1px solid var(--hud-line); color: var(--hud2); clip-path: polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px); }
-#pane-cockpit button.kb[data-beslis="goedgekeurd"] { background: linear-gradient(180deg, #6FE3FF, #2FB8E6); border-color: transparent; color: #022235; box-shadow: 0 0 16px rgba(69,214,255,.45); }
-#pane-cockpit button.kb:hover:not(:disabled), #pane-cockpit a.kb:hover { border-color: var(--hud); box-shadow: 0 0 14px rgba(69,214,255,.4); }
+#pane-cockpit .lijst .it { display: block; position: relative; padding: 14px 16px 14px 20px; margin-bottom: 10px; border-radius: 14px; border: 1px solid rgba(255,255,255,.07); background: rgba(255,255,255,.03); transition: background .2s, border-color .2s; }
+#pane-cockpit .lijst .it:hover { background: rgba(255,255,255,.055); border-color: rgba(255,255,255,.12); }
+#pane-cockpit .lijst .it:last-child { margin-bottom: 0; border-bottom: 1px solid rgba(255,255,255,.07); }
+#pane-cockpit .lijst .it .dot { position: absolute; left: 0; top: 14px; bottom: 14px; width: 3px; height: auto; margin: 0; border-radius: 0 3px 3px 0; box-shadow: none; }
+#pane-cockpit .lijst .it .dot.p0 { background: var(--rood); box-shadow: 0 0 12px var(--rood); }
+#pane-cockpit .lijst .it .dot.p1 { background: var(--amber); }
+#pane-cockpit .lijst .it .dot.p3 { background: rgba(255,255,255,.18); }
+#pane-cockpit .it .t { font-family: var(--kop); font-size: 15.5px; font-weight: 600; color: var(--wit); line-height: 1.35; }
+#pane-cockpit .it .muted { font-size: 13.5px; margin-top: 3px; }
+#pane-cockpit .tag { font-family: var(--mono); font-size: 10.5px; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; padding: 3px 8px; border-radius: 999px; background: rgba(59,227,255,.10); color: #9FEFFF; margin-right: 6px; vertical-align: 2px; }
+#pane-cockpit .tag.bad { background: rgba(255,95,121,.16); color: #FFB7C3; }
+#pane-cockpit .tag.warn { background: rgba(255,182,72,.14); color: #FFD394; }
+#pane-cockpit .keuze { margin-top: 12px; gap: 8px; }
+#pane-cockpit button.kb, #pane-cockpit a.kb { border-radius: 999px; padding: 7px 16px; font-size: 13.5px; font-weight: 600; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.12); color: var(--wit); transition: background .2s, box-shadow .2s, transform .1s; }
+#pane-cockpit button.kb[data-beslis="goedgekeurd"] { border-color: transparent; color: #061018; background: linear-gradient(90deg, var(--c1), #7FA8FF); box-shadow: 0 6px 20px -6px rgba(59,227,255,.6); }
+#pane-cockpit button.kb:hover:not(:disabled), #pane-cockpit a.kb:hover { background: rgba(255,255,255,.1); }
+#pane-cockpit button.kb[data-beslis="goedgekeurd"]:hover:not(:disabled) { background: linear-gradient(90deg, #6CEBFF, #9DBBFF); }
+#pane-cockpit button.kb:active:not(:disabled) { transform: translateY(1px); }
 #pane-cockpit button.kb:disabled { opacity: .5; cursor: default; }
-#pane-cockpit button.kb:focus-visible, #pane-cockpit a.kb:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
-/* prospects als balken */
-#pane-cockpit th { font-family: var(--lfont); font-size: 13px; font-weight: 700; letter-spacing: .14em; color: var(--hud-dim); }
-#pane-cockpit td, #pane-cockpit th { border-color: rgba(69,214,255,.09); }
-#pane-cockpit td { padding: 7px 8px; font-family: var(--lfont); font-size: 16px; font-weight: 600; }
-#pane-cockpit td.num { font-family: var(--lfont); font-size: 18px; font-weight: 700; color: var(--hud2); font-variant-numeric: tabular-nums; width: 70px; }
-#pane-cockpit td.cp-bal { width: 52%; }
-.cp-bal span { display: block; height: 8px; min-width: 2px; background: linear-gradient(90deg, rgba(69,214,255,.35), var(--hud)); box-shadow: 0 0 10px rgba(69,214,255,.55); }
-#pane-cockpit tr.totaal td { border-top-color: var(--hud-line); color: var(--hud); }
-#pane-cockpit .empty { font-family: var(--lfont); color: var(--hud-dim); font-size: 15px; letter-spacing: .08em; text-transform: uppercase; padding: 6px 0; }
-@media (max-width: 900px) { .cp-hud { gap: 12px; } }
-@media (max-width: 560px) { #pane-cockpit { padding: 16px 12px 8px; } #pane-cockpit .kop h2 { font-size: 22px; letter-spacing: .22em; } #pane-cockpit .row { gap: 10px; }
-  .cp-core { width: 64px; height: 64px; } .cp-core::after { inset: 6px; } .cp-core b { inset: 14px; } .cp-core i { inset: 21px; }
-  #pane-cockpit .kpi.c3 { grid-column: span 6; min-height: 0; padding: 12px 14px; } #pane-cockpit .kpi .l { font-size: 12.5px; } #pane-cockpit .kpi .v { font-size: 34px; } #pane-cockpit .kpi .s { font-size: 12.5px; }
-  #pane-cockpit .lijst .it { grid-template-columns: 30px minmax(0, 1fr); gap: 0 8px; } #pane-cockpit .lijst .it::before { font-size: 19px; } #pane-cockpit td.cp-bal { width: 34%; } }
-@media (prefers-reduced-motion: reduce) { #pane-cockpit::after, .cp-core::before, .cp-core::after, .cp-core i, .cp-telemetrie .live::before { animation: none; } }
+#pane-cockpit button.kb:focus-visible, #pane-cockpit a.kb:focus-visible { outline: 2px solid var(--c1); outline-offset: 2px; }
+/* prospects */
+#pane-cockpit th { font-family: var(--mono); font-size: 11px; font-weight: 500; letter-spacing: .12em; color: var(--dim); border-color: rgba(255,255,255,.06); }
+#pane-cockpit td { padding: 7px 6px; border-color: rgba(255,255,255,.05); font-size: 14px; color: var(--zacht); }
+#pane-cockpit td.num { font-family: var(--mono); font-size: 13.5px; color: var(--wit); width: 56px; font-variant-numeric: tabular-nums; }
+#pane-cockpit td.cp-bal { width: 40%; }
+.cp-bal span { display: block; height: 6px; min-width: 3px; border-radius: 999px; background: linear-gradient(90deg, var(--c1), var(--c2)); box-shadow: 0 0 10px rgba(59,227,255,.35); }
+#pane-cockpit tr.totaal td { border-top-color: rgba(255,255,255,.12); color: var(--wit); }
+#pane-cockpit .empty { color: var(--dim); font-size: 14.5px; padding: 8px 0; }
+@media (max-width: 1100px) { .cp-hero { grid-template-columns: auto minmax(0, 1fr); } .cp-hero .cp-status { grid-column: 1 / -1; } .cp-bento > * { grid-column: span 12 !important; } .cp-bento > #cp-kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 700px) { .cp-bento > .cp-score-kaart, .cp-score-kaart #cp-score { grid-template-columns: minmax(0, 1fr); } #pane-cockpit .cp-score-t { white-space: normal; } }
+@media (max-width: 560px) { #pane-cockpit { padding: 18px 14px 10px; border-radius: 22px; } .cp-hero { gap: 14px; } .cp-orb { width: 66px; height: 66px; } #cp-groet { font-size: 25px; } #cp-samen { font-size: 14px; }
+  .cp-bento { gap: 12px; } .cp-bento > #cp-kpis { gap: 12px; } #pane-cockpit .kpi .v { font-size: 32px; } #pane-cockpit td.cp-bal { width: 32%; } }
+@media (prefers-reduced-motion: reduce) { .cp-aurora::before, .cp-aurora::after, .cp-orb::before, .cp-orb span, .cp-orb span::after, .cp-eyebrow .live::before { animation: none; } }
 /* Aanmelden */
 #login { max-width: 400px; margin: 12vh auto; padding: 28px; border-radius: 20px; background: var(--panel); border: 1px solid var(--line); }
 #login h2 { font-family: 'Playfair Display', serif; margin: 0 0 6px; }
@@ -388,17 +393,21 @@ a.kb { display: inline-block; text-decoration: none; background: var(--panel2); 
 
     <!-- TAB: COCKPIT -->
     <div class="pane" id="pane-cockpit" role="tabpanel" aria-hidden="true">
-      <div class="kop"><div><h2><em>Cortana</em></h2><div class="sub">Wat op jou wacht en of de systemen draaien.</div></div><div class="cp-telemetrie" aria-hidden="true"><span class="live">Verbonden</span><span>Tijd <b id="cp-klok">--:--:--</b></span></div></div>
-      <div class="cp-hud"><div class="cp-core" aria-hidden="true"><b></b><i></i></div><div class="cp-status" id="cp-status"><span class="muted">Laden...</span></div></div>
-      <div class="row">
-        <section class="card c12"><h3>Scorebord</h3><div id="cp-score"></div></section>
+      <div class="cp-aurora" aria-hidden="true"><i></i><b></b></div>
+      <div class="cp-hero">
+        <div class="cp-orb" aria-hidden="true"><span></span></div>
+        <div>
+          <div class="cp-eyebrow"><span>Cortana</span><span class="live">Verbonden</span><span id="cp-klok"></span></div>
+          <h2 id="cp-groet">Goeiedag, <em>Steven</em></h2>
+          <p id="cp-samen">Wat op jou wacht en of de systemen draaien.</p>
+        </div>
+        <div class="cp-status" id="cp-status"><span class="muted">Laden...</span></div>
       </div>
-      <div class="row" id="cp-kpis"></div>
-      <div class="row">
-        <section class="card c12"><h3>Wachtrij <span class="muted" id="cp-wr-sub"></span></h3><div class="lijst" id="cp-wachtrij"></div></section>
-      </div>
-      <div class="row">
-        <section class="card c12"><h3>Prospects per status <span class="muted" id="cp-sync"></span></h3><div class="tbl" id="cp-prospects"></div></section>
+      <div class="cp-bento">
+        <section class="card cp-score-kaart"><h3>Scorebord</h3><div id="cp-score"></div></section>
+        <div id="cp-kpis"></div>
+        <section class="card cp-wr-kaart"><h3>Wachtrij <span class="muted" id="cp-wr-sub"></span></h3><div class="lijst" id="cp-wachtrij"></div></section>
+        <section class="card cp-pr-kaart"><h3>Prospects per status <span class="muted" id="cp-sync"></span></h3><div class="tbl" id="cp-prospects"></div></section>
       </div>
     </div>
 
@@ -1207,11 +1216,28 @@ a.kb { display: inline-block; text-decoration: none; background: var(--panel2); 
   (function cpKlok() {
     var el = document.getElementById('cp-klok');
     if (!el) return;
-    var zet = function () { try { el.textContent = new Date().toLocaleTimeString('nl-BE', { hour: '2-digit', minute: '2-digit', second: '2-digit', timeZone: 'Europe/Brussels' }); } catch (e) {} };
+    var zet = function () { try { el.textContent = new Date().toLocaleTimeString('nl-BE', { hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Brussels' }); } catch (e) {} };
     zet(); setInterval(zet, 1000);
   })();
+  function cpTekenGroet(d) {
+    var uur = Number(new Date().toLocaleString('en-GB', { hour: '2-digit', hour12: false, timeZone: 'Europe/Brussels' }));
+    var groet = uur < 6 ? 'Goedenacht' : uur < 12 ? 'Goedemorgen' : uur < 18 ? 'Goedemiddag' : 'Goedenavond';
+    var h = $('cp-groet');
+    h.textContent = groet + ', ';
+    h.appendChild(cpEl('em', '', 'Steven'));
+    var open = cpGetal(d.open_totaal), dringend = cpGetal(d.dringend);
+    var pro = (d.prospects && typeof d.prospects === 'object') ? d.prospects : {};
+    var aanJou = Array.isArray(pro.wacht_op_steven) ? pro.wacht_op_steven.length : 0;
+    var delen = [];
+    delen.push(open ? open + (open === 1 ? ' open actie' : ' open acties') : 'geen open acties');
+    delen.push(dringend ? dringend + ' dringend' : 'niets dringend');
+    delen.push(aanJou ? aanJou + (aanJou === 1 ? ' prospect wacht op jou' : ' prospects wachten op jou') : 'geen prospect wacht op jou');
+    var zin = delen.join(', ');
+    $('cp-samen').textContent = zin.charAt(0).toUpperCase() + zin.slice(1) + '.';
+  }
+
   function cpTeken(d) {
-    var stappen = [cpTekenStatus, cpTekenScore, cpTekenWachtrij, cpTekenProspects];
+    var stappen = [cpTekenGroet, cpTekenStatus, cpTekenScore, cpTekenWachtrij, cpTekenProspects];
     stappen.forEach(function (f) { try { f(d); } catch (err) { if (window.console) console.error(err); } });
   }
 
