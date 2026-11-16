@@ -9,7 +9,7 @@
 <title>Intern | Mechele Consultancy</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@400;500;700&family=Orbitron:wght@500;700;800&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
 /* Intern dashboard v2 (22/10/2026). Eigen stijl, los van shared.css (klantportaal blijft ongewijzigd). */
 :root {
@@ -201,75 +201,107 @@ a.kb { display: inline-block; text-decoration: none; background: var(--panel2); 
 .cp-fout { color: var(--red); font-size: 13px; }
 .cp-rij .keuze { margin-top: 10px; }
 
-/* Cortana (cockpit) - sinds 16/11/2026: heldere futuristische stijl, enkel binnen #pane-cockpit */
-#pane-cockpit { --hud: #5FDCFF; --hud2: #CDF4FF; --hud-dim: #8FB4CC; --hud-line: rgba(95,220,255,.20); --hud-panel: rgba(16,42,68,.62); --rood: #FF6B7A; --amber: #F5B84A;
-  position: relative; margin: -6px -8px 0; padding: 22px 22px 10px; border-radius: 22px; isolation: isolate; overflow: hidden;
-  background: radial-gradient(900px 420px at 15% -10%, rgba(95,220,255,.14), transparent 60%), #081627; }
-#pane-cockpit::before { content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='48.5' viewBox='0 0 28 48.5'%3E%3Cpath d='M14 0l14 8.08v16.17L14 32.33 0 24.25V8.08z M14 32.33v16.17' fill='none' stroke='%235FDCFF' stroke-opacity='.045' stroke-width='1'/%3E%3C/svg%3E"); }
-#pane-cockpit .kop { margin-bottom: 16px; }
-#pane-cockpit .kop h2 { font-family: 'DM Sans', system-ui, sans-serif; font-weight: 700; font-size: 26px; letter-spacing: .28em; text-transform: uppercase; color: var(--hud2); text-shadow: 0 0 16px rgba(95,220,255,.35); }
+/* Cortana (cockpit) - sinds 16/11/2026: HUD-stijl, enkel binnen #pane-cockpit */
+#pane-cockpit { --hud: #45D6FF; --hud2: #D8F6FF; --hud-dim: #86A9C2; --hud-line: rgba(69,214,255,.28); --hud-panel: rgba(10,34,58,.72); --rood: #FF5D6E; --amber: #FFB547;
+  --hfont: 'Orbitron', 'Rajdhani', system-ui, sans-serif; --lfont: 'Rajdhani', 'DM Sans', system-ui, sans-serif;
+  position: relative; margin: -6px -8px 0; padding: 20px 22px 12px; border-radius: 18px; isolation: isolate; overflow: hidden; border: 1px solid rgba(69,214,255,.12);
+  background: radial-gradient(1000px 380px at 50% -12%, rgba(69,214,255,.20), transparent 62%), linear-gradient(180deg, #071425, #050D19); }
+#pane-cockpit::before { content: ''; position: absolute; left: -20%; right: -20%; bottom: -10%; height: 46%; z-index: -1; pointer-events: none; opacity: .5;
+  background-image: linear-gradient(rgba(69,214,255,.16) 1px, transparent 1px), linear-gradient(90deg, rgba(69,214,255,.16) 1px, transparent 1px); background-size: 46px 46px;
+  transform: perspective(420px) rotateX(62deg); transform-origin: 50% 0; -webkit-mask: linear-gradient(transparent, #000 70%); mask: linear-gradient(transparent, #000 70%); }
+#pane-cockpit::after { content: ''; position: absolute; left: 0; right: 0; top: -30%; height: 30%; z-index: -1; pointer-events: none;
+  background: linear-gradient(180deg, transparent, rgba(69,214,255,.06) 70%, rgba(69,214,255,.16) 99%, transparent); animation: cpscan 9s linear infinite; }
+@keyframes cpscan { to { transform: translateY(460%); } }
+/* kop */
+#pane-cockpit .kop { margin-bottom: 14px; align-items: center; }
+#pane-cockpit .kop h2 { font-family: var(--hfont); font-weight: 800; font-size: 30px; letter-spacing: .3em; text-transform: uppercase; color: var(--hud2); text-shadow: 0 0 22px rgba(69,214,255,.55), 0 0 2px #fff; }
 #pane-cockpit .kop h2 em { color: inherit; }
-#pane-cockpit .kop .sub { color: var(--hud-dim); font-size: 14px; }
-#pane-cockpit .card, #pane-cockpit .cp-status { border-radius: 10px; background: var(--hud-panel); border: 1px solid var(--hud-line); box-shadow: 0 1px 0 rgba(255,255,255,.03) inset; }
-#pane-cockpit .card h3 { font-family: 'DM Sans', system-ui, sans-serif; font-size: 15px; font-weight: 700; letter-spacing: .04em; color: var(--hud2); justify-content: flex-start; margin-bottom: 12px; }
-#pane-cockpit .card h3::before { content: ''; width: 4px; height: 16px; margin-right: 10px; flex: none; align-self: center; border-radius: 2px; background: var(--hud); box-shadow: 0 0 8px var(--hud); }
-#pane-cockpit .card h3 .muted { margin-left: auto; font-weight: 500; letter-spacing: 0; color: var(--hud-dim); }
+#pane-cockpit .kop .sub { font-family: var(--lfont); font-weight: 600; font-size: 15px; letter-spacing: .08em; color: var(--hud-dim); }
+.cp-telemetrie { display: flex; gap: 8px; flex-wrap: wrap; font-family: var(--lfont); font-weight: 600; font-size: 13px; letter-spacing: .12em; text-transform: uppercase; }
+.cp-telemetrie span { padding: 5px 10px; border: 1px solid var(--hud-line); background: rgba(69,214,255,.06); color: var(--hud2); clip-path: polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%); }
+.cp-telemetrie b { color: var(--hud); font-weight: 700; font-variant-numeric: tabular-nums; }
+.cp-telemetrie .live::before { content: ''; display: inline-block; width: 7px; height: 7px; border-radius: 50%; margin-right: 7px; background: #3DFFA8; box-shadow: 0 0 8px #3DFFA8; animation: cppuls 1.6s ease-in-out infinite; vertical-align: 1px; }
+/* panelen met HUD-hoeken */
+#pane-cockpit .card, #pane-cockpit .cp-status, #pane-cockpit .kpi { position: relative; border-radius: 3px; background: linear-gradient(180deg, rgba(69,214,255,.07), transparent 60px), var(--hud-panel); border: 1px solid rgba(69,214,255,.16); box-shadow: inset 0 0 30px rgba(69,214,255,.04); backdrop-filter: blur(6px); }
+#pane-cockpit .card::before, #pane-cockpit .cp-status::before, #pane-cockpit .kpi::before,
+#pane-cockpit .card::after, #pane-cockpit .cp-status::after, #pane-cockpit .kpi::after { content: ''; position: absolute; width: 16px; height: 16px; pointer-events: none; border: 2px solid var(--hud); filter: drop-shadow(0 0 4px rgba(69,214,255,.8)); background: none; border-radius: 0; opacity: 1; }
+#pane-cockpit .card::before, #pane-cockpit .cp-status::before, #pane-cockpit .kpi::before { top: -1px; left: -1px; border-right: 0; border-bottom: 0; }
+#pane-cockpit .card::after, #pane-cockpit .cp-status::after, #pane-cockpit .kpi::after { bottom: -1px; right: -1px; top: auto; left: auto; border-left: 0; border-top: 0; }
+#pane-cockpit .card h3 { font-family: var(--lfont); font-size: 17px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--hud); justify-content: flex-start; margin-bottom: 14px; padding-bottom: 10px; border-bottom: 1px solid var(--hud-line); }
+#pane-cockpit .card h3::before { content: '//'; margin-right: 10px; color: var(--hud-dim); font-weight: 600; letter-spacing: 0; }
+#pane-cockpit .card h3 .muted { margin-left: auto; font-family: var(--lfont); font-size: 14px; font-weight: 600; letter-spacing: .06em; text-transform: none; color: var(--hud-dim); }
 #pane-cockpit .muted { color: var(--hud-dim); }
-.cp-hud { display: flex; gap: 16px; align-items: center; margin-bottom: 16px; }
-.cp-hud .cp-status { flex: 1; margin-bottom: 0; min-height: 72px; align-content: center; }
-.cp-core { position: relative; width: 72px; height: 72px; flex: none; --c: #5FDCFF; }
-.cp-core::before, .cp-core::after, .cp-core i { content: ''; position: absolute; border-radius: 50%; }
-.cp-core::before { inset: 0; background: conic-gradient(var(--c) 0 20%, transparent 20% 25%, var(--c) 25% 45%, transparent 45% 50%, var(--c) 50% 70%, transparent 70% 75%, var(--c) 75% 95%, transparent 95%);
-  -webkit-mask: radial-gradient(circle, transparent 60%, #000 61% 67%, transparent 68%); mask: radial-gradient(circle, transparent 60%, #000 61% 67%, transparent 68%); animation: cpdraai 16s linear infinite; }
-.cp-core::after { inset: 12px; border: 1px solid var(--c); opacity: .35; }
-.cp-core i { inset: 24px; background: radial-gradient(circle, #fff 0 14%, var(--c) 34%, transparent 72%); box-shadow: 0 0 22px var(--c); animation: cppuls 3.4s ease-in-out infinite; }
-.cp-hud:has(.cp-status.bad) .cp-core { --c: #FF6B7A; }
+/* status met kern */
+.cp-hud { display: flex; gap: 18px; align-items: center; margin-bottom: 16px; }
+.cp-hud .cp-status { flex: 1; margin-bottom: 0; min-height: 84px; align-content: center; padding: 14px 20px; }
+.cp-core { position: relative; width: 96px; height: 96px; flex: none; --c: #45D6FF; }
+.cp-core::before, .cp-core::after, .cp-core i, .cp-core b { content: ''; position: absolute; border-radius: 50%; }
+.cp-core::before { inset: 0; background: conic-gradient(var(--c) 0 22%, transparent 22% 25%, var(--c) 25% 47%, transparent 47% 50%, var(--c) 50% 72%, transparent 72% 75%, var(--c) 75% 97%, transparent 97%);
+  -webkit-mask: radial-gradient(circle, transparent 62%, #000 63% 68%, transparent 69%); mask: radial-gradient(circle, transparent 62%, #000 63% 68%, transparent 69%); animation: cpdraai 12s linear infinite; filter: drop-shadow(0 0 6px var(--c)); }
+.cp-core::after { inset: 10px; background: repeating-conic-gradient(var(--c) 0 2deg, transparent 2deg 10deg); -webkit-mask: radial-gradient(circle, transparent 66%, #000 67% 72%, transparent 73%); mask: radial-gradient(circle, transparent 66%, #000 67% 72%, transparent 73%); opacity: .6; animation: cpdraai 30s linear infinite reverse; }
+.cp-core b { inset: 22px; border: 1px solid var(--c); opacity: .4; }
+.cp-core i { inset: 32px; background: radial-gradient(circle, #fff 0 12%, var(--c) 32%, transparent 72%); box-shadow: 0 0 30px var(--c), 0 0 60px var(--c); animation: cppuls 3s ease-in-out infinite; }
+.cp-hud:has(.cp-status.bad) .cp-core { --c: #FF5D6E; }
 @keyframes cpdraai { to { transform: rotate(360deg); } }
-@keyframes cppuls { 0%, 100% { opacity: .8; transform: scale(.94); } 50% { opacity: 1; transform: scale(1.03); } }
-#pane-cockpit .cp-status .cp-s { font-size: 17px; }
-#pane-cockpit .cp-status.ok { border-color: rgba(95,220,255,.45); }
-#pane-cockpit .cp-status.ok .cp-s { color: var(--hud2); }
-#pane-cockpit .cp-status.bad { border-color: rgba(255,107,122,.6); background: rgba(255,107,122,.10); }
-#pane-cockpit .cp-status.bad .cp-s { color: #FFB3BB; }
-#pane-cockpit .cp-status ul { color: #FFD3D8; font-size: 14.5px; }
-#pane-cockpit .cp-score-t { font-size: 18px; color: var(--hud2); }
-#pane-cockpit .cp-bar { height: 10px; border-radius: 5px; background: rgba(95,220,255,.12); }
-#pane-cockpit .cp-bar > div { border-radius: 5px; background: linear-gradient(90deg, #39B8E6, var(--hud)); box-shadow: 0 0 10px rgba(95,220,255,.5); }
-#pane-cockpit .kpi { min-height: 104px; border-radius: 10px; color: var(--txt); background: var(--hud-panel) !important; border: 1px solid var(--hud-line); box-shadow: none; padding: 16px 18px; }
-#pane-cockpit .kpi::after { display: none; }
-#pane-cockpit .kpi .l { font-size: 13.5px; color: var(--hud-dim); opacity: 1; }
-#pane-cockpit .kpi .ic { width: 30px; height: 30px; background: rgba(95,220,255,.10); border-radius: 8px; color: var(--hud); }
-#pane-cockpit .kpi .v { font-size: 36px; color: #fff; font-variant-numeric: tabular-nums; margin-top: 6px; }
-#pane-cockpit .kpi .s { color: var(--hud-dim); opacity: 1; }
-#pane-cockpit .kpi.g-red { border-color: rgba(255,107,122,.6); background: rgba(255,107,122,.10) !important; }
-#pane-cockpit .kpi.g-red .v { color: #FFB3BB; }
-#pane-cockpit .kpi.g-red .ic { color: var(--rood); background: rgba(255,107,122,.14); }
-#pane-cockpit .kpi.g-blue { border-color: rgba(95,220,255,.5); }
-#pane-cockpit .kpi.g-blue .v { color: var(--hud); }
-#pane-cockpit .lijst .it { display: grid; grid-template-columns: minmax(0, 1fr); padding: 12px 14px; margin-bottom: 8px; border: 1px solid var(--hud-line); border-left: 4px solid var(--hud-dim); border-radius: 8px; background: rgba(255,255,255,.02); }
-#pane-cockpit .lijst .it:last-child { margin-bottom: 0; border-bottom: 1px solid var(--hud-line); }
-#pane-cockpit .lijst .it:has(.dot.p0) { border-left-color: var(--rood); background: rgba(255,107,122,.06); }
+@keyframes cppuls { 0%, 100% { opacity: .75; transform: scale(.92); } 50% { opacity: 1; transform: scale(1.04); } }
+#pane-cockpit .cp-status .cp-s { font-family: var(--hfont); font-size: 18px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
+#pane-cockpit .cp-status .muted { font-family: var(--lfont); font-size: 15px; font-weight: 600; letter-spacing: .05em; }
+#pane-cockpit .cp-status.ok .cp-s { color: var(--hud2); text-shadow: 0 0 14px rgba(69,214,255,.6); }
+#pane-cockpit .cp-status.bad { border-color: rgba(255,93,110,.5); background: rgba(255,93,110,.10); }
+#pane-cockpit .cp-status.bad::before, #pane-cockpit .cp-status.bad::after { border-color: var(--rood); }
+#pane-cockpit .cp-status.bad .cp-s { color: #FFB0B8; text-shadow: 0 0 14px rgba(255,93,110,.6); }
+#pane-cockpit .cp-status ul { color: #FFD3D8; font-size: 15px; }
+/* scorebord */
+#pane-cockpit .cp-score-t { font-family: var(--lfont); font-size: 21px; font-weight: 700; letter-spacing: .04em; color: var(--hud2); }
+#pane-cockpit .cp-bar { height: 14px; border-radius: 0; margin-top: 12px; background: repeating-linear-gradient(90deg, rgba(69,214,255,.13) 0 12px, transparent 12px 15px); }
+#pane-cockpit .cp-bar > div { border-radius: 0; background: repeating-linear-gradient(90deg, var(--hud) 0 12px, transparent 12px 15px); box-shadow: 0 0 14px rgba(69,214,255,.7); min-width: 0; }
+/* tellers */
+#pane-cockpit .kpi { min-height: 116px; color: var(--txt); padding: 16px 18px; overflow: visible; }
+#pane-cockpit .kpi .l { font-family: var(--lfont); font-size: 14.5px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--hud-dim); opacity: 1; }
+#pane-cockpit .kpi .ic { width: 32px; height: 32px; background: rgba(69,214,255,.10); border: 1px solid var(--hud-line); border-radius: 50%; color: var(--hud); }
+#pane-cockpit .kpi .v { font-family: var(--lfont); font-size: 46px; line-height: 1; font-weight: 700; color: var(--hud2); text-shadow: 0 0 18px rgba(69,214,255,.55); margin-top: 6px; font-variant-numeric: tabular-nums; }
+#pane-cockpit .kpi .s { font-family: var(--lfont); font-size: 14px; font-weight: 600; color: var(--hud-dim); opacity: 1; }
+#pane-cockpit .kpi.g-red { background: linear-gradient(180deg, rgba(255,93,110,.16), transparent 70px), var(--hud-panel) !important; border-color: rgba(255,93,110,.45); }
+#pane-cockpit .kpi.g-red::before, #pane-cockpit .kpi.g-red::after { border-color: var(--rood); filter: drop-shadow(0 0 4px rgba(255,93,110,.8)); }
+#pane-cockpit .kpi.g-red .v { color: #FFC2C8; text-shadow: 0 0 18px rgba(255,93,110,.7); }
+#pane-cockpit .kpi.g-red .ic { color: var(--rood); border-color: rgba(255,93,110,.5); background: rgba(255,93,110,.12); }
+#pane-cockpit .kpi.g-gold, #pane-cockpit .kpi.g-teal, #pane-cockpit .kpi.g-blue, #pane-cockpit .kpi.g-slate { background: linear-gradient(180deg, rgba(69,214,255,.07), transparent 60px), var(--hud-panel) !important; }
+/* wachtrij */
+#pane-cockpit .lijst { counter-reset: cpnr; }
+#pane-cockpit .lijst .it { counter-increment: cpnr; display: grid; grid-template-columns: 46px minmax(0, 1fr); gap: 0 14px; padding: 14px 16px 14px 12px; margin-bottom: 10px; border: 1px solid rgba(69,214,255,.14); border-left: 3px solid var(--hud-dim); border-radius: 2px; background: linear-gradient(90deg, rgba(69,214,255,.06), transparent 40%); }
+#pane-cockpit .lijst .it::before { content: counter(cpnr, decimal-leading-zero); font-family: var(--lfont); font-size: 26px; font-weight: 700; color: var(--hud-dim); align-self: start; line-height: 1.2; text-align: center; }
+#pane-cockpit .lijst .it:last-child { margin-bottom: 0; border-bottom: 1px solid rgba(69,214,255,.14); }
+#pane-cockpit .lijst .it:has(.dot.p0) { border-left-color: var(--rood); background: linear-gradient(90deg, rgba(255,93,110,.12), transparent 45%); }
+#pane-cockpit .lijst .it:has(.dot.p0)::before { color: var(--rood); text-shadow: 0 0 10px rgba(255,93,110,.7); }
 #pane-cockpit .lijst .it:has(.dot.p1) { border-left-color: var(--amber); }
+#pane-cockpit .lijst .it:has(.dot.p1)::before { color: var(--amber); }
 #pane-cockpit .lijst .it .dot { display: none; }
-#pane-cockpit .it .t { font-size: 15.5px; font-weight: 700; color: #fff; }
-#pane-cockpit .it .muted { font-size: 13.5px; }
-#pane-cockpit .tag { border-radius: 4px; font-size: 11.5px; font-weight: 700; letter-spacing: .03em; background: rgba(95,220,255,.12); color: var(--hud); margin-right: 4px; }
-#pane-cockpit .tag.bad { background: rgba(255,107,122,.18); color: #FFB3BB; } #pane-cockpit .tag.warn { background: rgba(245,184,74,.16); color: #FFD58A; }
-#pane-cockpit .keuze { margin-top: 10px; }
-#pane-cockpit button.kb, #pane-cockpit a.kb { border-radius: 6px; background: rgba(255,255,255,.04); border: 1px solid var(--hud-line); color: var(--hud2); font-size: 13.5px; font-weight: 500; padding: 7px 14px; }
-#pane-cockpit button.kb[data-beslis="goedgekeurd"] { background: var(--hud); border-color: var(--hud); color: #04263A; font-weight: 700; }
-#pane-cockpit button.kb:hover:not(:disabled), #pane-cockpit a.kb:hover { border-color: var(--hud); box-shadow: 0 0 10px rgba(95,220,255,.3); }
+#pane-cockpit .it .t { font-size: 16px; font-weight: 700; color: #fff; }
+#pane-cockpit .it .muted { font-size: 14px; }
+#pane-cockpit .tag { border-radius: 0; font-family: var(--lfont); font-size: 12.5px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; padding: 2px 8px; background: rgba(69,214,255,.12); color: var(--hud); border: 1px solid var(--hud-line); margin-right: 6px; }
+#pane-cockpit .tag.bad { background: rgba(255,93,110,.16); color: #FFB0B8; border-color: rgba(255,93,110,.45); }
+#pane-cockpit .tag.warn { background: rgba(255,181,71,.14); color: #FFD08A; border-color: rgba(255,181,71,.4); }
+#pane-cockpit .keuze { margin-top: 12px; }
+#pane-cockpit button.kb, #pane-cockpit a.kb { font-family: var(--lfont); font-size: 15px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; padding: 6px 18px; border-radius: 0; background: rgba(69,214,255,.05); border: 1px solid var(--hud-line); color: var(--hud2); clip-path: polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px); }
+#pane-cockpit button.kb[data-beslis="goedgekeurd"] { background: linear-gradient(180deg, #6FE3FF, #2FB8E6); border-color: transparent; color: #022235; box-shadow: 0 0 16px rgba(69,214,255,.45); }
+#pane-cockpit button.kb:hover:not(:disabled), #pane-cockpit a.kb:hover { border-color: var(--hud); box-shadow: 0 0 14px rgba(69,214,255,.4); }
 #pane-cockpit button.kb:disabled { opacity: .5; cursor: default; }
 #pane-cockpit button.kb:focus-visible, #pane-cockpit a.kb:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
-#pane-cockpit th { color: var(--hud-dim); }
-#pane-cockpit td, #pane-cockpit th { border-color: rgba(95,220,255,.10); }
-#pane-cockpit td { padding: 8px; }
-#pane-cockpit td.num { color: #fff; font-weight: 700; font-variant-numeric: tabular-nums; }
-#pane-cockpit tr.totaal td { border-top-color: var(--hud-line); color: var(--hud2); }
-#pane-cockpit .empty { color: var(--hud-dim); font-size: 14px; padding: 6px 0; }
-@media (max-width: 560px) { #pane-cockpit { padding: 16px 12px 6px; } #pane-cockpit .row { gap: 10px; } #pane-cockpit .kpi.c3 { grid-column: span 6; min-height: 0; padding: 12px 14px; } #pane-cockpit .kpi .l { font-size: 12.5px; } #pane-cockpit .kpi .v { font-size: 28px; } #pane-cockpit .kpi .s { font-size: 11.5px; } #pane-cockpit .kop h2 { font-size: 22px; letter-spacing: .2em; } .cp-core { width: 56px; height: 56px; } .cp-core::after { inset: 9px; } .cp-core i { inset: 18px; } }
-@media (prefers-reduced-motion: reduce) { .cp-core::before, .cp-core i { animation: none; } }
+/* prospects als balken */
+#pane-cockpit th { font-family: var(--lfont); font-size: 13px; font-weight: 700; letter-spacing: .14em; color: var(--hud-dim); }
+#pane-cockpit td, #pane-cockpit th { border-color: rgba(69,214,255,.09); }
+#pane-cockpit td { padding: 7px 8px; font-family: var(--lfont); font-size: 16px; font-weight: 600; }
+#pane-cockpit td.num { font-family: var(--lfont); font-size: 18px; font-weight: 700; color: var(--hud2); font-variant-numeric: tabular-nums; width: 70px; }
+#pane-cockpit td.cp-bal { width: 52%; }
+.cp-bal span { display: block; height: 8px; min-width: 2px; background: linear-gradient(90deg, rgba(69,214,255,.35), var(--hud)); box-shadow: 0 0 10px rgba(69,214,255,.55); }
+#pane-cockpit tr.totaal td { border-top-color: var(--hud-line); color: var(--hud); }
+#pane-cockpit .empty { font-family: var(--lfont); color: var(--hud-dim); font-size: 15px; letter-spacing: .08em; text-transform: uppercase; padding: 6px 0; }
+@media (max-width: 900px) { .cp-hud { gap: 12px; } }
+@media (max-width: 560px) { #pane-cockpit { padding: 16px 12px 8px; } #pane-cockpit .kop h2 { font-size: 22px; letter-spacing: .22em; } #pane-cockpit .row { gap: 10px; }
+  .cp-core { width: 64px; height: 64px; } .cp-core::after { inset: 6px; } .cp-core b { inset: 14px; } .cp-core i { inset: 21px; }
+  #pane-cockpit .kpi.c3 { grid-column: span 6; min-height: 0; padding: 12px 14px; } #pane-cockpit .kpi .l { font-size: 12.5px; } #pane-cockpit .kpi .v { font-size: 34px; } #pane-cockpit .kpi .s { font-size: 12.5px; }
+  #pane-cockpit .lijst .it { grid-template-columns: 30px minmax(0, 1fr); gap: 0 8px; } #pane-cockpit .lijst .it::before { font-size: 19px; } #pane-cockpit td.cp-bal { width: 34%; } }
+@media (prefers-reduced-motion: reduce) { #pane-cockpit::after, .cp-core::before, .cp-core::after, .cp-core i, .cp-telemetrie .live::before { animation: none; } }
 /* Aanmelden */
 #login { max-width: 400px; margin: 12vh auto; padding: 28px; border-radius: 20px; background: var(--panel); border: 1px solid var(--line); }
 #login h2 { font-family: 'Playfair Display', serif; margin: 0 0 6px; }
@@ -356,8 +388,8 @@ a.kb { display: inline-block; text-decoration: none; background: var(--panel2); 
 
     <!-- TAB: COCKPIT -->
     <div class="pane" id="pane-cockpit" role="tabpanel" aria-hidden="true">
-      <div class="kop"><div><h2><em>Cortana</em></h2><div class="sub">Wat op jou wacht en of de systemen draaien.</div></div></div>
-      <div class="cp-hud"><div class="cp-core" aria-hidden="true"><i></i></div><div class="cp-status" id="cp-status"><span class="muted">Laden...</span></div></div>
+      <div class="kop"><div><h2><em>Cortana</em></h2><div class="sub">Wat op jou wacht en of de systemen draaien.</div></div><div class="cp-telemetrie" aria-hidden="true"><span class="live">Verbonden</span><span>Tijd <b id="cp-klok">--:--:--</b></span></div></div>
+      <div class="cp-hud"><div class="cp-core" aria-hidden="true"><b></b><i></i></div><div class="cp-status" id="cp-status"><span class="muted">Laden...</span></div></div>
       <div class="row">
         <section class="card c12"><h3>Scorebord</h3><div id="cp-score"></div></section>
       </div>
@@ -1145,20 +1177,26 @@ a.kb { display: inline-block; text-decoration: none; background: var(--panel2); 
     var ps = pro && pro.per_status && typeof pro.per_status === 'object' ? pro.per_status : {};
     var keys = Object.keys(ps).sort(function (a, b) { return cpGetal(ps[b]) - cpGetal(ps[a]) || (a < b ? -1 : 1); });
     if (!keys.length) { box.appendChild(cpEl('div', 'empty', 'Nog geen prospectgegevens.')); return; }
+    var maxPs = keys.reduce(function (m, k) { return Math.max(m, cpGetal(ps[k])); }, 0);
     var tabel = cpEl('table'), kop = cpEl('thead'), kr = cpEl('tr');
     kr.appendChild(cpEl('th', '', 'Status'));
+    kr.appendChild(cpEl('th', '', ''));
     kr.appendChild(cpEl('th', 'num', 'Aantal'));
     kop.appendChild(kr); tabel.appendChild(kop);
     var body = cpEl('tbody');
     keys.forEach(function (k) {
       var tr = cpEl('tr');
       tr.appendChild(cpEl('td', '', k.replace(/_/g, ' ')));
+      var bt = cpEl('td', 'cp-bal'), bs = cpEl('span');
+      bs.style.width = (maxPs > 0 ? Math.max(1, cpGetal(ps[k]) / maxPs * 100) : 0).toFixed(1) + '%';
+      bt.appendChild(bs); tr.appendChild(bt);
       tr.appendChild(cpEl('td', 'num', String(cpGetal(ps[k]))));
       body.appendChild(tr);
     });
     if (pro.totaal != null) {
       var tt = cpEl('tr', 'totaal');
       tt.appendChild(cpEl('td', '', 'Totaal'));
+      tt.appendChild(cpEl('td', '', ''));
       tt.appendChild(cpEl('td', 'num', String(cpGetal(pro.totaal))));
       body.appendChild(tt);
     }
@@ -1166,6 +1204,12 @@ a.kb { display: inline-block; text-decoration: none; background: var(--panel2); 
     box.appendChild(tabel);
   }
 
+  (function cpKlok() {
+    var el = document.getElementById('cp-klok');
+    if (!el) return;
+    var zet = function () { try { el.textContent = new Date().toLocaleTimeString('nl-BE', { hour: '2-digit', minute: '2-digit', second: '2-digit', timeZone: 'Europe/Brussels' }); } catch (e) {} };
+    zet(); setInterval(zet, 1000);
+  })();
   function cpTeken(d) {
     var stappen = [cpTekenStatus, cpTekenScore, cpTekenWachtrij, cpTekenProspects];
     stappen.forEach(function (f) { try { f(d); } catch (err) { if (window.console) console.error(err); } });
