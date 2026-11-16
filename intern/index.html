@@ -201,6 +201,75 @@ a.kb { display: inline-block; text-decoration: none; background: var(--panel2); 
 .cp-fout { color: var(--red); font-size: 13px; }
 .cp-rij .keuze { margin-top: 10px; }
 
+/* Cortana (cockpit) - sinds 16/11/2026: heldere futuristische stijl, enkel binnen #pane-cockpit */
+#pane-cockpit { --hud: #5FDCFF; --hud2: #CDF4FF; --hud-dim: #8FB4CC; --hud-line: rgba(95,220,255,.20); --hud-panel: rgba(16,42,68,.62); --rood: #FF6B7A; --amber: #F5B84A;
+  position: relative; margin: -6px -8px 0; padding: 22px 22px 10px; border-radius: 22px; isolation: isolate; overflow: hidden;
+  background: radial-gradient(900px 420px at 15% -10%, rgba(95,220,255,.14), transparent 60%), #081627; }
+#pane-cockpit::before { content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='48.5' viewBox='0 0 28 48.5'%3E%3Cpath d='M14 0l14 8.08v16.17L14 32.33 0 24.25V8.08z M14 32.33v16.17' fill='none' stroke='%235FDCFF' stroke-opacity='.045' stroke-width='1'/%3E%3C/svg%3E"); }
+#pane-cockpit .kop { margin-bottom: 16px; }
+#pane-cockpit .kop h2 { font-family: 'DM Sans', system-ui, sans-serif; font-weight: 700; font-size: 26px; letter-spacing: .28em; text-transform: uppercase; color: var(--hud2); text-shadow: 0 0 16px rgba(95,220,255,.35); }
+#pane-cockpit .kop h2 em { color: inherit; }
+#pane-cockpit .kop .sub { color: var(--hud-dim); font-size: 14px; }
+#pane-cockpit .card, #pane-cockpit .cp-status { border-radius: 10px; background: var(--hud-panel); border: 1px solid var(--hud-line); box-shadow: 0 1px 0 rgba(255,255,255,.03) inset; }
+#pane-cockpit .card h3 { font-family: 'DM Sans', system-ui, sans-serif; font-size: 15px; font-weight: 700; letter-spacing: .04em; color: var(--hud2); justify-content: flex-start; margin-bottom: 12px; }
+#pane-cockpit .card h3::before { content: ''; width: 4px; height: 16px; margin-right: 10px; flex: none; align-self: center; border-radius: 2px; background: var(--hud); box-shadow: 0 0 8px var(--hud); }
+#pane-cockpit .card h3 .muted { margin-left: auto; font-weight: 500; letter-spacing: 0; color: var(--hud-dim); }
+#pane-cockpit .muted { color: var(--hud-dim); }
+.cp-hud { display: flex; gap: 16px; align-items: center; margin-bottom: 16px; }
+.cp-hud .cp-status { flex: 1; margin-bottom: 0; min-height: 72px; align-content: center; }
+.cp-core { position: relative; width: 72px; height: 72px; flex: none; --c: #5FDCFF; }
+.cp-core::before, .cp-core::after, .cp-core i { content: ''; position: absolute; border-radius: 50%; }
+.cp-core::before { inset: 0; background: conic-gradient(var(--c) 0 20%, transparent 20% 25%, var(--c) 25% 45%, transparent 45% 50%, var(--c) 50% 70%, transparent 70% 75%, var(--c) 75% 95%, transparent 95%);
+  -webkit-mask: radial-gradient(circle, transparent 60%, #000 61% 67%, transparent 68%); mask: radial-gradient(circle, transparent 60%, #000 61% 67%, transparent 68%); animation: cpdraai 16s linear infinite; }
+.cp-core::after { inset: 12px; border: 1px solid var(--c); opacity: .35; }
+.cp-core i { inset: 24px; background: radial-gradient(circle, #fff 0 14%, var(--c) 34%, transparent 72%); box-shadow: 0 0 22px var(--c); animation: cppuls 3.4s ease-in-out infinite; }
+.cp-hud:has(.cp-status.bad) .cp-core { --c: #FF6B7A; }
+@keyframes cpdraai { to { transform: rotate(360deg); } }
+@keyframes cppuls { 0%, 100% { opacity: .8; transform: scale(.94); } 50% { opacity: 1; transform: scale(1.03); } }
+#pane-cockpit .cp-status .cp-s { font-size: 17px; }
+#pane-cockpit .cp-status.ok { border-color: rgba(95,220,255,.45); }
+#pane-cockpit .cp-status.ok .cp-s { color: var(--hud2); }
+#pane-cockpit .cp-status.bad { border-color: rgba(255,107,122,.6); background: rgba(255,107,122,.10); }
+#pane-cockpit .cp-status.bad .cp-s { color: #FFB3BB; }
+#pane-cockpit .cp-status ul { color: #FFD3D8; font-size: 14.5px; }
+#pane-cockpit .cp-score-t { font-size: 18px; color: var(--hud2); }
+#pane-cockpit .cp-bar { height: 10px; border-radius: 5px; background: rgba(95,220,255,.12); }
+#pane-cockpit .cp-bar > div { border-radius: 5px; background: linear-gradient(90deg, #39B8E6, var(--hud)); box-shadow: 0 0 10px rgba(95,220,255,.5); }
+#pane-cockpit .kpi { min-height: 104px; border-radius: 10px; color: var(--txt); background: var(--hud-panel) !important; border: 1px solid var(--hud-line); box-shadow: none; padding: 16px 18px; }
+#pane-cockpit .kpi::after { display: none; }
+#pane-cockpit .kpi .l { font-size: 13.5px; color: var(--hud-dim); opacity: 1; }
+#pane-cockpit .kpi .ic { width: 30px; height: 30px; background: rgba(95,220,255,.10); border-radius: 8px; color: var(--hud); }
+#pane-cockpit .kpi .v { font-size: 36px; color: #fff; font-variant-numeric: tabular-nums; margin-top: 6px; }
+#pane-cockpit .kpi .s { color: var(--hud-dim); opacity: 1; }
+#pane-cockpit .kpi.g-red { border-color: rgba(255,107,122,.6); background: rgba(255,107,122,.10) !important; }
+#pane-cockpit .kpi.g-red .v { color: #FFB3BB; }
+#pane-cockpit .kpi.g-red .ic { color: var(--rood); background: rgba(255,107,122,.14); }
+#pane-cockpit .kpi.g-blue { border-color: rgba(95,220,255,.5); }
+#pane-cockpit .kpi.g-blue .v { color: var(--hud); }
+#pane-cockpit .lijst .it { display: grid; grid-template-columns: minmax(0, 1fr); padding: 12px 14px; margin-bottom: 8px; border: 1px solid var(--hud-line); border-left: 4px solid var(--hud-dim); border-radius: 8px; background: rgba(255,255,255,.02); }
+#pane-cockpit .lijst .it:last-child { margin-bottom: 0; border-bottom: 1px solid var(--hud-line); }
+#pane-cockpit .lijst .it:has(.dot.p0) { border-left-color: var(--rood); background: rgba(255,107,122,.06); }
+#pane-cockpit .lijst .it:has(.dot.p1) { border-left-color: var(--amber); }
+#pane-cockpit .lijst .it .dot { display: none; }
+#pane-cockpit .it .t { font-size: 15.5px; font-weight: 700; color: #fff; }
+#pane-cockpit .it .muted { font-size: 13.5px; }
+#pane-cockpit .tag { border-radius: 4px; font-size: 11.5px; font-weight: 700; letter-spacing: .03em; background: rgba(95,220,255,.12); color: var(--hud); margin-right: 4px; }
+#pane-cockpit .tag.bad { background: rgba(255,107,122,.18); color: #FFB3BB; } #pane-cockpit .tag.warn { background: rgba(245,184,74,.16); color: #FFD58A; }
+#pane-cockpit .keuze { margin-top: 10px; }
+#pane-cockpit button.kb, #pane-cockpit a.kb { border-radius: 6px; background: rgba(255,255,255,.04); border: 1px solid var(--hud-line); color: var(--hud2); font-size: 13.5px; font-weight: 500; padding: 7px 14px; }
+#pane-cockpit button.kb[data-beslis="goedgekeurd"] { background: var(--hud); border-color: var(--hud); color: #04263A; font-weight: 700; }
+#pane-cockpit button.kb:hover:not(:disabled), #pane-cockpit a.kb:hover { border-color: var(--hud); box-shadow: 0 0 10px rgba(95,220,255,.3); }
+#pane-cockpit button.kb:disabled { opacity: .5; cursor: default; }
+#pane-cockpit button.kb:focus-visible, #pane-cockpit a.kb:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+#pane-cockpit th { color: var(--hud-dim); }
+#pane-cockpit td, #pane-cockpit th { border-color: rgba(95,220,255,.10); }
+#pane-cockpit td { padding: 8px; }
+#pane-cockpit td.num { color: #fff; font-weight: 700; font-variant-numeric: tabular-nums; }
+#pane-cockpit tr.totaal td { border-top-color: var(--hud-line); color: var(--hud2); }
+#pane-cockpit .empty { color: var(--hud-dim); font-size: 14px; padding: 6px 0; }
+@media (max-width: 560px) { #pane-cockpit { padding: 16px 12px 6px; } #pane-cockpit .row { gap: 10px; } #pane-cockpit .kpi.c3 { grid-column: span 6; min-height: 0; padding: 12px 14px; } #pane-cockpit .kpi .l { font-size: 12.5px; } #pane-cockpit .kpi .v { font-size: 28px; } #pane-cockpit .kpi .s { font-size: 11.5px; } #pane-cockpit .kop h2 { font-size: 22px; letter-spacing: .2em; } .cp-core { width: 56px; height: 56px; } .cp-core::after { inset: 9px; } .cp-core i { inset: 18px; } }
+@media (prefers-reduced-motion: reduce) { .cp-core::before, .cp-core i { animation: none; } }
 /* Aanmelden */
 #login { max-width: 400px; margin: 12vh auto; padding: 28px; border-radius: 20px; background: var(--panel); border: 1px solid var(--line); }
 #login h2 { font-family: 'Playfair Display', serif; margin: 0 0 6px; }
@@ -251,7 +320,7 @@ a.kb { display: inline-block; text-decoration: none; background: var(--panel2); 
         Vandaag<span class="n hidden" id="n-vandaag">0</span></button>
       <button type="button" role="tab" data-tab="cockpit">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 18a8 8 0 1116 0"/><path d="M12 18l4-6"/><path d="M12 6v2M6 12h2M18 12h-2"/></svg>
-        Cockpit<span class="n hidden" id="n-cockpit">0</span></button>
+        Cortana<span class="n hidden" id="n-cockpit">0</span></button>
       <button type="button" role="tab" data-tab="overzicht">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/></svg>
         Overzicht en groeiplan</button>
@@ -287,8 +356,8 @@ a.kb { display: inline-block; text-decoration: none; background: var(--panel2); 
 
     <!-- TAB: COCKPIT -->
     <div class="pane" id="pane-cockpit" role="tabpanel" aria-hidden="true">
-      <div class="kop"><div><h2><em>Cockpit</em></h2><div class="sub">Wat op jou wacht en of de systemen draaien.</div></div></div>
-      <div class="cp-status" id="cp-status"><span class="muted">Laden...</span></div>
+      <div class="kop"><div><h2><em>Cortana</em></h2><div class="sub">Wat op jou wacht en of de systemen draaien.</div></div></div>
+      <div class="cp-hud"><div class="cp-core" aria-hidden="true"><i></i></div><div class="cp-status" id="cp-status"><span class="muted">Laden...</span></div></div>
       <div class="row">
         <section class="card c12"><h3>Scorebord</h3><div id="cp-score"></div></section>
       </div>
@@ -1109,7 +1178,7 @@ a.kb { display: inline-block; text-decoration: none; background: var(--panel2); 
       if (nr !== cpReeks) return;
       if (res.error) {
         if (!cpData) cpTeken({});
-        cpTekenStatus(cpData || {}, 'Cockpit laden mislukt: ' + res.error.message);
+        cpTekenStatus(cpData || {}, 'Cortana laden mislukt: ' + res.error.message);
         return;
       }
       var d = res.data && typeof res.data === 'object' ? res.data : {};
@@ -1119,7 +1188,7 @@ a.kb { display: inline-block; text-decoration: none; background: var(--panel2); 
       if (nr !== cpReeks) return;
       if (window.console) console.error(err);
       if (!cpData) cpTeken({});
-      cpTekenStatus(cpData || {}, 'Cockpit laden mislukt: ' + (err && err.message ? err.message : 'onbekende fout'));
+      cpTekenStatus(cpData || {}, 'Cortana laden mislukt: ' + (err && err.message ? err.message : 'onbekende fout'));
     }
   }
 
