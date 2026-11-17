@@ -962,6 +962,10 @@ footer {
 .scan-lines p:first-child { border-top: none; padding-top: 0; }
 .scan-lines p[hidden] { display: none; }
 .scan-lines strong { font-weight: 500; color: var(--white); }
+.scan-ex { margin-top: 6px; padding: 14px 18px; border-left: 3px solid var(--amber); border-radius: 0 4px 4px 0; background: rgba(255,255,255,0.06); }
+.scan-ex[hidden] { display: none; }
+.scan-ex span { display: block; font-size: 10px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--amber); margin-bottom: 5px; }
+.scan-lines .scan-ex p { border-top: none; padding: 0; font-size: 14px; color: rgba(255,255,255,0.85); line-height: 1.65; }
 .scan-cta { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 20px; margin-top: 18px; }
 .scan-cta span { font-size: 13px; color: rgba(255,255,255,0.5); }
 .scan-note { font-size: 12px; color: rgba(255,255,255,0.4); line-height: 1.6; margin-top: 26px; }
@@ -1162,13 +1166,14 @@ Geen abonnement op een platform dat u zelf moet doorzoeken. Wij doen het voor u:
 <div class="scan-lines">
 <p id="scan-l1"></p>
 <p id="scan-l2"></p>
+<div class="scan-ex" hidden="" id="scan-ex"><span>Een voorbeeld uit uw streek</span><p id="scan-ex-tekst"></p></div>
 <div class="scan-cta">
 <a class="btn-primary" href="mailto:info@mecheleconsultancy.be" id="scan-mail">Stuur mij deze opdrachten</a>
 <span>Een korte mail volstaat, antwoord doorgaans binnen één werkdag</span>
 </div>
 </div>
 </div>
-<p class="scan-note">Telling op 17 november 2026 van de gunningen die sinds 17 november 2025 op het Europese platform TED gepubliceerd werden, vanaf EUR 10.000. Kleinere opdrachten komen daar nog bovenop. Een opdracht die over meerdere provincies loopt, telt in elke provincie mee.</p>
+<p class="scan-note">Telling op 17 november 2026 van de gunningen die sinds 17 november 2025 op het Europese platform TED gepubliceerd werden, vanaf EUR 10.000. Kleinere opdrachten komen daar nog bovenop. Een opdracht die over meerdere provincies loopt, telt in elke provincie mee. Het voorbeeld is een van die gunningen.</p>
 </div>
 </div>
 </section>
@@ -1606,6 +1611,13 @@ Aanbestedingsbegeleiding voor KMO's
     'Groenonderhoud': { 'West-Vlaanderen': [36, 16, 18], 'Oost-Vlaanderen': [28, 8, 13], 'Antwerpen': [43, 21, 27], 'Limburg': [25, 13, 14], 'Vlaams-Brabant': [17, 3, 9], 'Brussel': [9, 3, 5], 'Waals-Brabant': [7, 2, 1], 'Henegouwen': [9, 5, 4], 'Namen': [5, 1, 2], 'Luik': [10, 3, 7], 'Luxemburg': [5, 1, 1] },
     'Technisch onderhoud': { 'West-Vlaanderen': [16, 6, 7], 'Oost-Vlaanderen': [8, 3, 2], 'Antwerpen': [13, 8, 6], 'Limburg': [7, 3, 4], 'Vlaams-Brabant': [7, 3, 5], 'Brussel': [19, 13, 6], 'Waals-Brabant': [7, 2, 0], 'Henegouwen': [15, 10, 7], 'Namen': [4, 1, 0], 'Luik': [10, 4, 3], 'Luxemburg': [2, 1, 1] }
   };
+  /* Een echt gegund voorbeeld per sector en provincie, met de hand gekozen en nagekeken op TED (17 november 2026). Winnaar zonder naam. Geen voorbeeld: enkel de cijfers. */
+  var E = {
+    'Schoonmaak': { 'West-Vlaanderen': 'Gemeentebestuur Knokke-Heist: Schoonhouden van diverse gemeentelijke gebouwen in Knokke-Heist. €398.460 over 1 jaar, 1 inschrijver. Gegund aan een groot bedrijf uit Brussel (02/2026).', 'Oost-Vlaanderen': 'Maatschappij Linkerscheldeoever: Onderhoud en schoonmaak kantoorgebouw. €112.883 over 3 jaar, 1 inschrijver. Gegund aan een groot bedrijf uit Anderlecht (12/2025).', 'Antwerpen': 'Gemeente Edegem: Tijdelijke schoonmaak in diverse gemeentelijke gebouwen. €404.553 over 7 maanden, 1 inschrijver. Gegund aan een groot bedrijf uit Brussel (06/2026).', 'Limburg': 'Stad Bilzen-Hoeselt: Reinigen van ruiten en raamconstructies. €321.211 over 4 jaar, 2 inschrijvers. Gegund aan een middelgroot bedrijf uit Haacht (11/2025).', 'Vlaams-Brabant': 'AGB Bexit: Schoonmaak van burelen. €229.950 over 4 jaar, 9 inschrijvers. Gegund aan een klein bedrijf uit Zaventem (03/2026).', 'Waals-Brabant': 'Habitations Sociales du Roman Païs: Marché de service d\'entretien et nettoyage des locaux communs. €311.849 over 2 jaar, 1 inschrijver. Gegund aan een groot bedrijf uit Braine-le-Château (03/2026).', 'Luik': 'Centre Hospitalier Régional de Huy: Nettoyage des vitres 2026-2030. €117.350 over 4 jaar, 9 inschrijvers. Gegund aan een middelgroot bedrijf uit Zaventem (07/2026).', 'Luxemburg': 'Commune d\'Attert: Nettoyage des écoles communales et du hall technique. €222.617 over 1 jaar, 4 inschrijvers. Gegund aan een groot bedrijf uit Jette (07/2026).' },
+    'Bouw en renovatie': { 'Antwerpen': 'Gemeente Wommelgem: Renovatie buitenschil oud gemeentehuis. €659.700 over 5 maanden, 2 inschrijvers. Gegund aan een klein bedrijf uit Geel (07/2026).', 'Limburg': 'Brandweerzone Oost-Limburg: Renovatie brandweerpost Maaseik. €487.710 over 9 maanden, 3 inschrijvers. Gegund aan een middelgroot bedrijf uit Opglabbeek (12/2025).', 'Henegouwen': 'Le Logis Châtelettain: Rénovation énergétique de 96 logements en site occupé. €1.555.377 over 18 maanden, 2 inschrijvers. Gegund aan een middelgroot bedrijf uit Strépy-Bracquegnies (05/2026).', 'Luik': 'Police Zone Vesdre: Adaptation de l\'accueil de la Maison de Police de Dison. €119.000 over 1 jaar, 1 inschrijver. Gegund aan een middelgroot bedrijf uit Villers-le-Bouillet (01/2026).', 'Luxemburg': 'La Famennoise: Rénovation de 85 logements du quartier « Devant les Bois » de Aye. €391.003 over 25 maanden, 5 inschrijvers. Gegund aan een KMO uit Stavelot (09/2026).', 'Oost-Vlaanderen': 'Gemeente Maarkedal: Renovatie nieuwe Bossenaarmolen. €599.450 over 16 maanden, 2 inschrijvers. Gegund aan een groot bedrijf uit Merelbeke (06/2026).', 'Vlaams-Brabant': 'Stad Diest: Raamcontract voor kleine herstellingen van de weginfrastructuur. €437.990 over 4 jaar, 5 inschrijvers. Gegund aan een klein bedrijf uit Herk-de-Stad (05/2026).' },
+    'Groenonderhoud': { 'West-Vlaanderen': 'KU Leuven: Onderhoud van groene ruimten op campus KULAK. €882.000 over 6 jaar, 3 inschrijvers. Gegund aan een KMO uit Gullegem (01/2026).', 'Oost-Vlaanderen': 'Woonmaatschappij Dender-Zuid: Raamcontract groenonderhoud. €736.554 over 4 jaar, 2 inschrijvers. Gegund aan een groot bedrijf uit Vorst (06/2026).', 'Antwerpen': 'Gemeente Essen: Onderhoud openbaar groen 2026. €352.008 over 1 jaar, 1 inschrijver. Gegund aan een middelgroot bedrijf uit Brasschaat (05/2026).', 'Limburg': 'Stad Bilzen-Hoeselt: Maaien van wegbermen op afroep. €828.182 over 1 jaar, 3 inschrijvers. Gegund aan een klein bedrijf uit Halen (08/2026).', 'Henegouwen': 'Le Logis Châtelettain: Entretien des abords et espaces verts 2026-2027. €345.126 over 1 jaar, 3 inschrijvers. Gegund aan een middelgroot bedrijf uit Braine-le-Château (04/2026).', 'Luik': 'Commune d\'Ans: Entretien et tonte des espaces verts. €570.500 over 4 jaar, 9 inschrijvers. Gegund aan een klein bedrijf uit Seraing (05/2026).', 'Waals-Brabant': 'Habitations Sociales du Roman Païs: Marché de services pour l\'entretien des espaces verts. €662.250 over 4 jaar, 1 inschrijver. Gegund aan een groot bedrijf uit Braine-le-Château (03/2026).' },
+    'Technisch onderhoud': { 'West-Vlaanderen': 'Regie der Gebouwen: Rijksarchief Brugge: technisch beheer en onderhoud HVAC, sanitair en elektrische installaties. €140.334 over 4 jaar, 3 inschrijvers. Gegund aan een middelgroot bedrijf uit Vorst (10/2026).', 'Antwerpen': 'Instituut voor Tropische Geneeskunde: Levering, plaatsing, indienststelling en onderhoud brandcentrales. €389.083 over 28 maanden, 2 inschrijvers. Gegund aan een KMO uit Sint-Niklaas (12/2025).', 'Limburg': 'AGB Masterplan: Onderhoud HVAC van het NAC. €281.740 over 4 jaar, 2 inschrijvers. Gegund aan een middelgroot bedrijf uit Hasselt (10/2026).', 'Vlaams-Brabant': 'Gemeente Dilbeek: Raamovereenkomst voor preventief en curatief onderhoud liften. €264.863 over 4 jaar, 4 inschrijvers. Gegund aan een middelgroot bedrijf uit Waregem (02/2026).', 'Brussel': 'Vlaamse Gemeenschapscommissie: Raamovereenkomst voor onderhoud en keuringen van HVAC-installaties. €850.000 over 4 jaar, 3 inschrijvers. Gegund aan een klein bedrijf uit Brussel (03/2026).', 'Henegouwen': 'Le Logis Châtelettain: Entretien, dépannages et réparations des ascenseurs. €157.765 over 3 jaar, 2 inschrijvers. Gegund aan een groot bedrijf uit Brussel (12/2025).' }
+  };
   var sector = document.getElementById('scan-sector');
   var provincie = document.getElementById('scan-provincie');
   var result = document.getElementById('scan-result');
@@ -1614,6 +1626,8 @@ Aanbestedingsbegeleiding voor KMO's
   var l1 = document.getElementById('scan-l1');
   var l2 = document.getElementById('scan-l2');
   var mail = document.getElementById('scan-mail');
+  var ex = document.getElementById('scan-ex');
+  var exTekst = document.getElementById('scan-ex-tekst');
 
   function line(el, vet, rest) {
     el.textContent = '';
@@ -1642,6 +1656,8 @@ Aanbestedingsbegeleiding voor KMO's
       if (kmo === 0) line(l2, 'Geen enkele', ' ging naar een KMO.');
       else line(l2, kmo + ' van de ' + n, (kmo === 1 ? ' ging' : ' gingen') + ' naar een KMO.');
     }
+    var vb = E[s] && E[s][p];
+    if (vb) { exTekst.textContent = vb; ex.hidden = false; } else { ex.hidden = true; }
     mail.href = 'mailto:info@mecheleconsultancy.be?subject=' +
       encodeURIComponent('Gunningen ' + s.toLowerCase() + ' ' + p) +
       '&body=' + encodeURIComponent('Goeiedag,\n\nStuur mij de gegunde opdrachten voor ' + s.toLowerCase() + ' in ' + p + '.\n\nBedrijf: \n\nMet vriendelijke groeten,');
