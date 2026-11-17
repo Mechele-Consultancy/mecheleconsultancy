@@ -943,6 +943,68 @@ footer {
   .nav-cta { padding: 8px 11px; font-size: 12px; white-space: nowrap; }
   .nav-cta-ghost { padding: 6px 10px; }
 }
+
+/* STREEKSCAN: cijfers per sector en provincie uit eigen tabel gunningen (Supabase) */
+.scan-box { background: var(--navy); border-radius: 8px; padding: 46px 50px; margin-top: 48px; scroll-margin-top: 100px; }
+.scan-head { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: end; }
+.scan-box .section-label { color: var(--amber); }
+.scan-box h3 { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 600; color: var(--white); line-height: 1.2; margin-bottom: 12px; }
+.scan-intro { font-size: 15px; color: rgba(255,255,255,0.65); line-height: 1.8; }
+.scan-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.scan-fields label { display: block; font-size: 10px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.55); margin-bottom: 7px; }
+.scan-fields select { width: 100%; font-family: inherit; font-size: 15px; color: var(--text-dark); background: var(--white); border: 1px solid var(--white); border-radius: 4px; padding: 11px 13px; }
+.scan-fields select:focus-visible { outline: 2px solid var(--amber); outline-offset: 2px; }
+.scan-result { display: grid; grid-template-columns: 220px 1fr; gap: 40px; align-items: start; margin-top: 34px; padding-top: 32px; border-top: 1px solid rgba(255,255,255,0.12); }
+.scan-result[hidden] { display: none; }
+.scan-number { font-family: 'Playfair Display', serif; font-size: 68px; font-weight: 700; color: var(--amber); line-height: 1; }
+.scan-unit { font-size: 13px; color: rgba(255,255,255,0.6); line-height: 1.5; margin-top: 8px; }
+.scan-lines p { font-size: 15px; color: rgba(255,255,255,0.8); line-height: 1.6; padding: 10px 0; border-top: 1px solid rgba(255,255,255,0.1); }
+.scan-lines p:first-child { border-top: none; padding-top: 0; }
+.scan-lines p[hidden] { display: none; }
+.scan-lines strong { font-weight: 500; color: var(--white); }
+.scan-cta { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 20px; margin-top: 18px; }
+.scan-cta span { font-size: 13px; color: rgba(255,255,255,0.5); }
+.scan-note { font-size: 12px; color: rgba(255,255,255,0.4); line-height: 1.6; margin-top: 26px; }
+
+/* VOORBEELD: een opdracht zoals ze in het wekelijkse overzicht per mail staat (titel, aanbesteder, tabel, toelichting) */
+.fiche { background: var(--white); }
+.fiche-doc { background: var(--white); border: 1px solid var(--border); border-top: 3px solid var(--amber); border-radius: 6px; padding: 34px 40px 32px; margin-top: 40px; box-shadow: 0 8px 40px rgba(43,58,82,0.1); }
+.fiche-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 12px; padding-bottom: 14px; border-bottom: 1px solid var(--border); margin-bottom: 24px; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; }
+.fiche-head strong { font-weight: 500; color: var(--navy); }
+.fiche-head span { color: var(--text-light); font-weight: 400; }
+.fiche-doc h3 { font-family: 'Playfair Display', serif; font-size: 23px; font-weight: 600; color: var(--navy); line-height: 1.25; margin-bottom: 6px; }
+.fiche-org { font-size: 14px; font-style: italic; color: var(--text-mid); margin-bottom: 18px; }
+.fiche-table { width: 100%; border-collapse: collapse; font-size: 14px; line-height: 1.5; margin-bottom: 22px; }
+.fiche-table th { background: var(--navy); border: 1px solid var(--navy); color: var(--white); font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; text-align: left; padding: 9px 12px; }
+.fiche-table td { border: 1px solid var(--border); padding: 11px 12px; text-align: left; vertical-align: top; color: var(--text-dark); font-weight: 400; }
+.fiche-table { margin-bottom: 8px; }
+.fiche-mobile { display: none; font-size: 14px; color: var(--text-dark); font-weight: 400; margin-bottom: 14px; }
+.fiche-note { font-size: 12px; color: var(--text-light); line-height: 1.6; margin-bottom: 20px; }
+.fiche-doc p.fiche-p { font-size: 15px; color: var(--text-mid); line-height: 1.8; margin-bottom: 14px; }
+.fiche-doc p.fiche-p:last-of-type { margin-bottom: 0; }
+.fiche-source { font-size: 12px; color: var(--text-light); line-height: 1.6; margin-top: 16px; max-width: 680px; }
+
+@media (max-width: 768px) {
+  .scan-box { padding: 34px 26px; }
+  .scan-head, .scan-result { grid-template-columns: 1fr; gap: 26px; }
+  .scan-number { font-size: 56px; }
+  .fiche-doc { padding: 26px 22px 24px; }
+  .fiche-doc h3 { font-size: 21px; }
+}
+@media (max-width: 640px) {
+  .fiche-table thead { display: none; }
+  .fiche-table, .fiche-table tbody, .fiche-table tr, .fiche-table td { display: block; width: 100%; }
+  .fiche-mobile { display: block; }
+  .fiche-table td.m-hide { display: none; }
+  .fiche-table tr { border: 1px solid var(--border); border-radius: 4px; overflow: hidden; margin-bottom: 10px; }
+  .fiche-table td { display: grid; grid-template-columns: 104px 1fr; gap: 10px; border: none; border-top: 1px solid var(--border); padding: 9px 12px; }
+  .fiche-table td[data-label="Waarde"] { border-top: none; }
+  .fiche-table td::before { content: attr(data-label); font-size: 10px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--navy); padding-top: 3px; }
+}
+@media (max-width: 480px) {
+  .scan-fields { grid-template-columns: 1fr; }
+  .fiche-doc { padding: 22px 16px 20px; }
+}
 </style>
 </head>
 <body>
@@ -973,7 +1035,7 @@ footer {
 <section class="hero">
 <div class="hero-inner">
 <p class="hero-eyebrow">
-Aanbestedingsbegeleiding voor KMO's
+Voor KMO's in schoonmaak, bouw, groen en techniek
 </p>
 <h1>
 Overheidsopdrachten zoeken<br/>kost tijd. <em>Dat doen wij.</em>
@@ -985,7 +1047,7 @@ Wij screenen elke werkdag alle publicaties, bezorgen u elke week de opdrachten d
 </p>
 <div class="hero-actions">
 <a class="btn-primary" href="#contact">Vraag informatie</a>
-<a class="btn-secondary" href="#diensten">Onze diensten</a>
+<a class="btn-secondary" href="#streek">Bekijk uw streek</a>
 
 </div>
 </div>
@@ -1054,6 +1116,60 @@ Geen abonnement op een platform dat u zelf moet doorzoeken. Wij doen het voor u:
 <div class="proof-grid"><div class="proof-card"><p class="proof-sector">Bouw en renovatie</p><div class="proof-number">324</div><p class="proof-unit">gegunde opdrachten</p><p class="proof-line"><strong>40%</strong> ging naar een KMO</p><p class="proof-line"><strong>54%</strong> had hoogstens drie inschrijvers</p></div><div class="proof-card"><p class="proof-sector">Groenonderhoud</p><div class="proof-number">167</div><p class="proof-unit">gegunde opdrachten</p><p class="proof-line"><strong>51%</strong> ging naar een KMO</p><p class="proof-line"><strong>42%</strong> had hoogstens drie inschrijvers</p></div><div class="proof-card"><p class="proof-sector">Technisch onderhoud</p><div class="proof-number">137</div><p class="proof-unit">gegunde opdrachten</p><p class="proof-line"><strong>41%</strong> ging naar een KMO</p><p class="proof-line"><strong>59%</strong> had hoogstens drie inschrijvers</p></div><div class="proof-card"><p class="proof-sector">Schoonmaak</p><div class="proof-number">114</div><p class="proof-unit">gegunde opdrachten</p><p class="proof-line"><strong>35%</strong> ging naar een KMO</p><p class="proof-line"><strong>36%</strong> had hoogstens drie inschrijvers</p></div></div>
 <p class="proof-take">Bij meer dan de helft van de bouw- en techniekopdrachten dongen hoogstens drie bedrijven mee. Die opdrachten gaan naar wie ze op tijd ziet, niet altijd naar wie het beste werk levert.</p>
 <p class="proof-note">Periode: gunningen gepubliceerd van 28 oktober 2025 tot 28 oktober 2026. Het aandeel KMO's is berekend op de gunningen waarvan de grootte van de winnaar gekend is, het aantal inschrijvers op de gunningen waar dat vermeld staat. Een opdracht kan onder meer dan één sector vallen.</p>
+<!-- STREEKSCAN: cijfers uit eigen tabel gunningen (Supabase), stand 17 november 2026 -->
+<div class="scan-box" id="streek">
+<div class="scan-head">
+<div>
+<p class="section-label">Uw streek</p>
+<h3>En in uw provincie?</h3>
+<p class="scan-intro">Kies uw sector en uw provincie. U ziet meteen hoeveel opdrachten er het voorbije jaar gegund werden, en hoeveel bedrijven meedongen.</p>
+</div>
+<form class="scan-fields" id="scan-form" novalidate="">
+<div>
+<label for="scan-sector">Sector</label>
+<select id="scan-sector" name="sector">
+<option value="">Kies uw sector</option>
+<option>Schoonmaak</option>
+<option>Bouw en renovatie</option>
+<option>Groenonderhoud</option>
+<option>Technisch onderhoud</option>
+</select>
+</div>
+<div>
+<label for="scan-provincie">Provincie</label>
+<select id="scan-provincie" name="provincie">
+<option value="">Kies uw provincie</option>
+<option>West-Vlaanderen</option>
+<option>Oost-Vlaanderen</option>
+<option>Antwerpen</option>
+<option>Limburg</option>
+<option>Vlaams-Brabant</option>
+<option>Brussel</option>
+<option>Waals-Brabant</option>
+<option>Henegouwen</option>
+<option>Namen</option>
+<option>Luik</option>
+<option>Luxemburg</option>
+</select>
+</div>
+</form>
+</div>
+<div aria-live="polite" class="scan-result" hidden="" id="scan-result">
+<div>
+<div class="scan-number" id="scan-n"></div>
+<p class="scan-unit" id="scan-unit"></p>
+</div>
+<div class="scan-lines">
+<p id="scan-l1"></p>
+<p id="scan-l2"></p>
+<div class="scan-cta">
+<a class="btn-primary" href="mailto:info@mecheleconsultancy.be" id="scan-mail">Stuur mij deze opdrachten</a>
+<span>Een korte mail volstaat, antwoord doorgaans binnen één werkdag</span>
+</div>
+</div>
+</div>
+<p class="scan-note">Telling op 17 november 2026 van de gunningen die sinds 17 november 2025 op het Europese platform TED gepubliceerd werden, vanaf EUR 10.000. Kleinere opdrachten komen daar nog bovenop. Een opdracht die over meerdere provincies loopt, telt in elke provincie mee.</p>
+</div>
 </div>
 </section>
 
@@ -1151,6 +1267,37 @@ Ook los te bestellen voor een concrete opdracht
 </ul>
 </div>
 </div>
+</div>
+</section>
+<!-- VOORBEELD: echte opdracht (Stad Kortrijk, TED 663135-2026 en wijziging 712840-2026) in de vorm van het weekoverzicht; bezetting uit de eigen dossierfiche van 6 oktober 2026; geen prijs, geen gegevens van een klant -->
+<section class="fiche" id="fiche">
+<div class="section-inner">
+<p class="section-label">Voorbeeld</p>
+<h2 class="section-title">Zo ziet een opdracht eruit<br/>in uw mailbox</h2>
+<p class="section-body">Elke week krijgt u de opdrachten die bij uw bedrijf passen, elk met dezelfde korte fiche. Dit is een echte opdracht uit oktober 2026. De deadline is intussen verstreken.</p>
+<div class="fiche-doc">
+<div class="fiche-head"><strong>Overzicht opportuniteiten</strong><span>Oktober 2026</span></div>
+<h3>Stad Kortrijk: glaswas en reiniging van zonnepanelen, 5 percelen</h3>
+<p class="fiche-org">Stad Kortrijk, referentie PPP0I4-3485/6669/2026/3485</p>
+<p class="fiche-mobile">Open, deadline 16/11/2026 om 09:00u, geen erkenning vereist</p>
+<table class="fiche-table">
+<thead>
+<tr><th scope="col">Status</th><th scope="col">Deadline</th><th scope="col">Waarde</th><th scope="col">Type</th><th scope="col">Erkenning</th><th scope="col">Bezetting</th></tr>
+</thead>
+<tbody>
+<tr><td class="m-hide" data-label="Status">Open</td><td class="m-hide" data-label="Deadline">16/11/2026, 09:00u</td><td data-label="Waarde">max. €400.000, €80.000 per jaar</td><td data-label="Type">Diensten, perceel 1 beglazing stadsgebouwen</td><td class="m-hide" data-label="Erkenning">Geen vereist</td><td data-label="Bezetting">ca. 1,1 tot 1,3 FTE</td></tr>
+<tr><td class="m-hide" data-label="Status">Open</td><td class="m-hide" data-label="Deadline">16/11/2026, 09:00u</td><td data-label="Waarde">max. €375.000, €75.000 per jaar</td><td data-label="Type">Diensten, perceel 2 beglazing OCMW-gebouwen</td><td class="m-hide" data-label="Erkenning">Geen vereist</td><td data-label="Bezetting">ca. 1,0 tot 1,2 FTE</td></tr>
+<tr><td class="m-hide" data-label="Status">Open</td><td class="m-hide" data-label="Deadline">16/11/2026, 09:00u</td><td data-label="Waarde">max. €50.000, €10.000 per jaar</td><td data-label="Type">Diensten, perceel 3 zonnepanelen stadsgebouwen</td><td class="m-hide" data-label="Erkenning">Geen vereist</td><td data-label="Bezetting">ca. 0,15 FTE</td></tr>
+<tr><td class="m-hide" data-label="Status">Open</td><td class="m-hide" data-label="Deadline">16/11/2026, 09:00u</td><td data-label="Waarde">max. €12.500, €2.500 per jaar</td><td data-label="Type">Diensten, perceel 4 zonnepanelen OCMW-gebouwen</td><td class="m-hide" data-label="Erkenning">Geen vereist</td><td data-label="Bezetting">minder dan 0,1 FTE</td></tr>
+<tr><td class="m-hide" data-label="Status">Open</td><td class="m-hide" data-label="Deadline">16/11/2026, 09:00u</td><td data-label="Waarde">max. €80.000, €16.000 per jaar</td><td data-label="Type">Diensten, perceel 5 buitenliften</td><td class="m-hide" data-label="Erkenning">Geen vereist</td><td data-label="Bezetting">ca. 0,25 FTE</td></tr>
+</tbody>
+</table>
+<p class="fiche-note">Bezetting: jaarwaarde gedeeld door een verkooptarief van €41 tot €44 per uur en ongeveer 1.550 productieve uren per voltijdse medewerker (FTE) per jaar. Een inschatting, geen garantie: in een raamovereenkomst kunnen de werkelijke afnames lager liggen dan de maximumwaarde.</p>
+<p class="fiche-p">Stad Kortrijk zoekt een dienstverlener voor de glaswas van de stads- en OCMW-gebouwen en de reiniging van zonnepanelen, van 1 september 2027 tot 31 augustus 2032. De percelen worden elk afzonderlijk gegund, dus u kan op 1, op enkele of op alle 5 inschrijven.</p>
+<p class="fiche-p">De procedure verloopt in twee fasen: eerst een kandidatuur, daarna een offerte voor de geselecteerde kandidaten. Voor de selectie worden per type perceel minstens 3 klanten voor gelijkaardige opdrachten uit de laatste drie jaar gevraagd, met een attest van goede uitvoering, en een bewijs van verzekering arbeidsongevallen en burgerlijke aansprakelijkheid. Er is geen minimumomzet gevraagd. Gunning gebeurt op prijs (60 punten), aangeboden kwaliteit (40 punten) en duurzaamheid (20 punten).</p>
+<p class="fiche-p">Voor een bedrijf van ongeveer 5 medewerkers zijn de zonnepanelen en één glaswasperceel haalbaar. Beide glaswaspercelen samen vragen ongeveer 2,5 FTE: dat kan enkel als er capaciteit bijkomt.</p>
+</div>
+<p class="fiche-source">U laat weten welke opdrachten u wil indienen. Zelf indienen kan, of u geeft de begeleiding aan ons.</p>
 </div>
 </section>
 <!-- HOW IT WORKS -->
@@ -1445,6 +1592,66 @@ Aanbestedingsbegeleiding voor KMO's
         sendErr.classList.add('show');
       });
   });
+})();
+</script>
+<script>
+/* STREEKSCAN: per sector en provincie [aantal gunningen, waarvan hoogstens drie inschrijvers, waarvan naar een KMO].
+   Bron: eigen tabel gunningen (TED), stand 17 november 2026. Bij een update ook de datum in .scan-note aanpassen. */
+(function () {
+  var form = document.getElementById('scan-form');
+  if (!form) return;
+  var D = {
+    'Schoonmaak': { 'West-Vlaanderen': [15, 9, 0], 'Oost-Vlaanderen': [14, 7, 5], 'Antwerpen': [19, 6, 7], 'Limburg': [12, 2, 4], 'Vlaams-Brabant': [8, 0, 2], 'Brussel': [32, 9, 12], 'Waals-Brabant': [8, 1, 1], 'Henegouwen': [13, 5, 7], 'Namen': [2, 1, 1], 'Luik': [9, 3, 5], 'Luxemburg': [6, 3, 2] },
+    'Bouw en renovatie': { 'West-Vlaanderen': [33, 17, 14], 'Oost-Vlaanderen': [20, 9, 10], 'Antwerpen': [39, 22, 13], 'Limburg': [17, 8, 8], 'Vlaams-Brabant': [18, 4, 9], 'Brussel': [27, 15, 10], 'Waals-Brabant': [4, 3, 0], 'Henegouwen': [41, 24, 11], 'Namen': [8, 3, 2], 'Luik': [17, 8, 10], 'Luxemburg': [5, 2, 2] },
+    'Groenonderhoud': { 'West-Vlaanderen': [36, 16, 18], 'Oost-Vlaanderen': [28, 8, 13], 'Antwerpen': [43, 21, 27], 'Limburg': [25, 13, 14], 'Vlaams-Brabant': [17, 3, 9], 'Brussel': [9, 3, 5], 'Waals-Brabant': [7, 2, 1], 'Henegouwen': [9, 5, 4], 'Namen': [5, 1, 2], 'Luik': [10, 3, 7], 'Luxemburg': [5, 1, 1] },
+    'Technisch onderhoud': { 'West-Vlaanderen': [16, 6, 7], 'Oost-Vlaanderen': [8, 3, 2], 'Antwerpen': [13, 8, 6], 'Limburg': [7, 3, 4], 'Vlaams-Brabant': [7, 3, 5], 'Brussel': [19, 13, 6], 'Waals-Brabant': [7, 2, 0], 'Henegouwen': [15, 10, 7], 'Namen': [4, 1, 0], 'Luik': [10, 4, 3], 'Luxemburg': [2, 1, 1] }
+  };
+  var sector = document.getElementById('scan-sector');
+  var provincie = document.getElementById('scan-provincie');
+  var result = document.getElementById('scan-result');
+  var nEl = document.getElementById('scan-n');
+  var unit = document.getElementById('scan-unit');
+  var l1 = document.getElementById('scan-l1');
+  var l2 = document.getElementById('scan-l2');
+  var mail = document.getElementById('scan-mail');
+
+  function line(el, vet, rest) {
+    el.textContent = '';
+    if (vet) {
+      var s = document.createElement('strong');
+      s.textContent = vet;
+      el.appendChild(s);
+    }
+    el.appendChild(document.createTextNode(rest));
+    el.hidden = false;
+  }
+
+  function update() {
+    var s = sector.value, p = provincie.value;
+    var row = D[s] && D[s][p];
+    if (!row) { result.hidden = true; return; }
+    var n = row[0], weinig = row[1], kmo = row[2];
+    nEl.textContent = String(n);
+    unit.textContent = 'gegunde opdrachten in ' + p + ', het voorbije jaar';
+    if (n < 5) {
+      line(l1, '', 'Dit zijn enkel de grote opdrachten die Europees gepubliceerd werden. De kleinere komen daar nog bovenop.');
+      l2.hidden = true;
+    } else {
+      if (weinig === 0) line(l1, '', 'Bij elke opdracht dongen minstens vier bedrijven mee.');
+      else line(l1, weinig + ' van de ' + n, (weinig === 1 ? ' had' : ' hadden') + ' hoogstens drie inschrijvers.');
+      if (kmo === 0) line(l2, 'Geen enkele', ' ging naar een KMO.');
+      else line(l2, kmo + ' van de ' + n, (kmo === 1 ? ' ging' : ' gingen') + ' naar een KMO.');
+    }
+    mail.href = 'mailto:info@mecheleconsultancy.be?subject=' +
+      encodeURIComponent('Gunningen ' + s.toLowerCase() + ' ' + p) +
+      '&body=' + encodeURIComponent('Goeiedag,\n\nStuur mij de gegunde opdrachten voor ' + s.toLowerCase() + ' in ' + p + '.\n\nBedrijf: \n\nMet vriendelijke groeten,');
+    result.hidden = false;
+  }
+
+  sector.addEventListener('change', update);
+  provincie.addEventListener('change', update);
+  form.addEventListener('submit', function (e) { e.preventDefault(); });
+  update();
 })();
 </script></body>
 </html>
