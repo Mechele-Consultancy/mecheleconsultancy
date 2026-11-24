@@ -23,6 +23,13 @@ body { background: var(--bg); color: var(--text); font-family: 'DM Sans', system
 a { color: var(--info); }
 button { font: inherit; cursor: pointer; }
 .hidden { display: none !important; }
+/* Bekijk als klant (enkel voor Steven, sinds 24/11/2026) */
+.als { background: var(--gold-soft); border-bottom: 1px solid #F1DDB4; color: var(--warn); }
+.als .in { max-width: 1080px; margin: 0 auto; padding: 10px 20px; display: flex; align-items: center; gap: 10px 14px; flex-wrap: wrap; font-size: 14px; }
+.als b { color: var(--navy); }
+.als select { font: inherit; color: var(--navy); background: #fff; border: 1px solid #E6CF9E; border-radius: 8px; padding: 6px 10px; }
+.als .muted { color: var(--warn); }
+a.uit { opacity: .55; cursor: not-allowed; }
 .muted { color: var(--light); font-size: 13px; }
 
 /* Bovenbalk */
@@ -159,6 +166,14 @@ ul.lijst { margin: 0; padding-left: 18px; color: var(--mid); font-size: 14px; }
   </div>
 </div>
 
+<div class="als hidden" id="alsbalk" role="region" aria-label="Bekijk als klant">
+<div class="in">
+<span>Testweergave: u bekijkt de klantpagina als</span>
+<label class="hidden" for="alskeuze">Klant</label>
+<select id="alskeuze"></select>
+<span class="muted">Enkel zichtbaar voor u. Knoppen versturen niets, de klant merkt er niets van.</span>
+</div>
+</div>
 <div id="login" class="hidden">
   <h2>Aanmelden</h2>
   <div class="muted">Uw klantpagina bij Mechele Consultancy.</div>
@@ -281,6 +296,7 @@ ul.lijst { margin: 0; padding-left: 18px; color: var(--mid); font-size: 14px; }
     $('logout').classList.add('hidden');
     $('refresh').classList.add('hidden');
     $('stamp').textContent = '';
+    $('alsbalk').classList.add('hidden');
     $('msg').textContent = tekst || '';
   }
 
@@ -305,14 +321,54 @@ ul.lijst { margin: 0; padding-left: 18px; color: var(--mid); font-size: 14px; }
     $('msg').textContent = res.error ? 'Versturen mislukt: ' + res.error.message : 'Als dit adres gekend is, staat er binnen enkele minuten een mail in uw mailbox om een nieuw wachtwoord in te stellen.';
   });
 
-  $('logout').addEventListener('click', async function () { await sb.auth.signOut(); toonLogin(); });
+  $('logout').addEventListener('click', async function () { await sb.auth.signOut(); alsKlant = null; toonLogin(); });
   $('refresh').addEventListener('click', laad);
+
+  /* Bekijk als klant: enkel voor de eigenaar. De databank controleert dat zelf (is_eigenaar). */
+  var alsKlant = null;
+  function gekozenKlant(lijst) {
+    var q = new URLSearchParams(window.location.search).get('als');
+    var codes = lijst.map(function (k) { return k.klantcode; });
+    if (q && codes.indexOf(q) >= 0) return q;
+    try { var b = localStorage.getItem('mc_als'); if (b && codes.indexOf(b) >= 0) return b; } catch (e) { /* prive venster */ }
+    var actief = lijst.filter(function (k) { return k.status === 'actief'; });
+    return (actief[0] || lijst[0] || {}).klantcode || null;
+  }
+  async function probeerEigenaar() {
+    var lijst = await sb.rpc('portaal_klantenlijst');
+    if (lijst.error || !Array.isArray(lijst.data) || !lijst.data.length) return false;
+    var sel = $('alskeuze');
+    sel.innerHTML = lijst.data.map(function (k) {
+      return '<option value="' + esc(k.klantcode) + '">' + esc(k.klantcode + ' ' + k.naam + (k.status !== 'actief' ? ' (' + k.status + ')' : '')) + '</option>';
+    }).join('');
+    alsKlant = gekozenKlant(lijst.data);
+    sel.value = alsKlant;
+    $('alsbalk').classList.remove('hidden');
+    return true;
+  }
+  $('alskeuze').addEventListener('change', function () {
+    alsKlant = this.value;
+    try { localStorage.setItem('mc_als', alsKlant); } catch (e) { /* prive venster */ }
+    laad();
+  });
+  function knoppenUit() {
+    Array.prototype.forEach.call(document.querySelectorAll('#app main a[href^="mailto:"]'), function (a) {
+      if (a.closest('.contact')) return;
+      a.removeAttribute('href');
+      a.classList.add('uit');
+      a.setAttribute('title', 'Testweergave: deze knop verstuurt niets');
+    });
+  }
 
   async function laad() {
     $('stamp').textContent = 'Laden...';
-    var res = await sb.rpc('klant_portaal_data');
+    var res = alsKlant ? await sb.rpc('klant_portaal_data_als', { p_klantcode: alsKlant }) : await sb.rpc('klant_portaal_data');
+    if (res.error && !alsKlant && /geen toegang|permission|JWT/i.test(res.error.message) && await probeerEigenaar()) {
+      res = await sb.rpc('klant_portaal_data_als', { p_klantcode: alsKlant });
+    }
     if (res.error) {
       if (/geen toegang|permission|JWT/i.test(res.error.message)) {
+        alsKlant = null;
         toonLogin('Dit account is nog niet gekoppeld aan een klantdossier. Neem contact op met Steven.');
         $('logout').classList.remove('hidden');
       } else $('stamp').textContent = 'Fout bij laden: ' + res.error.message;
@@ -323,6 +379,7 @@ ul.lijst { margin: 0; padding-left: 18px; color: var(--mid); font-size: 14px; }
     $('logout').classList.remove('hidden');
     $('refresh').classList.remove('hidden');
     try { render(res.data || {}); } catch (err) { if (window.console) console.error(err); }
+    if (alsKlant) knoppenUit();
     $('stamp').textContent = 'Stand ' + fmtDatum(res.data && res.data.gegenereerd, true);
   }
 

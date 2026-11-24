@@ -927,7 +927,7 @@ a.kb { display: inline-block; text-decoration: none; background: var(--panel2); 
         if (k.status === 'gepauzeerd' || k.status === 'gestopt') intake = '<span class="muted">niet van toepassing</span>';
         else intake = ontbreekt.length ? '<ul class="compact">' + ontbreekt.map(function (o) { return '<li>' + esc(o) + '</li>'; }).join('') + '</ul>' : tag('volledig', 'ok');
         var formule = k.formule === 'proef' ? tag('proef', 'warn') + '<div class="muted">staat niet in de vaste tarieven</div>' : esc(k.formule || '-');
-        return '<tr><td>' + esc(k.klantcode || '-') + '</td><td>' + esc(k.naam) + '<div class="muted">' + esc(k.fte != null ? k.fte + ' FTE' : '') + '</div></td><td>' + tag(k.status, stc) + '</td><td>' + formule + '</td><td>' + esc(k.segment || '-') + '</td><td>' + intake + '</td></tr>';
+        return '<tr><td>' + esc(k.klantcode || '-') + '</td><td>' + esc(k.naam) + '<div class="muted">' + esc(k.fte != null ? k.fte + ' FTE' : '') + '</div>' + (k.klantcode && k.klantcode !== 'MC-000' ? '<div><a href="/klant/?als=' + encodeURIComponent(k.klantcode) + '" target="_blank" rel="noopener">klantpagina bekijken</a></div>' : '') + '</td><td>' + tag(k.status, stc) + '</td><td>' + formule + '</td><td>' + esc(k.segment || '-') + '</td><td>' + intake + '</td></tr>';
       }).join('') + '</tbody></table>' : '<div class="empty">Geen klanten.</div>';
     $('attesten').innerHTML = attesten.length ? '<div class="muted" style="margin-top:10px">Attesten die binnen 60 dagen vervallen: ' + attesten.map(function (a) { return esc(a.klantcode) + ' ' + esc(a.type) + ' (' + esc(a.dagen_resterend) + ' d)'; }).join(', ') + '</div>' : '';
 
