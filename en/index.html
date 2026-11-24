@@ -957,6 +957,71 @@ footer {
   .nav-cta { padding: 8px 11px; font-size: 12px; white-space: nowrap; }
   .nav-cta-ghost { padding: 6px 10px; }
 }
+/* STREEKSCAN: cijfers per sector en provincie uit eigen tabel gunningen (Supabase) */
+.scan-box { background: var(--navy); border-radius: 8px; padding: 46px 50px; margin-top: 48px; scroll-margin-top: 100px; }
+.scan-head { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: end; }
+.scan-box .section-label { color: var(--amber); }
+.scan-box h3 { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 600; color: var(--white); line-height: 1.2; margin-bottom: 12px; }
+.scan-intro { font-size: 15px; color: rgba(255,255,255,0.65); line-height: 1.8; }
+.scan-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.scan-fields label { display: block; font-size: 10px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.55); margin-bottom: 7px; }
+.scan-fields select { width: 100%; font-family: inherit; font-size: 15px; color: var(--text-dark); background: var(--white); border: 1px solid var(--white); border-radius: 4px; padding: 11px 13px; }
+.scan-fields select:focus-visible { outline: 2px solid var(--amber); outline-offset: 2px; }
+.scan-result { display: grid; grid-template-columns: 220px 1fr; gap: 40px; align-items: start; margin-top: 34px; padding-top: 32px; border-top: 1px solid rgba(255,255,255,0.12); }
+.scan-result[hidden] { display: none; }
+.scan-number { font-family: 'Playfair Display', serif; font-size: 68px; font-weight: 700; color: var(--amber); line-height: 1; }
+.scan-unit { font-size: 13px; color: rgba(255,255,255,0.6); line-height: 1.5; margin-top: 8px; }
+.scan-lines p { font-size: 15px; color: rgba(255,255,255,0.8); line-height: 1.6; padding: 10px 0; border-top: 1px solid rgba(255,255,255,0.1); }
+.scan-lines p:first-child { border-top: none; padding-top: 0; }
+.scan-lines p[hidden] { display: none; }
+.scan-lines strong { font-weight: 500; color: var(--white); }
+.scan-ex { margin-top: 6px; padding: 14px 18px; border-left: 3px solid var(--amber); border-radius: 0 4px 4px 0; background: rgba(255,255,255,0.06); }
+.scan-ex[hidden] { display: none; }
+.scan-ex span { display: block; font-size: 10px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--amber); margin-bottom: 5px; }
+.scan-lines .scan-ex p { border-top: none; padding: 0; font-size: 14px; color: rgba(255,255,255,0.85); line-height: 1.65; }
+.scan-cta { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 20px; margin-top: 18px; }
+.scan-cta span { font-size: 13px; color: rgba(255,255,255,0.5); }
+.scan-note { font-size: 12px; color: rgba(255,255,255,0.4); line-height: 1.6; margin-top: 26px; }
+
+/* VOORBEELD: een opdracht zoals ze in het wekelijkse overzicht per mail staat (titel, aanbesteder, tabel, toelichting) */
+.fiche { background: var(--white); }
+.fiche-doc { background: var(--white); border: 1px solid var(--border); border-top: 3px solid var(--amber); border-radius: 6px; padding: 34px 40px 32px; margin-top: 40px; box-shadow: 0 8px 40px rgba(43,58,82,0.1); }
+.fiche-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 12px; padding-bottom: 14px; border-bottom: 1px solid var(--border); margin-bottom: 24px; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; }
+.fiche-head strong { font-weight: 500; color: var(--navy); }
+.fiche-head span { color: var(--text-light); font-weight: 400; }
+.fiche-doc h3 { font-family: 'Playfair Display', serif; font-size: 23px; font-weight: 600; color: var(--navy); line-height: 1.25; margin-bottom: 6px; }
+.fiche-org { font-size: 14px; font-style: italic; color: var(--text-mid); margin-bottom: 18px; }
+.fiche-table { width: 100%; border-collapse: collapse; font-size: 14px; line-height: 1.5; margin-bottom: 22px; }
+.fiche-table th { background: var(--navy); border: 1px solid var(--navy); color: var(--white); font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; text-align: left; padding: 9px 12px; }
+.fiche-table td { border: 1px solid var(--border); padding: 11px 12px; text-align: left; vertical-align: top; color: var(--text-dark); font-weight: 400; }
+.fiche-table { margin-bottom: 8px; }
+.fiche-mobile { display: none; font-size: 14px; color: var(--text-dark); font-weight: 400; margin-bottom: 14px; }
+.fiche-note { font-size: 12px; color: var(--text-light); line-height: 1.6; margin-bottom: 20px; }
+.fiche-doc p.fiche-p { font-size: 15px; color: var(--text-mid); line-height: 1.8; margin-bottom: 14px; }
+.fiche-doc p.fiche-p:last-of-type { margin-bottom: 0; }
+.fiche-source { font-size: 12px; color: var(--text-light); line-height: 1.6; margin-top: 16px; max-width: 680px; }
+
+@media (max-width: 768px) {
+  .scan-box { padding: 34px 26px; }
+  .scan-head, .scan-result { grid-template-columns: 1fr; gap: 26px; }
+  .scan-number { font-size: 56px; }
+  .fiche-doc { padding: 26px 22px 24px; }
+  .fiche-doc h3 { font-size: 21px; }
+}
+@media (max-width: 640px) {
+  .fiche-table thead { display: none; }
+  .fiche-table, .fiche-table tbody, .fiche-table tr, .fiche-table td { display: block; width: 100%; }
+  .fiche-mobile { display: block; }
+  .fiche-table td.m-hide { display: none; }
+  .fiche-table tr { border: 1px solid var(--border); border-radius: 4px; overflow: hidden; margin-bottom: 10px; }
+  .fiche-table td { display: grid; grid-template-columns: 104px 1fr; gap: 10px; border: none; border-top: 1px solid var(--border); padding: 9px 12px; }
+  .fiche-table td[data-label="Value"] { border-top: none; }
+  .fiche-table td::before { content: attr(data-label); font-size: 10px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--navy); padding-top: 3px; }
+}
+@media (max-width: 480px) {
+  .scan-fields { grid-template-columns: 1fr; }
+  .fiche-doc { padding: 22px 16px 20px; }
+}
 </style>
 </head>
 <body>
@@ -1036,6 +1101,61 @@ footer {
 <div class="proof-grid"><div class="proof-card"><p class="proof-sector">Construction and renovation</p><div class="proof-number">324</div><p class="proof-unit">contracts awarded</p><p class="proof-line"><strong>40%</strong> went to an SME</p><p class="proof-line"><strong>54%</strong> had three bidders or fewer</p></div><div class="proof-card"><p class="proof-sector">Grounds maintenance</p><div class="proof-number">167</div><p class="proof-unit">contracts awarded</p><p class="proof-line"><strong>51%</strong> went to an SME</p><p class="proof-line"><strong>42%</strong> had three bidders or fewer</p></div><div class="proof-card"><p class="proof-sector">Technical maintenance</p><div class="proof-number">137</div><p class="proof-unit">contracts awarded</p><p class="proof-line"><strong>41%</strong> went to an SME</p><p class="proof-line"><strong>59%</strong> had three bidders or fewer</p></div><div class="proof-card"><p class="proof-sector">Cleaning</p><div class="proof-number">114</div><p class="proof-unit">contracts awarded</p><p class="proof-line"><strong>35%</strong> went to an SME</p><p class="proof-line"><strong>36%</strong> had three bidders or fewer</p></div></div>
 <p class="proof-take">In more than half of the construction and technical tenders, three companies or fewer competed. Those contracts go to whoever spots them in time, not always to whoever does the best work.</p>
 <p class="proof-note">Period: awards published from 28 October 2025 to 28 October 2026. The SME share is calculated on the awards where the size of the winner is known, the number of bidders on the awards where it is stated. A contract can fall under more than one sector.</p>
+<!-- STREEKSCAN (en): zelfde cijfers en voorbeelden als de Nederlandse homepage, stand 17 november 2026 -->
+<div class="scan-box" id="streek">
+<div class="scan-head">
+<div>
+<p class="section-label">Your region</p>
+<h3>And in your province?</h3>
+<p class="scan-intro">Choose your sector and your province. You will see right away how many contracts were awarded over the past year, and how many companies competed for them.</p>
+</div>
+<form class="scan-fields" id="scan-form" novalidate="">
+<div>
+<label for="scan-sector">Sector</label>
+<select id="scan-sector" name="sector">
+<option value="">Choose your sector</option>
+<option value="Schoonmaak">Cleaning</option>
+<option value="Bouw en renovatie">Construction and renovation</option>
+<option value="Groenonderhoud">Grounds maintenance</option>
+<option value="Technisch onderhoud">Technical maintenance</option>
+</select>
+</div>
+<div>
+<label for="scan-provincie">Province</label>
+<select id="scan-provincie" name="provincie">
+<option value="">Choose your province</option>
+<option value="West-Vlaanderen">West Flanders</option>
+<option value="Oost-Vlaanderen">East Flanders</option>
+<option value="Antwerpen">Antwerp</option>
+<option value="Limburg">Limburg</option>
+<option value="Vlaams-Brabant">Flemish Brabant</option>
+<option value="Brussel">Brussels</option>
+<option value="Waals-Brabant">Walloon Brabant</option>
+<option value="Henegouwen">Hainaut</option>
+<option value="Namen">Namur</option>
+<option value="Luik">Liège</option>
+<option value="Luxemburg">Luxembourg</option>
+</select>
+</div>
+</form>
+</div>
+<div aria-live="polite" class="scan-result" hidden="" id="scan-result">
+<div>
+<div class="scan-number" id="scan-n"></div>
+<p class="scan-unit" id="scan-unit"></p>
+</div>
+<div class="scan-lines">
+<p id="scan-l1"></p>
+<p id="scan-l2"></p>
+<div class="scan-ex" hidden="" id="scan-ex"><span>An example from your region</span><p id="scan-ex-tekst"></p></div>
+<div class="scan-cta">
+<a class="btn-primary" href="mailto:info@mecheleconsultancy.be" id="scan-mail">Send me these contracts</a>
+<span>A short email is enough, we usually reply within one working day</span>
+</div>
+</div>
+</div>
+<p class="scan-note">Count on 17 November 2026 of the awards published on TED, the European tender platform, since 17 November 2025, from EUR 10,000. Smaller contracts come on top of this. A contract covering several provinces counts in each of them. Where possible, the example is one of those smaller contracts, from the Belgian Bulletin of Tenders. Contract titles are shown in their original language.</p>
+</div>
 </div>
 </section>
 
@@ -1071,6 +1191,37 @@ footer {
 </ul>
 </div>
 </div>
+</div>
+</section>
+<!-- VOORBEELDFICHE (en): vertaling van de fiche op de Nederlandse homepage -->
+<section class="fiche" id="fiche">
+<div class="section-inner">
+<p class="section-label">Example</p>
+<h2 class="section-title">What a tender looks like<br/>in your inbox</h2>
+<p class="section-body">Every week you receive the tenders that fit your business, each with the same short summary. This is a real tender from October 2026. The deadline has since passed.</p>
+<div class="fiche-doc">
+<div class="fiche-head"><strong>Opportunities overview</strong><span>October 2026</span></div>
+<h3>City of Kortrijk: window cleaning and solar panel cleaning, 5 lots</h3>
+<p class="fiche-org">City of Kortrijk, reference PPP0I4-3485/6669/2026/3485</p>
+<p class="fiche-mobile">Open, deadline 16/11/2026 at 09:00, no accreditation required</p>
+<table class="fiche-table">
+<thead>
+<tr><th scope="col">Status</th><th scope="col">Deadline</th><th scope="col">Value</th><th scope="col">Type</th><th scope="col">Accreditation</th><th scope="col">Staffing</th></tr>
+</thead>
+<tbody>
+<tr><td class="m-hide" data-label="Status">Open</td><td class="m-hide" data-label="Deadline">16/11/2026, 09:00</td><td data-label="Value">max. €400,000, €80,000 per year</td><td data-label="Type">Services, lot 1 windows of city buildings</td><td class="m-hide" data-label="Accreditation">None required</td><td data-label="Staffing">approx. 1.1 to 1.3 FTE</td></tr>
+<tr><td class="m-hide" data-label="Status">Open</td><td class="m-hide" data-label="Deadline">16/11/2026, 09:00</td><td data-label="Value">max. €375,000, €75,000 per year</td><td data-label="Type">Services, lot 2 windows of social welfare centre buildings</td><td class="m-hide" data-label="Accreditation">None required</td><td data-label="Staffing">approx. 1.0 to 1.2 FTE</td></tr>
+<tr><td class="m-hide" data-label="Status">Open</td><td class="m-hide" data-label="Deadline">16/11/2026, 09:00</td><td data-label="Value">max. €50,000, €10,000 per year</td><td data-label="Type">Services, lot 3 solar panels on city buildings</td><td class="m-hide" data-label="Accreditation">None required</td><td data-label="Staffing">approx. 0.15 FTE</td></tr>
+<tr><td class="m-hide" data-label="Status">Open</td><td class="m-hide" data-label="Deadline">16/11/2026, 09:00</td><td data-label="Value">max. €12,500, €2,500 per year</td><td data-label="Type">Services, lot 4 solar panels on social welfare centre buildings</td><td class="m-hide" data-label="Accreditation">None required</td><td data-label="Staffing">less than 0.1 FTE</td></tr>
+<tr><td class="m-hide" data-label="Status">Open</td><td class="m-hide" data-label="Deadline">16/11/2026, 09:00</td><td data-label="Value">max. €80,000, €16,000 per year</td><td data-label="Type">Services, lot 5 outdoor lifts</td><td class="m-hide" data-label="Accreditation">None required</td><td data-label="Staffing">approx. 0.25 FTE</td></tr>
+</tbody>
+</table>
+<p class="fiche-note">Staffing: annual value divided by a selling rate of €41 to €44 per hour and about 1,550 productive hours per full-time employee (FTE) per year. An estimate, not a guarantee: in a framework agreement, actual orders can be lower than the maximum value.</p>
+<p class="fiche-p">The City of Kortrijk is looking for a provider to clean the windows of the city and social welfare centre (OCMW) buildings and to clean solar panels, from 1 September 2027 to 31 August 2032. Each lot is awarded separately, so you can bid on 1, several or all 5.</p>
+<p class="fiche-p">The procedure has two stages: first an application, then a bid from the selected candidates. For selection, at least 3 clients for similar contracts from the last three years are required per type of lot, with a certificate of satisfactory performance, plus proof of workers' compensation and public liability insurance. No minimum turnover is required. The contract is awarded on price (60 points), quality offered (40 points) and sustainability (20 points).</p>
+<p class="fiche-p">For a company of about 5 employees, the solar panels and one window cleaning lot are feasible. Both window cleaning lots together require about 2.5 FTE: that only works if capacity grows.</p>
+</div>
+<p class="fiche-source">You let us know which tenders you want to bid on. You can submit yourself, or leave the bid support to us.</p>
 </div>
 </section>
 <!-- HOW IT WORKS -->
@@ -1290,5 +1441,68 @@ Public tender support for SMEs in Belgium
   });
 })();
 </script>
-</body>
+<script>
+/* STREEKSCAN (en): per sector en provincie [aantal gunningen, waarvan hoogstens drie inschrijvers, waarvan naar een KMO].
+   Zelfde cijfers als var D op de Nederlandse homepage (stand 17 november 2026); voorbeelden vertaald uit var E.
+   Bij een update van de streekscan: build_lang.py opnieuw draaien. */
+(function () {
+  var form = document.getElementById('scan-form');
+  if (!form) return;
+  var D = {"Schoonmaak": {"West-Vlaanderen": [15, 9, 0], "Oost-Vlaanderen": [14, 7, 5], "Antwerpen": [19, 6, 7], "Limburg": [12, 2, 4], "Vlaams-Brabant": [8, 0, 2], "Brussel": [32, 9, 12], "Waals-Brabant": [8, 1, 1], "Henegouwen": [13, 5, 7], "Namen": [2, 1, 1], "Luik": [9, 3, 5], "Luxemburg": [6, 3, 2]}, "Bouw en renovatie": {"West-Vlaanderen": [33, 17, 14], "Oost-Vlaanderen": [20, 9, 10], "Antwerpen": [39, 22, 13], "Limburg": [17, 8, 8], "Vlaams-Brabant": [18, 4, 9], "Brussel": [27, 15, 10], "Waals-Brabant": [4, 3, 0], "Henegouwen": [41, 24, 11], "Namen": [8, 3, 2], "Luik": [17, 8, 10], "Luxemburg": [5, 2, 2]}, "Groenonderhoud": {"West-Vlaanderen": [36, 16, 18], "Oost-Vlaanderen": [28, 8, 13], "Antwerpen": [43, 21, 27], "Limburg": [25, 13, 14], "Vlaams-Brabant": [17, 3, 9], "Brussel": [9, 3, 5], "Waals-Brabant": [7, 2, 1], "Henegouwen": [9, 5, 4], "Namen": [5, 1, 2], "Luik": [10, 3, 7], "Luxemburg": [5, 1, 1]}, "Technisch onderhoud": {"West-Vlaanderen": [16, 6, 7], "Oost-Vlaanderen": [8, 3, 2], "Antwerpen": [13, 8, 6], "Limburg": [7, 3, 4], "Vlaams-Brabant": [7, 3, 5], "Brussel": [19, 13, 6], "Waals-Brabant": [7, 2, 0], "Henegouwen": [15, 10, 7], "Namen": [4, 1, 0], "Luik": [10, 4, 3], "Luxemburg": [2, 1, 1]}};
+  var E = {"Schoonmaak": {"West-Vlaanderen": "Politiezone Arro Ieper: Reinigen van de ruiten aan de binnen- en buitenkant van de gebouwen van de politiezone. €47,627, 1 bidder. Awarded to a company from Bruges (10/2026).", "Oost-Vlaanderen": "Maatschappij Linkerscheldeoever: Onderhoud en schoonmaak kantoorgebouw. €112,883 over 3 years, 1 bidder. Awarded to a large company from Anderlecht (12/2025).", "Antwerpen": "De Noorderkempen: Poetsen van het kantoorgebouw. €77,988 over 1 year, 2 bidders. Awarded to a company from Stabroek (10/2026).", "Limburg": "ZorgGroep Lommel: Reinigen van ramen en deuren. €81,245, 2 bidders. Awarded to a company from Heppen (09/2026).", "Vlaams-Brabant": "AGB Bexit: Schoonmaak van burelen. €229,950 over 4 years, 9 bidders. Awarded to a small company from Zaventem (03/2026).", "Brussel": "Gemeente Sint-Lambrechts-Woluwe: Gemeentelijke gebouwen: schoonmaak van ruiten voor 12 maanden. €56,580, 2 bidders. Awarded to a company from Couture-Saint-Germain (10/2026).", "Waals-Brabant": "Habitations Sociales du Roman Païs: Marché de service d'entretien et nettoyage des locaux communs. €311,849 over 2 years, 1 bidder. Awarded to a large company from Braine-le-Château (03/2026).", "Henegouwen": "Police des Hauts-Pays: Nettoyage des locaux et des vitres de commissariats. €142,010, 2 bidders. Awarded to a company from Saint-Ghislain (11/2026).", "Namen": "Opérateur de Transport de Wallonie: Nettoyage des locaux et espaces clients, gare des bus à Namur. €351,905, 4 bidders. Awarded to a company from Brussels (09/2026).", "Luik": "Centre Hospitalier Régional de Huy: Nettoyage des vitres 2026-2030. €117,350 over 4 years, 9 bidders. Awarded to a medium-sized company from Zaventem (07/2026).", "Luxemburg": "Commune d'Attert: Nettoyage des écoles communales et du hall technique. €222,617 over 1 year, 4 bidders. Awarded to a large company from Jette (07/2026)."}, "Bouw en renovatie": {"West-Vlaanderen": "Zorg Izegem: Rode Poort: behandeling tegen opstijgend vocht. €41,300 over 3 months, 2 bidders. Awarded to a company from 's-Gravenwezel (11/2026).", "Oost-Vlaanderen": "Stad Zottegem: Vernieuwen van het schrijnwerk in de gebouwen van het SAMWD. €113,677, 1 bidder. Awarded to a company from Evergem (11/2026).", "Antwerpen": "Stad Geel: Raamovereenkomst onderhoud daken en goten kerken. €96,480 over 4 years, 2 bidders. Awarded to a company from Geel (11/2026).", "Limburg": "Stad Beringen: Leveren en plaatsen aluminium buitenschrijnwerk VIP-gebouw. €41,951, 3 bidders. Awarded to a company from Herentals (10/2026).", "Vlaams-Brabant": "Gemeente Boutersem: Renovatie dak Schuttersveld. €50,147, 1 bidder. Awarded to a company from Herk-de-Stad (09/2026).", "Brussel": "OCMW Sint-Pieters-Woluwe: Vervangingswerken van brandwerende deuren. €93,920, 1 bidder. Awarded to a company from La Bruyère (11/2026).", "Waals-Brabant": "Province du Brabant wallon: Travaux de rénovation de la plate-forme en zinc du dôme. €134,486 over 6 months, 1 bidder. Awarded to a company from Piétrain (10/2026).", "Henegouwen": "Ville de Châtelet: Réfection de la toiture plate de la Maison de la Poterie. €44,505, 2 bidders. Awarded to a company from Bouffioulx (11/2026).", "Namen": "Commune d'Ohey: Restauration du mur d'enceinte et du balcon de la maison Rosoux. €63,298, 2 bidders. Awarded to a company from Ciney (11/2026).", "Luik": "Commune de Blegny: Réfection d'une toiture de l'école communale de Saint-Remy. €34,123, 2 bidders. Awarded to a company from Blegny (11/2026).", "Luxemburg": "La Famennoise: Rénovation de 85 logements du quartier « Devant les Bois » de Aye. €391,003 over 25 months, 5 bidders. Awarded to an SME from Stavelot (09/2026)."}, "Groenonderhoud": {"West-Vlaanderen": "Intercommunale Leiedal: Groenbeheer en -onderhoud op de zone Bramier in Lauwe. €60,857, 2 bidders. Awarded to a company from Lauwe (10/2026).", "Oost-Vlaanderen": "Gemeente Nazareth-De Pinte: Plaatsen en ledigen van bladkorven voor openbaar groen (2026 en 2027). €63,292, 2 bidders. Awarded to a company from Zele (10/2026).", "Antwerpen": "Gemeente Balen: Verfraaiing buitenruimte woonzorgcentrum Ter Vest. €106,196, 1 bidder. Awarded to a company from Balen (10/2026).", "Limburg": "Stad Genk: Planten van laanbomen 2026. €44,111, 4 bidders. Awarded to a company from Neerpelt (11/2026).", "Vlaams-Brabant": "Gemeente Keerbergen: Bomenbeheer op openbaar domein. €36,490, 2 bidders. Awarded to a company from Hasselt (11/2026).", "Brussel": "Gemeente Sint-Lambrechts-Woluwe: Marché de plantation en voirie durant 12 mois. €79,530, 3 bidders. Awarded to a company from Lasne (10/2026).", "Waals-Brabant": "Habitations Sociales du Roman Païs: Marché de services pour l'entretien des espaces verts. €662,250 over 4 years, 1 bidder. Awarded to a large company from Braine-le-Château (03/2026).", "Henegouwen": "Le Logis Quaregnonnais: Entretien des espaces verts communs. €59,440, 3 bidders. Awarded to a company from Brussels (10/2026).", "Namen": "Ville de Namur: Citadelle de Namur: enlèvement des végétations 2026. €71,457, 2 bidders. Awarded to a company from Villers-la-Ville (09/2026).", "Luik": "Ville de Seraing: Contrat d'entretien des plantations de la Place Kuborn pour 2026 et 2027. €24,820 over 15 months, 2 bidders. Awarded to a company from Hermalle-sous-Huy (10/2026).", "Luxemburg": "Commune de Habay: Abattage d'arbres dangereux au Châtelet et Champs Gilots. €45,650, 2 bidders. Awarded to a company from Attert (11/2026)."}, "Technisch onderhoud": {"West-Vlaanderen": "vzw Karel de Goede: Leveren, plaatsen en indienststelling nieuwe lift. €66,230, 1 bidder. Awarded to a company from Waregem (10/2026).", "Oost-Vlaanderen": "Katholiek Secundair Onderwijs Oudenaarde: Leveren en plaatsen CV-installatie. €81,398, 3 bidders. Awarded to a company from Zottegem (10/2026).", "Antwerpen": "Gemeente Lint: Vernieuwen algemene laagspanningsborden ontmoetingscentrum. €87,274 over 4 months, 3 bidders. Awarded to a company from Lier (10/2026).", "Limburg": "Gemeente Lanaken: Rekem, kleuterschool en lagere school: relighting. €82,175 over 5 months, 2 bidders. Awarded to a company from Lanaken (10/2026).", "Vlaams-Brabant": "Scholengroep 12 ADITE: Raamcontract keuringen en klein onderhoud CV-ketels. €122,105 over 6 years, 2 bidders. Awarded to a company from Aarschot (11/2026).", "Brussel": "Regie der Gebouwen: Grote Moskee van Brussel: vervangen van één liftinstallatie. €78,243, 3 bidders. Awarded to a company from Drogenbos (10/2026).", "Waals-Brabant": "Commune de Court-Saint-Etienne: Remplacement des chaudières de la maison communale. €24,777, 1 bidder. Awarded to a company from Court-Saint-Etienne (10/2026).", "Henegouwen": "Société de Logements de Mouscron: Travaux d'installation et de dépannage de convecteurs gaz. €35,810, 2 bidders. Awarded to a company from Tournai (11/2026).", "Namen": "Hôpital psychiatrique du Beau Vallon: Remplacement chaufferie BV07 Polyclinique. €65,213, 1 bidder. Awarded to a company from Bierwart (09/2026).", "Luik": "Gemeinde Raeren: Remplacement du système de chauffage dans le musée Raeren. €93,015, 1 bidder. Awarded to a company from Eynatten (10/2026)."}};
+  var SN = {"Schoonmaak": "Cleaning", "Bouw en renovatie": "Construction and renovation", "Groenonderhoud": "Grounds maintenance", "Technisch onderhoud": "Technical maintenance"};
+  var PN = {"West-Vlaanderen": "West Flanders", "Oost-Vlaanderen": "East Flanders", "Antwerpen": "Antwerp", "Limburg": "Limburg", "Vlaams-Brabant": "Flemish Brabant", "Brussel": "Brussels", "Waals-Brabant": "Walloon Brabant", "Henegouwen": "Hainaut", "Namen": "Namur", "Luik": "Liège", "Luxemburg": "Luxembourg"};
+  var sector = document.getElementById('scan-sector');
+  var provincie = document.getElementById('scan-provincie');
+  var result = document.getElementById('scan-result');
+  var nEl = document.getElementById('scan-n');
+  var unit = document.getElementById('scan-unit');
+  var l1 = document.getElementById('scan-l1');
+  var l2 = document.getElementById('scan-l2');
+  var mail = document.getElementById('scan-mail');
+  var ex = document.getElementById('scan-ex');
+  var exTekst = document.getElementById('scan-ex-tekst');
+
+  function line(el, vet, rest) {
+    el.textContent = '';
+    if (vet) {
+      var s = document.createElement('strong');
+      s.textContent = vet;
+      el.appendChild(s);
+    }
+    el.appendChild(document.createTextNode(rest));
+    el.hidden = false;
+  }
+
+  function update() {
+    var s = sector.value, pk = provincie.value;
+    var row = D[s] && D[s][pk];
+    if (!row) { result.hidden = true; return; }
+    var n = row[0], weinig = row[1], kmo = row[2];
+    var p = PN[pk], sn = SN[s].toLowerCase();
+    nEl.textContent = String(n);
+    unit.textContent = 'contracts awarded in ' + p + ', over the past year';
+    if (n < 5) {
+      line(l1, '', 'These are only the larger contracts published at European level. Smaller ones come on top of this.');
+      l2.hidden = true;
+    } else {
+      if (weinig === 0) line(l1, '', 'Every contract had at least four bidders.');
+      else line(l1, weinig + ' of ' + n, ' had three bidders or fewer.');
+      if (kmo === 0) line(l2, 'None', ' went to an SME.');
+      else line(l2, kmo + ' of ' + n, ' went to an SME.');
+    }
+    var vb = E[s] && E[s][pk];
+    if (vb) { exTekst.textContent = vb; ex.hidden = false; } else { ex.hidden = true; }
+    mail.href = 'mailto:info@mecheleconsultancy.be?subject=' +
+      encodeURIComponent('Contract awards ' + sn + ', ' + p) +
+      '&body=' + encodeURIComponent('Hello,\n\nPlease send me the awarded contracts for ' + sn + ' in ' + p + '.\n\nCompany: \n\nKind regards,');
+    result.hidden = false;
+  }
+
+  sector.addEventListener('change', update);
+  provincie.addEventListener('change', update);
+  form.addEventListener('submit', function (e) { e.preventDefault(); });
+  update();
+})();
+</script></body>
 </html>
