@@ -392,7 +392,9 @@ ul.lijst { margin: 0; padding-left: 18px; color: var(--mid); font-size: 14px; }
     // Kerncijfers
     var open = opdr.filter(function (o) { var n = dagenTot(o.deadline); return !o.dossier_id && n != null && n >= 0; });
     var lopend = dos.filter(function (x) { return x.status === 'lopend' || (x.status === 'ingediend' && !x.gunning_resultaat); });
-    var deze = rap.length ? rap[rap.length - 1] : null;
+    // maandrapport komt nieuwste maand eerst; enkel de lopende maand telt als "deze maand"
+    var nuMaand = new Date().toLocaleDateString('sv-SE', { timeZone: 'Europe/Brussels' }).slice(0, 7);
+    var deze = rap.filter(function (r) { return String(r.maand || '').slice(0, 7) === nuMaand; })[0] || null;
     var komend = dos.filter(function (x) { var n = dagenTot(x.deadline); return x.status === 'lopend' && n != null && n >= 0; })
       .concat(open).map(function (x) { return x.deadline; }).sort()[0];
     $('tegels').innerHTML = [
