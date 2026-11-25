@@ -606,7 +606,7 @@ ul.lijst { margin: 0; padding-left: 18px; color: var(--mid); font-size: 14px; }
 
     // Facturen en formule
     var ab = d.abonnement;
-    $('abonnement').textContent = ab ? 'Uw formule: ' + (FORMULE[ab.formule] || ab.formule) + (ab.bedrag_eur ? ', ' + eurCent(ab.bedrag_eur) + ' excl. btw' : '') + ', sinds ' + fmtDatum(ab.start_datum) + (ab.minimum_tot ? ', minimum tot ' + fmtDatum(ab.minimum_tot) : '') + '.' : 'Geen lopende opvolging.';
+    $('abonnement').textContent = ab ? 'Uw formule: ' + (FORMULE[ab.formule] || ab.formule) + (ab.bedrag_eur ? ', ' + eurCent(ab.bedrag_eur) + ' excl. btw' : '') + ', ' + (dagenTot(ab.start_datum) > 0 ? 'vanaf ' : 'sinds ') + fmtDatum(ab.start_datum) + (ab.minimum_tot ? ', minimum tot ' + fmtDatum(ab.minimum_tot) : '') + '.' : 'Geen lopende opvolging.';
     $('facturen').innerHTML = fac.length ? '<table><thead><tr><th>Datum</th><th>Nummer</th><th>Omschrijving</th><th>Status</th><th class="num">Bedrag excl. btw</th></tr></thead><tbody>' +
       fac.map(function (f) {
         var s = FACTUUR[f.status] || [f.status, ''];

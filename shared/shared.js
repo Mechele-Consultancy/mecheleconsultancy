@@ -99,6 +99,16 @@
     return { toon: toon, huidig: function () { return huidig; } };
   }
 
+  /* Testsite (sinds 25/11/2026): op een *.pages.dev-adres een vaste rode balk, zodat nooit twijfel bestaat of dit live is. */
+  if (/\.pages\.dev$/i.test(window.location.hostname)) {
+    var balk = document.createElement('div');
+    balk.setAttribute('role', 'status');
+    balk.style.cssText = 'position:sticky;top:0;z-index:9999;background:#B23B3B;color:#fff;text-align:center;font:600 13px/1.4 system-ui,sans-serif;padding:6px 10px';
+    balk.textContent = 'TESTSITE: niet zichtbaar voor klanten. Zelfde databank als live: wat u hier opslaat, is echt.';
+    var zet = function () { if (document.body && !document.getElementById('mc-testbalk')) { balk.id = 'mc-testbalk'; document.body.insertBefore(balk, document.body.firstChild); } };
+    if (document.body) zet(); else document.addEventListener('DOMContentLoaded', zet);
+  }
+
   window.MC = {
     sb: sb, $: $, esc: esc, safeUrl: safeUrl, dagenTot: dagenTot, fmtDatum: fmtDatum, fmtMaand: fmtMaand,
     eur: eur, eurCent: eurCent, num: num, pct: pct, dagTag: dagTag, tag: tag, kpiTegels: kpiTegels, initTabs: initTabs, waardeHtml: waardeHtml
