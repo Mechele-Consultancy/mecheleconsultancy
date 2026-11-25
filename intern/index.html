@@ -455,6 +455,17 @@ a.kb { display: inline-block; text-decoration: none; background: var(--panel2); 
           <div class="muted" style="margin-top:10px">Live: mecheleconsultancy.be, wat klanten zien. Testsite: test.mecheleconsultancy.pages.dev, enkel voor u, aanmelden met een aanmeldlink op de testsite zelf. Beide gebruiken dezelfde databank: een knop die iets opslaat, doet dat ook op de testsite echt. In de testweergave staan de klantknoppen uit.</div>
         </section>
       </div>
+      <div class="row">
+        <section class="card c12"><h3>Conclusie in het maandrapport <span class="muted">verschijnt bij de klant onder "Mijn conclusie", in de u-vorm</span></h3>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+            <select id="mn-klant" aria-label="Klant" style="font:inherit;background:var(--panel2);color:var(--txt);border:1px solid var(--line);border-radius:8px;padding:6px 10px"></select>
+            <input id="mn-maand" type="month" aria-label="Maand" style="font:inherit;background:var(--panel2);color:var(--txt);border:1px solid var(--line);border-radius:8px;padding:5px 10px">
+          </div>
+          <textarea id="mn-tekst" maxlength="1500" rows="4" placeholder="Bv. In november kwam er een opdracht in Pecq die bij u past. De rest was algemene schoonmaak. In december verwacht ik meer bij de sociale huisvesting." style="width:100%;margin-top:10px;font:inherit;background:var(--panel2);color:var(--txt);border:1px solid var(--line);border-radius:10px;padding:10px"></textarea>
+          <div style="margin-top:8px"><button type="button" class="kb" id="mn-bewaar">Bewaren</button> <span class="kmsg muted" id="mn-msg"></span></div>
+          <div class="muted" style="margin-top:6px">Leeg bewaren haalt de conclusie weg.</div>
+        </section>
+      </div>
     </div>
 
     <!-- TAB 3: BOEKHOUDING -->
@@ -627,6 +638,7 @@ a.kb { display: inline-block; text-decoration: none; background: var(--panel2); 
     var res = await sb.rpc('portaal_overzicht');
     if (res.error) { $('kp-tabel').innerHTML = '<div class="empty">Laden mislukt: ' + esc(res.error.message) + '</div>'; return; }
     var lijst = Array.isArray(res.data) ? res.data : [];
+    laadMaandnotities(lijst);
     var metAccount = lijst.filter(function (k) { return (k.accounts || []).some(function (a) { return a.actief; }); }).length;
     var ongelezen = lijst.reduce(function (s, k) { return s + num(k.ongelezen); }, 0);
     $('kp-sub').textContent = lijst.length + ' klanten, ' + metAccount + ' met een actief account';
@@ -646,6 +658,38 @@ a.kb { display: inline-block; text-decoration: none; background: var(--panel2); 
           '<td style="white-space:nowrap"><a class="kb" href="' + esc(q) + '" target="_blank" rel="noopener">Bekijk live</a> <a class="kb" href="' + esc(TESTSITE + q) + '" target="_blank" rel="noopener">Testsite</a></td></tr>';
       }).join('') + '</tbody></table>' : '<div class="empty">Geen klanten.</div>';
   }
+
+  // Conclusie per klant per maand (ronde 2)
+  var mnLijst = [];
+  function mnToon() {
+    var code = $('mn-klant').value, maand = $('mn-maand').value;
+    var n = mnLijst.filter(function (x) { return x.klantcode === code && String(x.maand).slice(0, 7) === maand; })[0];
+    $('mn-tekst').value = n ? n.tekst : '';
+    $('mn-msg').textContent = n ? 'Laatst bewaard ' + fmtDatum(n.updated_at, true) : '';
+  }
+  async function laadMaandnotities(klanten) {
+    var sel = $('mn-klant'), huidig = sel.value;
+    sel.innerHTML = klanten.map(function (k) { return '<option value="' + esc(k.klantcode) + '">' + esc(k.klantcode + ' ' + k.naam) + '</option>'; }).join('');
+    if (huidig) sel.value = huidig;
+    if (!$('mn-maand').value) $('mn-maand').value = new Date().toLocaleDateString('sv-SE', { timeZone: 'Europe/Brussels' }).slice(0, 7);
+    var res = await sb.rpc('maandnotities_lijst');
+    mnLijst = res.error ? [] : (res.data || []);
+    if (res.error) $('mn-msg').textContent = 'Laden mislukt: ' + res.error.message;
+    else mnToon();
+  }
+  $('mn-klant').addEventListener('change', mnToon);
+  $('mn-maand').addEventListener('change', mnToon);
+  $('mn-bewaar').addEventListener('click', async function () {
+    var code = $('mn-klant').value, maand = $('mn-maand').value;
+    if (!code || !/^\d{4}-\d{2}$/.test(maand)) { $('mn-msg').textContent = 'Kies een klant en een maand.'; return; }
+    this.disabled = true; $('mn-msg').textContent = 'Opslaan...';
+    var res = await sb.rpc('zet_maandnotitie', { p_klantcode: code, p_maand: maand + '-01', p_tekst: $('mn-tekst').value });
+    this.disabled = false;
+    if (res.error) { $('mn-msg').textContent = 'Mislukt: ' + res.error.message; return; }
+    var r2 = await sb.rpc('maandnotities_lijst');
+    mnLijst = r2.error ? mnLijst : (r2.data || []);
+    $('mn-msg').textContent = 'Bewaard. De klant ziet het bij de volgende keer laden.';
+  });
 
   // Klantberichten uit het klantenportaal (sinds 25/11/2026)
   var kbLijst = [];
