@@ -642,7 +642,7 @@ ul.lijst { margin: 0; padding-left: 18px; color: var(--mid); font-size: 14px; }
     var res = await sb.rpc('factuur_pdf', { p_factuur: btn.getAttribute('data-factuur') });
     btn.disabled = false;
     if (res.error || !res.data || !res.data.base64) { window.alert(t('Downloaden mislukt, probeer opnieuw of mail ons.')); return; }
-    var bin = atob(res.data.base64), buf = new Uint8Array(bin.length);
+    var bin = atob(String(res.data.base64).replace(/\s/g, '')), buf = new Uint8Array(bin.length);
     for (var i = 0; i < bin.length; i++) buf[i] = bin.charCodeAt(i);
     var url = URL.createObjectURL(new Blob([buf], { type: 'application/pdf' }));
     var a = document.createElement('a');
