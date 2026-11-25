@@ -451,6 +451,11 @@ a.kb { display: inline-block; text-decoration: none; background: var(--panel2); 
     <div class="pane" id="pane-klantpaginas" role="tabpanel" aria-hidden="true">
       <div class="kop"><div><h2>Klant<em>pagina's</em></h2><div class="sub">Bekijk elke klantpagina zoals de klant ze ziet. Op de testsite staat de versie waaraan we werken, voor ze live gaat.</div></div></div>
       <div class="row">
+        <section class="card c12"><h3>Weekoverzicht <span class="muted">GO-opdrachten die de klant nog niet ziet</span></h3><div id="wo-lijst"></div>
+          <div class="muted" style="margin-top:10px">Werkwijze: stel het weekoverzicht op en verstuur de mail. Vink daarna aan wat in die mail stond en klik "Weekoverzicht verstuurd: zet online". Pas dan ziet de klant die opdrachten op zijn pagina. Wat niet aangevinkt is, blijft verborgen en staat volgende week opnieuw hier, tot de deadline voorbij is.</div>
+        </section>
+      </div>
+      <div class="row">
         <section class="card c12"><h3>Klanten en hun pagina <span class="muted" id="kp-sub"></span></h3><div class="tbl" id="kp-tabel"></div>
           <div class="muted" style="margin-top:10px">Live: mecheleconsultancy.be, wat klanten zien. Testsite: test.mecheleconsultancy.pages.dev, enkel voor u, aanmelden met een aanmeldlink op de testsite zelf. Beide gebruiken dezelfde databank: een knop die iets opslaat, doet dat ook op de testsite echt. In de testweergave staan de klantknoppen uit.</div>
         </section>
@@ -652,12 +657,56 @@ a.kb { display: inline-block; text-decoration: none; background: var(--panel2); 
         return '<tr><td><b>' + esc(k.klantcode) + '</b> ' + esc(k.naam) + '<div class="muted">' + esc(k.contactpersoon || '') + (k.status !== 'actief' ? ' | ' + esc(k.status) : '') + '</div></td>' +
           '<td>' + (acc.length ? acc.map(function (a) { return esc(a.email); }).join('<br>') : tag('geen account')) + '</td>' +
           '<td>' + (laatst ? esc(fmtDatum(laatst, true)) : '<span class="muted">nooit</span>') + '</td>' +
-          '<td class="num">' + esc(k.open_opdrachten) + (num(k.zonder_keuze) ? '<div class="muted">' + esc(k.zonder_keuze) + ' zonder keuze</div>' : '') + '</td>' +
+          '<td class="num">' + esc(k.open_opdrachten) + (num(k.zonder_keuze) ? '<div class="muted">' + esc(k.zonder_keuze) + ' zonder keuze</div>' : '') +
+            (num(k.nog_niet_online) ? '<div class="muted">' + esc(k.nog_niet_online) + ' nog niet online</div>' : '') + '</td>' +
           '<td class="num">' + esc(k.lopende_dossiers) + '</td>' +
           '<td class="num">' + (num(k.ongelezen) ? tag(k.ongelezen, 'warn') : '0') + '</td>' +
           '<td style="white-space:nowrap"><a class="kb" href="' + esc(q) + '" target="_blank" rel="noopener">Bekijk live</a> <a class="kb" href="' + esc(TESTSITE + q) + '" target="_blank" rel="noopener">Testsite</a></td></tr>';
       }).join('') + '</tbody></table>' : '<div class="empty">Geen klanten.</div>';
   }
+
+  // Weekoverzicht: GO-opdrachten pas online na de verstuurde mail (sinds 25/11/2026)
+  async function laadWeekoverzicht() {
+    var res = await sb.rpc('weekoverzicht_lijst');
+    if (res.error) { $('wo-lijst').innerHTML = '<div class="empty">Laden mislukt: ' + esc(res.error.message) + '</div>'; return; }
+    var lijst = Array.isArray(res.data) ? res.data : [];
+    $('wo-lijst').innerHTML = lijst.length ? lijst.map(function (k) {
+      var opd = Array.isArray(k.opdrachten) ? k.opdrachten : [];
+      return '<div class="wo-klant" data-klant="' + esc(k.klantcode) + '" style="margin-top:12px">' +
+        '<div><b>' + esc(k.klantcode) + '</b> ' + esc(k.naam) + ' <span class="muted">' + opd.length + ' opdracht' + (opd.length === 1 ? '' : 'en') +
+        (num(k.accounts) ? '' : ' | nog geen account: de klant ziet de pagina pas met een account') + '</span></div>' +
+        '<div class="tbl"><table><thead><tr><th style="width:30px"><input type="checkbox" class="wo-alles" aria-label="Alles aanvinken"></th><th class="num">Score</th><th>Opdracht</th><th>Deadline</th><th>Werktitel</th></tr></thead><tbody>' +
+        opd.map(function (o) {
+          var link = M.safeUrl(o.url);
+          var titel = esc(o.titel || '');
+          return '<tr><td><input type="checkbox" class="wo-vink" value="' + esc(o.id) + '" aria-label="Aanvinken"></td>' +
+            '<td class="num">' + (o.ai_score != null ? tag(o.ai_score, num(o.ai_score) >= 4 ? 'ok' : '') : '<span class="muted">-</span>') + '</td>' +
+            '<td>' + (link ? '<a href="' + link + '" target="_blank" rel="noopener">' + titel + '</a>' : titel) + '<div class="muted">' + esc(o.organisatie || '') + '</div></td>' +
+            '<td style="white-space:nowrap">' + (o.deadline ? esc(fmtDatum(o.deadline, true)) : '<span class="muted">onbekend</span>') + '</td>' +
+            '<td>' + (o.klant_titel ? esc(o.klant_titel) : '<span class="muted">nog niet gemaakt</span>') + (o.heeft_advies ? '' : '<div class="muted">advies volgt</div>') + '</td></tr>';
+        }).join('') + '</tbody></table></div>' +
+        '<div class="keuze" style="margin-top:8px"><button type="button" class="kb wo-zet">Weekoverzicht verstuurd: zet online</button> <span class="kmsg muted"></span></div></div>';
+    }).join('') : '<div class="empty">Alles wat GO kreeg, staat online. Niets te doen.</div>';
+  }
+  $('wo-lijst').addEventListener('change', function (e) {
+    if (!e.target.classList.contains('wo-alles')) return;
+    var box = e.target.closest('.wo-klant');
+    box.querySelectorAll('.wo-vink').forEach(function (c) { c.checked = e.target.checked; });
+  });
+  $('wo-lijst').addEventListener('click', async function (e) {
+    var btn = e.target.closest('button.wo-zet');
+    if (!btn) return;
+    var box = btn.closest('.wo-klant'), msg = box.querySelector('.kmsg');
+    var ids = Array.prototype.map.call(box.querySelectorAll('.wo-vink:checked'), function (c) { return c.value; });
+    if (!ids.length) { msg.textContent = 'Vink eerst aan wat in de mail stond.'; return; }
+    if (!window.confirm(ids.length + ' opdracht' + (ids.length === 1 ? '' : 'en') + ' online zetten voor ' + box.getAttribute('data-klant') + '? Doe dit pas nadat de mail verstuurd is.')) return;
+    btn.disabled = true; msg.textContent = 'Opslaan...';
+    var res = await sb.rpc('zet_online', { p_matches: ids });
+    btn.disabled = false;
+    if (res.error) { msg.textContent = 'Mislukt: ' + res.error.message; return; }
+    msg.textContent = res.data + ' online gezet.';
+    setTimeout(function () { laadWeekoverzicht(); laadKlantpaginas(); }, 800);
+  });
 
   // Conclusie per klant per maand (ronde 2)
   var mnLijst = [];
@@ -772,6 +821,7 @@ a.kb { display: inline-block; text-decoration: none; background: var(--panel2); 
     laadCockpit();
     laadKlantberichten();
     laadKlantpaginas();
+    laadWeekoverzicht();
     var dash = d.data || {};
     var stappen = [
       ['Vandaag', function () { renderVandaag(dash); }],

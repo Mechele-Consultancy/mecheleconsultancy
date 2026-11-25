@@ -401,7 +401,7 @@ ul.lijst { margin: 0; padding-left: 18px; color: var(--mid); font-size: 14px; }
       'Mijn conclusie:': 'Ma conclusion :', 'Bekijk wat ik gescreend heb': 'Voir ce que j\u2019ai examiné',
       'Uw formule:': 'Votre formule :', 'opvolging per maand': 'suivi mensuel', 'opvolging per jaar': 'suivi annuel', 'opvolging volgens onze afspraak': 'suivi selon notre accord', 'proefdossier': 'dossier test',
       'vanaf': 'à partir du', 'sinds': 'depuis le', 'minimum tot': 'minimum jusqu\u2019au', 'Geen lopende opvolging.': 'Pas de suivi en cours.',
-      'Datum': 'Date', 'Nummer': 'Numéro', 'Omschrijving': 'Description', 'Bedrag excl. btw': 'Montant hors TVA', 'open': 'ouverte', 'betaald': 'payée', 'vervalt': 'échéance', 'Nog geen facturen.': 'Pas encore de factures.',
+      'Datum': 'Date', 'Nummer': 'Numéro', 'Omschrijving': 'Description', 'Bedrag excl. btw': 'Montant hors TVA', 'open': 'ouverte', 'betaald': 'payée', 'vervalt': 'échéance', 'Nog geen facturen.': 'Pas encore de factures.', 'Pdf downloaden': 'Télécharger le pdf', 'Downloaden mislukt, probeer opnieuw of mail ons.': 'Échec du téléchargement, réessayez ou envoyez-nous un e-mail.',
       'Klantcode': 'Code client', 'Bedrijf': 'Entreprise', 'Contactpersoon': 'Personne de contact', 'Activiteit': 'Activité', 'Zoekprofielen': 'Profils de recherche', 'nog in te stellen': 'à configurer',
       'Stukken mailen': 'Envoyer les documents', 'klantcode_onderwerp': 'Votre code client figure déjà dans l\u2019objet, les documents arrivent directement dans votre dossier.', 'alles aanwezig': 'tout est présent',
       'Opdrachtgever': 'Donneur d\u2019ordre', 'attest goede uitvoering': 'attestation de bonne exécution', 'tot': 'au', 'Nog geen referenties geregistreerd.': 'Pas encore de références enregistrées.',
@@ -454,7 +454,7 @@ ul.lijst { margin: 0; padding-left: 18px; color: var(--mid); font-size: 14px; }
       'Mijn conclusie:': 'My conclusion:', 'Bekijk wat ik gescreend heb': 'See what I screened',
       'Uw formule:': 'Your plan:', 'opvolging per maand': 'monthly monitoring', 'opvolging per jaar': 'yearly monitoring', 'opvolging volgens onze afspraak': 'monitoring as agreed', 'proefdossier': 'trial bid',
       'vanaf': 'from', 'sinds': 'since', 'minimum tot': 'minimum until', 'Geen lopende opvolging.': 'No active monitoring.',
-      'Datum': 'Date', 'Nummer': 'Number', 'Omschrijving': 'Description', 'Bedrag excl. btw': 'Amount excl. VAT', 'open': 'open', 'betaald': 'paid', 'vervalt': 'due', 'Nog geen facturen.': 'No invoices yet.',
+      'Datum': 'Date', 'Nummer': 'Number', 'Omschrijving': 'Description', 'Bedrag excl. btw': 'Amount excl. VAT', 'open': 'open', 'betaald': 'paid', 'vervalt': 'due', 'Nog geen facturen.': 'No invoices yet.', 'Pdf downloaden': 'Download pdf', 'Downloaden mislukt, probeer opnieuw of mail ons.': 'Download failed, please try again or email us.',
       'Klantcode': 'Client code', 'Bedrijf': 'Company', 'Contactpersoon': 'Contact person', 'Activiteit': 'Activity', 'Zoekprofielen': 'Search profiles', 'nog in te stellen': 'to be set up',
       'Stukken mailen': 'E-mail documents', 'klantcode_onderwerp': 'Your client code is already in the subject, so the documents go straight into your file.', 'alles aanwezig': 'all present',
       'Opdrachtgever': 'Client', 'attest goede uitvoering': 'certificate of good performance', 'tot': 'to', 'Nog geen referenties geregistreerd.': 'No references registered yet.',
@@ -634,6 +634,24 @@ ul.lijst { margin: 0; padding-left: 18px; color: var(--mid); font-size: 14px; }
 
   /* Keuze per opdracht (sinds 25/11/2026) */
   function zoekOpdracht(id) { return laatste.opdrachten.filter(function (o) { return o.id === id; })[0] || null; }
+  // Factuur-pdf uit de databank, enkel voor de aangemelde klant (sinds 25/11/2026)
+  $('facturen').addEventListener('click', async function (e) {
+    var btn = e.target.closest('button.pdfknop');
+    if (!btn) return;
+    btn.disabled = true;
+    var res = await sb.rpc('factuur_pdf', { p_factuur: btn.getAttribute('data-factuur') });
+    btn.disabled = false;
+    if (res.error || !res.data || !res.data.base64) { window.alert(t('Downloaden mislukt, probeer opnieuw of mail ons.')); return; }
+    var bin = atob(res.data.base64), buf = new Uint8Array(bin.length);
+    for (var i = 0; i < bin.length; i++) buf[i] = bin.charCodeAt(i);
+    var url = URL.createObjectURL(new Blob([buf], { type: 'application/pdf' }));
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = String(res.data.bestandsnaam || ('Factuur ' + btn.getAttribute('data-nr') + '.pdf')).replace(/[^A-Za-z0-9 ._()-]/g, '_');
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(function () { URL.revokeObjectURL(url); }, 4000);
+  });
+
   $('opdrachten').addEventListener('click', async function (e) {
     var btn = e.target.closest('[data-act]');
     if (!btn) return;
@@ -857,7 +875,7 @@ ul.lijst { margin: 0; padding-left: 18px; color: var(--mid); font-size: 14px; }
       fac.map(function (f) {
         var s = FACTUUR[f.status] || [f.status, ''];
         var verv = f.status === 'gefactureerd' && f.vervaldatum ? '<div class="muted">' + esc(t('vervalt')) + ' ' + esc(fmtDatum(f.vervaldatum)) + '</div>' : (f.betaald_op ? '<div class="muted">' + esc(t('op')) + ' ' + esc(fmtDatum(f.betaald_op)) + '</div>' : '');
-        var pdf = M.safeUrl(f.document_url) ? '<a href="' + M.safeUrl(f.document_url) + '" target="_blank" rel="noopener">pdf</a>' : '';
+        var pdf = f.pdf ? '<button type="button" class="knop-2 pdfknop" data-factuur="' + esc(f.id) + '" data-nr="' + esc(f.factuurnummer || '') + '">' + esc(t('Pdf downloaden')) + '</button>' : '';
         return '<tr><td>' + esc(fmtDatum(f.factuurdatum)) + '</td><td>' + esc(f.factuurnummer || '-') + '</td><td>' + esc(f.omschrijving || f.type) + '</td><td>' + tag(t(s[0]), s[1]) + verv + '</td><td class="num">' + eurCent(f.bedrag_eur) + '</td><td>' + pdf + '</td></tr>';
       }).join('') + '</tbody></table>' : '<div class="empty">' + esc(t('Nog geen facturen.')) + '</div>';
 
