@@ -573,12 +573,14 @@ ul.lijst { margin: 0; padding-left: 18px; color: var(--mid); font-size: 14px; }
 
     // Dossiers met stappen
     $('dossiers').innerHTML = dos.length ? dos.map(function (x) {
-      var s = STATUS[x.status] || [x.status, ''];
-      var stap = x.status === 'lopend' ? 0 : x.status === 'ingediend' ? (x.klant_status ? 2 : 1) : 3;
+      // Een ingediend dossier met een statusbericht en zonder gunning staat in beoordeling: zelfde bron als de tijdlijn
+      var inBeoordeling = x.status === 'ingediend' && x.klant_status && !x.gunning_resultaat;
+      var s = inBeoordeling ? ['in beoordeling', 'info'] : (STATUS[x.status] || [x.status, '']);
+      var stap =x.status === 'lopend' ? 0 : x.status === 'ingediend' ? (x.klant_status ? 2 : 1) : 3;
       var namen = ['Voorbereiding', 'Ingediend', 'In beoordeling', 'Gunning'];
       var waarde = M.waardeHtml(x.contractwaarde_min_eur, x.contractwaarde_max_eur, x.looptijd_jaren) || '<span class="muted">nog in te schatten</span>';
       var prijs = [x.dossierfee_eur ? 'vast ' + eur(x.dossierfee_eur) : '', x.succesfee_eur ? 'succesfee ' + eur(x.succesfee_eur) : (x.succesfee_pct ? 'succesfee ' + String(x.succesfee_pct).replace('.', ',') + '%' : '')].filter(Boolean).join(', ');
-      var datum = x.gunning_resultaat ? fmtDatum(x.gunning_datum) : x.ingediend_op ? fmtDatum(x.ingediend_op) : fmtDatum(x.deadline, true);
+      var datum = x.gunning_resultaat ? fmtDatum(x.gunning_datum) : x.ingediend_op ? (inBeoordeling ? 'ingediend op ' : '') + fmtDatum(x.ingediend_op) : fmtDatum(x.deadline, true);
       return '<div class="dossier"><div class="t">' + esc(x.omschrijving) + '</div>' +
         '<div class="muted">' + esc(x.aanbesteder || '') + (x.dossiernummer ? ' | ' + esc(x.dossiernummer) : '') + '</div>' +
         '<div class="stappen">' + namen.map(function (nm, i) { return '<div class="stap' + (i < stap ? ' ok' : i === stap ? ' nu' : '') + '"><i></i>' + esc(nm) + '</div>'; }).join('') + '</div>' +
@@ -608,7 +610,7 @@ ul.lijst { margin: 0; padding-left: 18px; color: var(--mid); font-size: 14px; }
     $('facturen').innerHTML = fac.length ? '<table><thead><tr><th>Datum</th><th>Nummer</th><th>Omschrijving</th><th>Status</th><th class="num">Bedrag excl. btw</th></tr></thead><tbody>' +
       fac.map(function (f) {
         var s = FACTUUR[f.status] || [f.status, ''];
-        var verv = f.status === 'gefactureerd' && f.vervaldatum ? '<div class="muted">vervalt ' + esc(fmtDatum(f.vervaldatum)) + '</div>' : (f.betaald_op ? '<div class="muted">betaald ' + esc(fmtDatum(f.betaald_op)) + '</div>' : '');
+        var verv = f.status === 'gefactureerd' && f.vervaldatum ? '<div class="muted">vervalt ' + esc(fmtDatum(f.vervaldatum)) + '</div>' : (f.betaald_op ? '<div class="muted">op ' + esc(fmtDatum(f.betaald_op)) + '</div>' : '');
         return '<tr><td>' + esc(fmtDatum(f.factuurdatum)) + '</td><td>' + esc(f.factuurnummer || '-') + '</td><td>' + esc(f.omschrijving || f.type) + '</td><td>' + tag(s[0], s[1]) + verv + '</td><td class="num">' + eurCent(f.bedrag_eur) + '</td></tr>';
       }).join('') + '</tbody></table>' : '<div class="empty">Nog geen facturen.</div>';
 
