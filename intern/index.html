@@ -380,6 +380,7 @@ a.kb { display: inline-block; text-decoration: none; background: var(--panel2); 
       <div class="row" id="v-kpis"></div>
       <div class="row">
         <div class="c7 stack">
+          <section class="card"><h3>Klantberichten <span class="muted" id="kb-teller"></span> <select id="kb-filter" aria-label="Filter per klant" style="font:inherit;font-size:13px;background:var(--panel2);color:var(--txt);border:1px solid var(--line);border-radius:8px;padding:3px 8px"><option value="">Alle klanten</option></select></h3><div class="lijst" id="klantberichten"></div></section>
           <section class="card"><h3>Acties</h3><div class="lijst" id="acties"></div></section>
           <section class="card"><h3>Radar: te beslissen <a href="https://docs.google.com/spreadsheets/d/166wgQIkOi7BX6W7dIWam7o8xc3lRXH8vttrhBTWIorU/edit" target="_blank" rel="noopener">Open de sheet</a></h3><div class="lijst" id="radar"></div></section>
           <section class="card"><h3>Wacht op gunning</h3><div class="lijst" id="gunning"></div></section>
@@ -607,6 +608,50 @@ a.kb { display: inline-block; text-decoration: none; background: var(--panel2); 
     msg.textContent = res.data && res.data.naar_sheet ? 'Opgeslagen, sheet volgt binnen een minuut.' : 'Opgeslagen in de databank.';
   });
 
+  // Klantberichten uit het klantenportaal (sinds 25/11/2026)
+  var kbLijst = [];
+  function renderKlantberichten() {
+    var f = $('kb-filter').value;
+    var codes = [];
+    kbLijst.forEach(function (b) { if (b.klantcode && codes.indexOf(b.klantcode) < 0) codes.push(b.klantcode); });
+    $('kb-filter').innerHTML = '<option value="">Alle klanten</option>' + codes.sort().map(function (c) { return '<option value="' + esc(c) + '">' + esc(c) + '</option>'; }).join('');
+    if (f && codes.indexOf(f) >= 0) $('kb-filter').value = f; else f = '';
+    var lijst = kbLijst.filter(function (b) { return !f || b.klantcode === f; });
+    var ongelezen = kbLijst.filter(function (b) { return !b.gelezen; }).length;
+    $('kb-teller').textContent = ongelezen ? ongelezen + ' ongelezen' : '';
+    $('klantberichten').innerHTML = lijst.length ? lijst.slice(0, 30).map(function (b) {
+      var link = M.safeUrl(b.opdracht_url);
+      var re = 'mailto:' + encodeURIComponent(b.afzender_email || '') + '?subject=' + encodeURIComponent('Re: [' + (b.klantcode || '') + '] ' + (b.onderwerp || ''));
+      return '<div class="it"><span class="dot ' + (b.gelezen ? 'p3' : 'p1') + '"></span><div style="min-width:0;flex:1">' +
+        '<div class="t">' + (b.soort === 'reactie' ? tag('keuze', 'info') + ' ' : '') + esc(b.onderwerp) + '</div>' +
+        '<div class="muted">' + esc(b.klantcode || '') + ' ' + esc(b.klant || '') + (b.contactpersoon ? ' | ' + esc(b.contactpersoon) : '') + ' | ' + esc(fmtDatum(b.created_at, true)) + '</div>' +
+        (b.opdracht ? '<div class="muted">Opdracht: ' + (link ? '<a href="' + link + '" target="_blank" rel="noopener">' + esc(b.opdracht) + '</a>' : esc(b.opdracht)) + '</div>' : '') +
+        (b.dossier ? '<div class="muted">Dossier: ' + esc(b.dossier) + '</div>' : '') +
+        '<div style="margin-top:6px;white-space:pre-wrap">' + esc(b.bericht) + '</div>' +
+        '<div class="keuze" style="margin-top:8px" data-kb="' + esc(b.id) + '">' +
+        (b.afzender_email ? '<a class="kb" href="' + esc(re) + '">Antwoord per mail</a> ' : '') +
+        '<button type="button" class="kb" data-gelezen="' + (b.gelezen ? '0' : '1') + '">' + (b.gelezen ? 'Markeer ongelezen' : 'Markeer gelezen') + '</button>' +
+        '<span class="kmsg muted"></span></div></div></div>';
+    }).join('') : '<div class="empty">Geen klantberichten.</div>';
+  }
+  async function laadKlantberichten() {
+    var res = await sb.rpc('klantberichten_lijst', { p_limiet: 100 });
+    if (res.error) { $('klantberichten').innerHTML = '<div class="empty">Laden mislukt: ' + esc(res.error.message) + '</div>'; return; }
+    kbLijst = Array.isArray(res.data) ? res.data : [];
+    renderKlantberichten();
+  }
+  $('kb-filter').addEventListener('change', renderKlantberichten);
+  $('klantberichten').addEventListener('click', async function (e) {
+    var btn = e.target.closest('button[data-gelezen]');
+    if (!btn) return;
+    var box = btn.parentNode, msg = box.querySelector('.kmsg');
+    btn.disabled = true; msg.textContent = 'Opslaan...';
+    var res = await sb.rpc('markeer_klantbericht', { p_id: box.getAttribute('data-kb'), p_gelezen: btn.getAttribute('data-gelezen') === '1' });
+    btn.disabled = false;
+    if (res.error) { msg.textContent = 'Mislukt: ' + res.error.message; return; }
+    laadKlantberichten();
+  });
+
   // Uren bewaren (per dossier of per maand)
   $('app').addEventListener('click', async function (e) {
     var btn = e.target.closest('button.uren-save');
@@ -642,6 +687,7 @@ a.kb { display: inline-block; text-decoration: none; background: var(--panel2); 
     $('login').classList.add('hidden');
     $('shell').classList.remove('hidden');
     laadCockpit();
+    laadKlantberichten();
     var dash = d.data || {};
     var stappen = [
       ['Vandaag', function () { renderVandaag(dash); }],

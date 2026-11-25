@@ -94,6 +94,24 @@ nav.tabs .n { display: inline-block; min-width: 20px; margin-left: 6px; padding:
 .opdracht .onder { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; margin-top: 12px; }
 .opdracht .prijs { font-size: 14px; color: var(--mid); }
 .opdracht .prijs b { color: var(--navy); }
+/* Keuze per opdracht en bronnen (sinds 25/11/2026) */
+.opdracht .bronnen { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 8px; font-size: 14px; }
+.opdracht .keuze { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.knop-2 { background: #fff; color: var(--navy); border: 1px solid var(--line); border-radius: 10px; padding: 9px 14px; font-weight: 500; }
+.knop-2:hover { border-color: var(--navy-light); }
+.knop:disabled, .knop-2:disabled { opacity: .55; cursor: not-allowed; }
+.opdracht .reden { margin-top: 10px; display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.opdracht .reden input { flex: 1 1 260px; font: inherit; padding: 9px 12px; border: 1px solid var(--line); border-radius: 10px; }
+.opdracht .gekozen { font-size: 14px; color: var(--mid); }
+.opdracht .gekozen button { background: none; border: 0; color: var(--info); text-decoration: underline; padding: 0 0 0 6px; font-size: 13px; }
+.kmsg { font-size: 13px; color: var(--mid); margin-top: 6px; min-height: 1em; }
+.kmsg.fout { color: var(--bad); }
+/* Berichten */
+.veld { display: block; margin-bottom: 12px; }
+.veld span { display: block; font-size: 13px; color: var(--mid); margin-bottom: 4px; }
+.veld input, .veld select, .veld textarea { width: 100%; font: inherit; padding: 10px 12px; border: 1px solid var(--line); border-radius: 10px; background: #fff; color: var(--text); }
+.veld textarea { min-height: 140px; resize: vertical; }
+.veld .teller { text-align: right; font-size: 12px; color: var(--light); margin-top: 2px; }
 
 /* Dossier met stappen */
 .dossier { border: 1px solid var(--line); border-radius: 14px; padding: 18px; margin-bottom: 12px; }
@@ -203,6 +221,7 @@ ul.lijst { margin: 0; padding-left: 18px; color: var(--mid); font-size: 14px; }
       <button type="button" role="tab" data-tab="rapport">Maandrapport</button>
       <button type="button" role="tab" data-tab="facturen">Facturen</button>
       <button type="button" role="tab" data-tab="gegevens">Uw gegevens</button>
+      <button type="button" role="tab" data-tab="berichten">Bericht aan Steven</button>
     </nav>
 
     <div class="pane" id="pane-opdrachten" role="tabpanel" aria-hidden="true">
@@ -261,6 +280,27 @@ ul.lijst { margin: 0; padding-left: 18px; color: var(--mid); font-size: 14px; }
       </div>
     </div>
 
+    <div class="pane" id="pane-berichten" role="tabpanel" aria-hidden="true">
+      <div class="twee">
+        <section class="card">
+          <h2>Bericht aan Steven</h2>
+          <p class="intro">Een vraag over een opdracht, een dossier of iets anders? Stuur het hier. Ik antwoord doorgaans binnen een werkdag, per e-mail.</p>
+          <form id="berichtform" novalidate>
+            <label class="veld"><span>Over</span><select id="b-over"><option value="">Algemeen</option></select></label>
+            <label class="veld"><span>Onderwerp</span><input id="b-onderwerp" maxlength="150" required></label>
+            <label class="veld"><span>Bericht</span><textarea id="b-bericht" maxlength="4000" required></textarea><div class="teller" id="b-teller">0 / 4000</div></label>
+            <button type="submit" class="knop" id="b-verstuur">Versturen</button>
+            <div class="kmsg" id="b-msg"></div>
+          </form>
+          <p class="muted">Een document sturen? Mail het naar <a href="mailto:steven@mecheleconsultancy.be">steven@mecheleconsultancy.be</a> met uw klantcode in het onderwerp, dan komt het meteen in uw dossier.</p>
+        </section>
+        <section class="card">
+          <h2>Eerder verstuurd</h2>
+          <div id="berichten"></div>
+        </section>
+      </div>
+    </div>
+
     <div class="contact">Vragen? Een korte mail naar <a href="mailto:steven@mecheleconsultancy.be">steven@mecheleconsultancy.be</a> volstaat. Steven Mechele, +32 495 79 44 26</div>
   </main>
 </div>
@@ -277,6 +317,13 @@ ul.lijst { margin: 0; padding-left: 18px; color: var(--mid); font-size: 14px; }
   var FACTUUR = { gefactureerd: ['open', 'warn'], betaald: ['betaald', 'ok'] };
   var FORMULE = { tier1_maand: 'opvolging per maand', tier1_jaar: 'opvolging per jaar', vriendentarief: 'opvolging volgens onze afspraak', proef: 'proefdossier' };
   var ATTEST = { kbo_uittreksel: 'KBO-uittreksel', statuten: 'Statuten', jaarrekening: 'Jaarrekening', rsz: 'RSZ-attest', fiscaal: 'Fiscaal attest', uea: 'UEA', erkenning: 'Erkenning aannemer', vca: 'VCA', iso9001: 'ISO 9001', iso14001: 'ISO 14001', iso45001: 'ISO 45001', verzekering_ba: 'Verzekering BA', verzekering_beroeps: 'Beroepsaansprakelijkheid', sectorcertificaat: 'Sectorcertificaat', cv: 'CV', andere: 'Ander attest' };
+  var REACTIE = {
+    dossier_besteld: ['begeleiding gevraagd', 'ok', 'U vroeg begeleiding. Ik bevestig per mail met de volgende stappen'],
+    zelf_indienen: ['u dient zelf in', 'info', 'U dient deze opdracht zelf in'],
+    geen_interesse: ['niet voor u', '', 'U gaf aan dat deze opdracht niet voor u is'],
+    interesse: ['interesse', 'info', 'U toonde interesse']
+  };
+  var laatste = { opdrachten: [], dossiers: [], klant: {} };
   var tabs = M.initTabs($('tabs'), 'opdrachten');
 
   function groet() {
@@ -358,7 +405,83 @@ ul.lijst { margin: 0; padding-left: 18px; color: var(--mid); font-size: 14px; }
       a.classList.add('uit');
       a.setAttribute('title', 'Testweergave: deze knop verstuurt niets');
     });
+    // Keuzeknoppen en berichtformulier: zichtbaar maar uit. De databank weigert ze ook voor de eigenaar.
+    Array.prototype.forEach.call(document.querySelectorAll('#opdrachten button[data-act], #berichtform button, #berichtform input, #berichtform textarea, #berichtform select'), function (b) {
+      if (b.getAttribute('data-act') === 'vraag') return;
+      b.disabled = true;
+      b.setAttribute('title', 'Testweergave: deze knop verstuurt niets');
+    });
   }
+
+  /* Keuze per opdracht (sinds 25/11/2026) */
+  function zoekOpdracht(id) { return laatste.opdrachten.filter(function (o) { return o.id === id; })[0] || null; }
+  $('opdrachten').addEventListener('click', async function (e) {
+    var btn = e.target.closest('button[data-act]');
+    if (!btn) return;
+    var id = btn.getAttribute('data-id'), act = btn.getAttribute('data-act'), msg = $('kmsg-' + id);
+    if (act === 'vraag') { openVraag(id); return; }
+    if (alsKlant) { if (msg) msg.textContent = 'Testweergave: er wordt niets verstuurd.'; return; }
+    if (act === 'toon_reden') {
+      var r = $('reden-' + id);
+      if (r) { r.classList.toggle('hidden'); if (!r.classList.contains('hidden')) r.querySelector('input').focus(); }
+      return;
+    }
+    if (act === 'wijzig') {
+      var o = zoekOpdracht(id);
+      if (o) { o.klant_reactie = null; render(laatsteRuw); }
+      return;
+    }
+    var reden = null;
+    if (act === 'geen_interesse') { var inp = btn.parentNode.querySelector('input'); reden = inp ? inp.value.trim() : null; }
+    var box = btn.closest('.opdracht'), knoppen = box.querySelectorAll('button');
+    knoppen.forEach(function (k) { k.disabled = true; });
+    msg.className = 'kmsg'; msg.textContent = 'Bezig...';
+    var res = await sb.rpc('klant_reageer', { p_match: id, p_reactie: act, p_reden: reden });
+    if (res.error) {
+      knoppen.forEach(function (k) { k.disabled = false; });
+      msg.className = 'kmsg fout'; msg.textContent = 'Niet gelukt: ' + res.error.message;
+      return;
+    }
+    laad();
+  });
+
+  /* Berichten */
+  var laatsteRuw = {};
+  function vulKeuzelijst() {
+    var sel = $('b-over'), huidig = sel.value;
+    var opties = ['<option value="">Algemeen</option>'];
+    laatste.opdrachten.forEach(function (o) { opties.push('<option value="m:' + esc(o.id) + '">Opdracht: ' + esc(String(o.titel || '').slice(0, 90)) + '</option>'); });
+    laatste.dossiers.forEach(function (x) { opties.push('<option value="d:' + esc(x.id) + '">Dossier: ' + esc(String(x.omschrijving || '').slice(0, 90)) + '</option>'); });
+    sel.innerHTML = opties.join('');
+    if (huidig && Array.prototype.some.call(sel.options, function (op) { return op.value === huidig; })) sel.value = huidig;
+  }
+  function openVraag(id) {
+    var o = zoekOpdracht(id);
+    tabs.toon('berichten');
+    $('b-over').value = 'm:' + id;
+    if (o && !$('b-onderwerp').value) $('b-onderwerp').value = ('Vraag over: ' + (o.titel || '')).slice(0, 150);
+    $('b-bericht').focus();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+  $('b-bericht').addEventListener('input', function () { $('b-teller').textContent = this.value.length + ' / 4000'; });
+  $('berichtform').addEventListener('submit', async function (e) {
+    e.preventDefault();
+    var msg = $('b-msg');
+    if (alsKlant) { msg.className = 'kmsg'; msg.textContent = 'Testweergave: er wordt niets verstuurd.'; return; }
+    var onderwerp = $('b-onderwerp').value.trim(), bericht = $('b-bericht').value.trim(), over = $('b-over').value;
+    if (!onderwerp || !bericht) { msg.className = 'kmsg fout'; msg.textContent = 'Vul een onderwerp en een bericht in.'; return; }
+    $('b-verstuur').disabled = true; msg.className = 'kmsg'; msg.textContent = 'Versturen...';
+    var res = await sb.rpc('stuur_klantbericht', {
+      p_onderwerp: onderwerp, p_bericht: bericht,
+      p_match: over.indexOf('m:') === 0 ? over.slice(2) : null,
+      p_dossier: over.indexOf('d:') === 0 ? over.slice(2) : null
+    });
+    $('b-verstuur').disabled = false;
+    if (res.error) { msg.className = 'kmsg fout'; msg.textContent = 'Niet verstuurd: ' + res.error.message; return; }
+    $('b-onderwerp').value = ''; $('b-bericht').value = ''; $('b-over').value = ''; $('b-teller').textContent = '0 / 4000';
+    msg.className = 'kmsg'; msg.textContent = 'Uw bericht is verstuurd. Ik antwoord per e-mail.';
+    laad();
+  });
 
   async function laad() {
     $('stamp').textContent = 'Laden...';
@@ -385,6 +508,13 @@ ul.lijst { margin: 0; padding-left: 18px; color: var(--mid); font-size: 14px; }
 
   function render(d) {
     var k = d.klant || {}, opdr = d.opdrachten || [], dos = d.dossiers || [], rap = d.maandrapport || [], fac = d.facturen || [], intake = d.intake || {};
+    laatsteRuw = d; laatste = { opdrachten: opdr, dossiers: dos, klant: k };
+    vulKeuzelijst();
+    var ber = d.berichten || [];
+    $('berichten').innerHTML = ber.length ? '<table><thead><tr><th>Datum</th><th>Onderwerp</th></tr></thead><tbody>' +
+      ber.map(function (b) {
+        return '<tr><td style="white-space:nowrap">' + esc(fmtDatum(b.datum, true)) + '</td><td>' + esc(b.onderwerp) + (b.soort === 'reactie' ? ' <span class="muted">(keuze bij een opdracht)</span>' : '') + '</td></tr>';
+      }).join('') + '</tbody></table>' : '<div class="empty">Nog geen berichten verstuurd.</div>';
     var voornaam = String(k.contactpersoon || '').trim().split(/\s+/)[0];
     $('groet').innerHTML = esc(groet()) + (voornaam ? ', <em>' + esc(voornaam) + '</em>' : '');
     $('bedrijf').textContent = (k.naam || '') + (k.klantcode ? ' | klantcode ' + k.klantcode : '');
@@ -412,14 +542,33 @@ ul.lijst { margin: 0; padding-left: 18px; color: var(--mid); font-size: 14px; }
       var cls = o.dossier_id ? ' klaar' : voorbij ? ' voorbij' : '';
       var stand = o.dossier_id ? tag('in begeleiding', 'ok') : (voorbij ? tag('deadline voorbij') : tag('uw keuze', 'warn'));
       var prijs = o.prijs && o.prijs.tekst ? o.prijs.tekst : 'prijs na inschatting';
-      var actie = !o.dossier_id && !voorbij
-        ? '<a class="knop" href="' + esc(mailto((k.klantcode ? k.klantcode + ' ' : '') + 'begeleiding: ' + (o.titel || ''), 'Beste Steven,\n\nJa, ik wil dat u deze opdracht begeleidt: ' + (o.titel || '') + ' (' + (o.organisatie || '') + ').\n\nMet vriendelijke groeten,\n' + (k.contactpersoon || ''))) + '">Ja, begeleid deze opdracht</a>'
+      var keuzeOpen = !o.dossier_id && !voorbij;
+      if (keuzeOpen && o.klant_reactie && REACTIE[o.klant_reactie]) stand = tag(REACTIE[o.klant_reactie][0], REACTIE[o.klant_reactie][1]);
+      var actie = '';
+      if (keuzeOpen && o.klant_reactie && REACTIE[o.klant_reactie]) {
+        actie = '<div class="gekozen">' + esc(REACTIE[o.klant_reactie][2]) + (o.klant_reactie_op ? ' op ' + esc(fmtDatum(o.klant_reactie_op)) : '') +
+          '.<button type="button" data-act="wijzig" data-id="' + esc(o.id) + '">Keuze wijzigen</button></div>';
+      } else if (keuzeOpen) {
+        actie = '<div class="keuze">' +
+          '<button type="button" class="knop" data-act="dossier_besteld" data-id="' + esc(o.id) + '">Ja, begeleid deze opdracht</button>' +
+          '<button type="button" class="knop-2" data-act="zelf_indienen" data-id="' + esc(o.id) + '">Zelf indienen</button>' +
+          '<button type="button" class="knop-2" data-act="toon_reden" data-id="' + esc(o.id) + '">Niet voor ons</button>' +
+          '<button type="button" class="knop-2" data-act="vraag" data-id="' + esc(o.id) + '">Vraag stellen</button></div>';
+      } else if (!o.dossier_id) {
+        actie = '<button type="button" class="knop-2" data-act="vraag" data-id="' + esc(o.id) + '">Vraag stellen</button>';
+      }
+      var reden = keuzeOpen && !o.klant_reactie
+        ? '<div class="reden hidden" id="reden-' + esc(o.id) + '"><input maxlength="500" placeholder="Korte reden (optioneel), bv. te ver, te groot, geen erkenning" aria-label="Reden"><button type="button" class="knop-2" data-act="geen_interesse" data-id="' + esc(o.id) + '">Bevestigen</button></div>'
         : '';
-      return '<div class="opdracht' + cls + '"><div class="t">' + (link ? '<a href="' + link + '" target="_blank" rel="noopener">' + esc(o.titel) + '</a>' : esc(o.titel)) + '</div>' +
+      var bronnen = (link ? '<a href="' + link + '" target="_blank" rel="noopener">Bekijk publicatie</a>' : '') +
+        (M.safeUrl(o.documenten_url) ? '<a href="' + M.safeUrl(o.documenten_url) + '" target="_blank" rel="noopener">Bestek en documenten</a>' : '');
+      return '<div class="opdracht' + cls + '" data-opdracht="' + esc(o.id) + '"><div class="t">' + (link ? '<a href="' + link + '" target="_blank" rel="noopener">' + esc(o.titel) + '</a>' : esc(o.titel)) + '</div>' +
         '<div class="muted">' + esc(o.organisatie || '') + (o.raming_eur ? ' | geschatte waarde ' + esc(eur(o.raming_eur)) : '') + (o.aangeboden_op ? ' | voorgesteld op ' + esc(fmtDatum(o.aangeboden_op)) : '') + '</div>' +
         '<div class="rij">' + stand + ' ' + dagTag(o.deadline) + ' <span class="muted">indienen uiterlijk ' + esc(fmtDatum(o.deadline, true)) + '</span></div>' +
         (o.advies ? '<div class="advies"><b>Mijn advies:</b> ' + esc(o.advies) + '</div>' : '') +
-        '<div class="onder"><div class="prijs">Begeleiding: <b>' + esc(prijs) + '</b> excl. btw</div>' + actie + '</div></div>';
+        (bronnen ? '<div class="bronnen">' + bronnen + '</div>' : '') +
+        '<div class="onder"><div class="prijs">Begeleiding: <b>' + esc(prijs) + '</b> excl. btw</div>' + actie + '</div>' + reden +
+        '<div class="kmsg" id="kmsg-' + esc(o.id) + '"></div></div>';
     }).join('') : '<div class="empty">Er staat op dit moment geen opdracht voor u klaar. Zodra er een passende opdracht verschijnt, krijgt u een mail met de fiche en mijn advies.</div>';
 
     // Dossiers met stappen
