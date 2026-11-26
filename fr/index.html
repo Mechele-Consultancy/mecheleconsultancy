@@ -27,7 +27,8 @@
  "description": "Mechele Consultancy recherche et filtre les marchés publics pour les PME belges et accompagne la préparation et le dépôt du dossier d'offre.",
  "founder": {
   "@type": "Person",
-  "name": "Steven Mechele"
+  "name": "Steven Mechele",
+  "image": "https://mecheleconsultancy.be/img/steven-mechele.jpg"
  },
  "vatID": "BE0810155282",
  "email": "info@mecheleconsultancy.be",
@@ -1016,6 +1017,10 @@ footer {
 .founder p { font-size: 16px; color: var(--text-mid); line-height: 1.8; margin-bottom: 12px; }
 .founder p.founder-sign { font-size: 14px; font-weight: 500; color: var(--navy); margin: 8px 0 0; }
 @media (max-width: 480px) { .founder { margin-top: 40px; padding: 24px 20px; } .founder h3 { font-size: 21px; } }
+.founder { display: flex; gap: 32px; align-items: flex-start; }
+.founder-photo { width: 160px; height: 160px; flex: 0 0 160px; border-radius: 50%; object-fit: cover; border: 3px solid var(--amber); }
+.founder-body { min-width: 0; }
+@media (max-width: 640px) { .founder { flex-direction: column; gap: 20px; } .founder-photo { width: 120px; height: 120px; flex-basis: auto; } }
 </style>
 </head>
 <body>
@@ -1118,11 +1123,14 @@ Pas d'abonnement à une plateforme que vous devez parcourir vous-même. Nous le 
 </div>
 </div>
 <div class="founder">
+<img class="founder-photo" src="/img/steven-mechele.jpg" alt="Steven Mechele, fondateur de Mechele Consultancy" width="160" height="160" loading="lazy" decoding="async">
+<div class="founder-body">
 <h3>Qui est derrière Mechele Consultancy ?</h3>
 <p>Je suis Steven Mechele, de Handzame en Flandre occidentale. Plusieurs de mes amis sont indépendants. Quand nous parlions de leur entreprise, le même point sensible revenait chaque fois : les marchés publics. Certains ne savaient pas qu'ils existaient, d'autres y voyaient une montagne de paperasse. C'est ce qui m'a poussé à m'y plonger.</p>
 <p>Aujourd'hui, je filtre chaque jour ouvrable les publications pour mes clients et je ne leur envoie que ce qui correspond à leur entreprise. Ceux qui souhaitent de l'aide pour leur offre peuvent compter sur un accompagnement par dossier.</p>
 <p>Mechele Consultancy est une jeune entreprise en croissance. Pour vous, cela signifie que vous parlez toujours directement avec moi, et que je connais votre dossier.</p>
 <p class="founder-sign">Steven Mechele, fondateur</p>
+</div>
 </div>
 </div>
 </section>

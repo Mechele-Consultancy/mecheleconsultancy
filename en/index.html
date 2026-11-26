@@ -30,7 +30,8 @@
  "description": "Mechele Consultancy finds and filters public tenders for SMEs in Belgium and supports the preparation and submission of the bid.",
  "founder": {
   "@type": "Person",
-  "name": "Steven Mechele"
+  "name": "Steven Mechele",
+  "image": "https://mecheleconsultancy.be/img/steven-mechele.jpg"
  },
  "vatID": "BE0810155282",
  "email": "info@mecheleconsultancy.be",
@@ -1029,6 +1030,10 @@ footer {
 .founder p { font-size: 16px; color: var(--text-mid); line-height: 1.8; margin-bottom: 12px; }
 .founder p.founder-sign { font-size: 14px; font-weight: 500; color: var(--navy); margin: 8px 0 0; }
 @media (max-width: 480px) { .founder { margin-top: 40px; padding: 24px 20px; } .founder h3 { font-size: 21px; } }
+.founder { display: flex; gap: 32px; align-items: flex-start; }
+.founder-photo { width: 160px; height: 160px; flex: 0 0 160px; border-radius: 50%; object-fit: cover; border: 3px solid var(--amber); }
+.founder-body { min-width: 0; }
+@media (max-width: 640px) { .founder { flex-direction: column; gap: 20px; } .founder-photo { width: 120px; height: 120px; flex-basis: auto; } }
 </style>
 </head>
 <body>
@@ -1098,11 +1103,14 @@ footer {
 </div>
 </div>
 <div class="founder">
+<img class="founder-photo" src="/img/steven-mechele.jpg" alt="Steven Mechele, founder of Mechele Consultancy" width="160" height="160" loading="lazy" decoding="async">
+<div class="founder-body">
 <h3>Who is behind it?</h3>
 <p>I am Steven Mechele, from Handzame in West Flanders. Several of my friends run their own businesses. Whenever we talked about their company, the same pain point kept coming up: public tenders. Some did not know they existed, others saw them as a mountain of paperwork. That is what made me dig into it.</p>
 <p>Today I screen the publications for my clients every working day and only send them what fits their business. Anyone who wants help with a bid can count on support per tender.</p>
 <p>Mechele Consultancy is young and growing. For you, that means you always deal with me directly, and I know your file.</p>
 <p class="founder-sign">Steven Mechele, founder</p>
+</div>
 </div>
 </div>
 </section>
